@@ -1,20 +1,17 @@
-#-------------------------------------------------
-#
-# Project created by QtCreator 2016-09-12T10:24:59
-#
-#-------------------------------------------------
-
-QT       += core gui
-
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-
-TARGET = Conspectus
 TEMPLATE = app
 
+QT += qml quick widgets
 
-SOURCES += main.cpp\
-        mainwindow.cpp
+CONFIG += c++11
 
-HEADERS  += mainwindow.h
+SOURCES += main.cpp
 
-FORMS    += mainwindow.ui
+RESOURCES += qml.qrc
+
+# Additional import path used to resolve QML modules in Qt Creator's code model
+QML_IMPORT_PATH =
+
+# Default rules for deployment.
+qnx: target.path = /tmp/$${TARGET}/bin
+else: unix:!android: target.path = /opt/$${TARGET}/bin
+!isEmpty(target.path): INSTALLS += target
