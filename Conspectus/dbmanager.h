@@ -24,7 +24,8 @@ class DBManager
 private:
     /* ==================== Constructor ==================== */
     DBManager() {
-        if (createDB()) {
+        tryToCreateDB();
+        if (isTableEmpty(TABLE_CONSPECT) && isTableEmpty(TABLE_LIST)) {
             fillAssets();
         }
     }
@@ -62,7 +63,7 @@ private:
 
         return true;
     }
-    bool createDB() {
+    bool tryToCreateDB() {
         QSqlDatabase conspectDataBase = QSqlDatabase::addDatabase("QSQLITE");
         conspectDataBase.setDatabaseName(DATABASE_NAME);
         if (!conspectDataBase.open()) {
@@ -71,7 +72,7 @@ private:
         }
 
         QString createConspectTableQuery =
-            "CREATE TABLE " TABLE_CONSPECT " ("
+            "CREATE TABLE IF NOT EXISTS " TABLE_CONSPECT " ("
                 TERM " integer NOT NULL" ","
                 SUBJECT " VARCHAR(255) NOT NULL" ","
                 THEME " VARCHAR(255) NOT NULL" ","
@@ -80,7 +81,7 @@ private:
         makeQuery(createConspectTableQuery);
 
         QString createListTableQuery =
-            "CREATE TABLE " TABLE_LIST " ("
+            "CREATE TABLE IF NOT EXISTS " TABLE_LIST " ("
                 LIST_ID " integer PRIMARY KEY NOT NULL" ","
                 FILE_NAME " VARCHAR(255) NOT NULL" ","
                 TAGS " VARCHAR(255)" ","
@@ -88,6 +89,11 @@ private:
             ");";
         makeQuery(createListTableQuery);
         return true;
+    }
+    bool isTableEmpty(QString tableName) {
+        QSqlQuery query;
+        query.prepare("SELECT * FROM " + tableName);
+        return query.size() == 0;
     }
 
 public:
