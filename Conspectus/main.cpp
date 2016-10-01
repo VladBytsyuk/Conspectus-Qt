@@ -3,6 +3,7 @@
 #include <QStandardItemModel>
 #include <QQuickView>
 #include <QTreeView>
+#include "dbmanager.h"
 
 int main(int argc, char *argv[])
 {
@@ -11,6 +12,8 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
     engine.load(qmlUrl);
+
+    DBManager* dbManager = DBManager::getInstance();
 
     QStandardItemModel model(2,3);
     for (int row = 0; row < 2; ++row) {
