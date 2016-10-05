@@ -1,6 +1,7 @@
 #ifndef CONSPECTMODEL_H
 #define CONSPECTMODEL_H
 
+#include<QStandardItemModel>
 
 class ConspectModel
 {
@@ -12,9 +13,10 @@ private:
 
 
     /* ====================== Fields ======================= */
-
+    static ConspectModel* mInstance;
+    
     /* ====================== Methods ====================== */
-
+    
 
 public:
     /* ==================== Constructor ==================== */
@@ -22,6 +24,12 @@ public:
     /* ====================== Fields ======================= */
 
     /* ====================== Methods ====================== */
+    static ConspectModel* getInstance() {
+        if (mInstance == nullptr) {
+            mInstance = new ConspectModel();
+        }
+        return mInstance;
+    }
 };
 
 

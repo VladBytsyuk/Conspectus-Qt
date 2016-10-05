@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <QtSql>
+#include <conspectmodel.h>
 
 #define DATABASE_NAME "conspectus_db"
 
@@ -108,6 +109,9 @@ public:
         }
         return mInstance;
     }
+    
+    void setConspectModel(ConspectModel* model);
+    ConspectModel* getConspectModel();
 };
 
 
