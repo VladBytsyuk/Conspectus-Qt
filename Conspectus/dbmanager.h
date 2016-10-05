@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <QtSql>
+#include <QTreeView>
 #include <conspectmodel.h>
 
 #define DATABASE_NAME "conspectus_db"
@@ -111,7 +112,24 @@ public:
     }
     
     void setConspectModel(ConspectModel* model);
-    ConspectModel* getConspectModel();
+
+    ConspectModel* getConspectModel() {
+        ConspectModel* model = ConspectModel::getInstance();
+        QStandardItemModel* conspectModel = model->getConspectModel();
+        QStandardItemModel* listModel = model->getListModel();
+        QString getTerms = "SELECT DISTINCT " TERM " FROM " TABLE_CONSPECT ";";
+        QSqlQuery terms = makeQuery(getTerms);
+        for (int termIterator = 0; terms.next(); ++termIterator) {
+            int term = terms.value(termIterator).toInt();
+            QModelIndex termIndex = conspectModel->index(termIterator, 0);
+            conspectModel->setData(termIndex, term);
+        }
+
+        QTreeView t;
+        t.setModel(conspectModel);
+        t.show();
+        return model;
+    }
 };
 
 
