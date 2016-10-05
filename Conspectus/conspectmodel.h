@@ -8,12 +8,15 @@ class ConspectModel
 private:
     /* ==================== Constructor ==================== */
     ConspectModel() {
-
+        conspectHierarchyModel = new QStandardItemModel();
+        listsModel = new QStandardItemModel();
     }
 
 
     /* ====================== Fields ======================= */
     static ConspectModel* mInstance;
+    QStandardItemModel* conspectHierarchyModel;
+    QStandardItemModel* listsModel;
     
     /* ====================== Methods ====================== */
     
@@ -35,5 +38,6 @@ public:
 
 
 /* ================= Fields initialization ================= */
+ConspectModel* ConspectModel::mInstance = nullptr;
 
 #endif // CONSPECTMODEL_H

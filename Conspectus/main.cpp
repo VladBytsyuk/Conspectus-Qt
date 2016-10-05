@@ -15,20 +15,23 @@ int main(int argc, char *argv[])
 
     DBManager* dbManager = DBManager::getInstance();
 
-    QStandardItemModel model(2,3);
-    for (int row = 0; row < 2; ++row) {
-        for (int column = 0; column < 3; ++column) {
-            QStandardItem *item =
-                    new QStandardItem(QString("row %0, column %1")
-                                      .arg(row)
-                                      .arg(column));
-            model.setItem(row, column, item);
-        }
-    }
+//    QStandardItemModel model(200,1);
+//    for (int i = 0; i < 200; i++) {
+//        QModelIndex index = model.index(i, 0);
+//        model.setData(index, i);
 
-    QTreeView t;
-    t.setModel(&model);
-    t.show();
+//        model.insertRows(0, 2, index);
+//        model.insertColumns(0, 1, index);
+//        for (int k = 0; k < 2; k++) {
+//            model.setData(model.index(k, 0, index), "exit");
+//        }
+//    }
+    
+//    QTreeView t;
+//    t.setModel(&model);
+//    t.show();
+
+    ConspectModel* myModel = dbManager->getConspectModel();
 
     return app.exec();
 }

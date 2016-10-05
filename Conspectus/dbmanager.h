@@ -37,14 +37,14 @@ private:
 
 
     /* ====================== Methods ====================== */
-    bool makeQuery(QString queryString) {
+    QSqlQuery makeQuery(QString queryString) {
         QSqlQuery query;
         bool isQueryDone = query.exec(queryString);
         if (!isQueryDone) {
             qDebug() << "Couldn't exec this query:" << endl
                      << queryString << endl;
         }
-        return isQueryDone;
+        return query;
     }
     bool fillAssets() {
         QString insertMathIntro =
