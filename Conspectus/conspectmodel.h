@@ -1,22 +1,22 @@
 #ifndef CONSPECTMODEL_H
 #define CONSPECTMODEL_H
 
-#include<QStandardItemModel>
+#include <QStandardItemModel>
 
 class ConspectModel
 {
 private:
     /* ==================== Constructor ==================== */
     ConspectModel() {
-        conspectHierarchyModel = new QStandardItemModel();
-        listsModel = new QStandardItemModel();
+        mConspectHierarchyModel = new QStandardItemModel();
+        mListsModel = new QStandardItemModel();
     }
 
 
     /* ====================== Fields ======================= */
     static ConspectModel* mInstance;
-    QStandardItemModel* conspectHierarchyModel;
-    QStandardItemModel* listsModel;
+    QStandardItemModel* mConspectHierarchyModel;
+    QStandardItemModel* mListsModel;
     
     /* ====================== Methods ====================== */
     
@@ -32,6 +32,24 @@ public:
             mInstance = new ConspectModel();
         }
         return mInstance;
+    }
+
+
+    void setConspectModel(QStandardItemModel* conspectModel) {
+        mConspectHierarchyModel = conspectModel;
+    }
+
+    QStandardItemModel* getConspectModel() {
+        return mConspectHierarchyModel;
+    }
+
+
+    void setListModel(QStandardItemModel* listModel) {
+        mListsModel = listModel;
+    }
+
+    QStandardItemModel* getListModel() {
+        return mListsModel;
     }
 };
 
