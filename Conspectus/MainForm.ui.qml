@@ -3,14 +3,17 @@ import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.2
 
 Item {
-    width: 640
-    height: 480
+    property int scrWidth: 640;
+    property int scrHeight: 480;
+
+    width: scrWidth
+    height: scrHeight
 
     Rectangle {
         x: 0
         y: 0
-        width: 640
-        height: 480
+        width: scrWidth
+        height: scrHeight
         color: "#faebd7"
     }
     
