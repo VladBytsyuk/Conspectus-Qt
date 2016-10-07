@@ -5,6 +5,14 @@ import QtQuick.Layouts 1.2
 Item {
     width: 640
     height: 480
+
+    Rectangle {
+        x: 0
+        y: 0
+        width: 640
+        height: 480
+        color: "#faebd7"
+    }
     
     property alias buttonAdd: buttonAdd
     property alias buttonView: buttonView
