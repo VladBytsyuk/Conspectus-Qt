@@ -18,8 +18,6 @@
 #define TAGS "tags"
 #define COMMENTS "comments"
 
-#define MODEL_MAX_SIZE 50
-
 using namespace std;
 
 class DBManager
@@ -44,7 +42,7 @@ private:
         bool isQueryDone = query.exec(queryString);
         if (!isQueryDone) {
             qDebug() << "Couldn't exec this query:" << endl
-                     << queryString << endl;
+                     << queryString;
         }
         return query;
     }
@@ -120,21 +118,46 @@ public:
     void setModel(ConspectModel* model);
 
     ConspectModel* getModel() {
-        QStandardItemModel conspectModel(MODEL_MAX_SIZE, 1);
-        QStandardItemModel listModel(MODEL_MAX_SIZE, 1);
+        QStandardItemModel* conspectModel = ConspectModel::getConspectModel();
+        QStandardItemModel* listModel = ConspectModel::getListModel();
 
         QString getTerms = "SELECT DISTINCT " TERM " "
-                               "FROM " TABLE_CONSPECT ";";
+                               "FROM " TABLE_CONSPECT;
         QSqlQuery terms = makeQuery(getTerms);
+        QString termsCount = "SELECT COUNT(DISTINCT " TERM ") "
+                                 "FROM " TABLE_CONSPECT;
+        QSqlQuery termsSize = makeQuery(termsCount);
+        termsSize.next();
+        conspectModel->insertRows(0, termsSize.value(0).toInt(), conspectModel->index(0,0));
         for (int termIterator = 0; terms.next(); ++termIterator) {
-            QModelIndex termIndex = conspectModel.index(termIterator, 0);
+            QModelIndex termIndex = conspectModel->index(termIterator, 0);
             int term = terms.value(0).toInt();
-            conspectModel.setData(termIndex, term);
-        }
+            conspectModel->setData(termIndex, term);
 
-        ConspectModel::setConspectModel(&conspectModel);
-        ConspectModel::setListModel(&listModel);
-        return ConspectModel::getInstance();
+            QString getSubjects =
+                    "SELECT DISTINCT " SUBJECT " "
+                        "FROM " TABLE_CONSPECT " "
+                        "WHERE " TERM " = " + QString::number(term);
+            QSqlQuery subjects = makeQuery(getSubjects);
+            QString subjectsCount = "SELECT COUNT(DISTINCT " SUBJECT ") "
+                                        "FROM " TABLE_CONSPECT " "
+                                        "WHERE " TERM " = " + QString::number(term);
+            QSqlQuery subjectsSize = makeQuery(subjectsCount);
+            subjectsSize.next();
+            conspectModel->insertRows(0, subjectsSize.value(0).toInt(), termIndex);
+            conspectModel->insertColumns(0, 1, termIndex);
+            for (int subjIterator = 0; subjects.next(); ++subjIterator) {
+                QString subject = subjects.value(0).toString();
+                conspectModel
+                        ->setData(conspectModel
+                                 ->index(subjIterator, 0, termIndex), subject);
+            }
+
+        }
+        ConspectModel* model =  ConspectModel::getInstance();
+        ConspectModel::setConspectModel(conspectModel);
+        ConspectModel::setListModel(listModel);
+        return model;
     }
 };
 

@@ -31,22 +31,9 @@ int main(int argc, char *argv[])
 //    t.setModel(&model);
 //    t.show();
 
-    QStandardItemModel conspectModel(MODEL_MAX_SIZE, 1);
-
-    QString getTerms = "SELECT DISTINCT " TERM " "
-                           "FROM " TABLE_CONSPECT ";";
-    QSqlQuery terms;
-    terms.exec(getTerms);
-    for (int termIterator = 0; terms.next(); ++termIterator) {
-        QModelIndex termIndex = conspectModel.index(termIterator, 0);
-        int term = terms.value(0).toInt();
-        conspectModel.setData(termIndex, term);
-    }
-
 
     QTreeView tree;
     dbManager->getModel();
-//    tree.setModel(&conspectModel);
     tree.setModel(ConspectModel::getConspectModel());
     tree.show();
 
