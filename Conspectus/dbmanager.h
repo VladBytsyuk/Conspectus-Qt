@@ -3,8 +3,7 @@
 
 #include <QString>
 #include <QtSql>
-#include <QTreeView>
-#include <conspectmodel.h>
+#include "conspectmodel.h"
 
 #define DATABASE_NAME "conspectus_db"
 
@@ -18,6 +17,8 @@
 #define FILE_NAME "file_name"
 #define TAGS "tags"
 #define COMMENTS "comments"
+
+#define MODEL_MAX_SIZE 50
 
 using namespace std;
 
@@ -56,6 +57,11 @@ private:
         QString insertMathLimits =
             "INSERT INTO " TABLE_CONSPECT " "
                 "VALUES(1, 'Mathematic', 'Limits', 12);";
+        makeQuery(insertMathLimits);
+
+        QString insertEngGreetings =
+            "INSERT INTO " TABLE_CONSPECT " "
+                "VALUES(2, 'English', 'Greetings', 32);";
         makeQuery(insertMathLimits);
 
         QString insertMathList =
@@ -111,24 +117,24 @@ public:
         return mInstance;
     }
     
-    void setConspectModel(ConspectModel* model);
+    void setModel(ConspectModel* model);
 
-    ConspectModel* getConspectModel() {
-        ConspectModel* model = ConspectModel::getInstance();
-        QStandardItemModel* conspectModel = model->getConspectModel();
-        QStandardItemModel* listModel = model->getListModel();
-        QString getTerms = "SELECT DISTINCT " TERM " FROM " TABLE_CONSPECT ";";
+    ConspectModel* getModel() {
+        QStandardItemModel conspectModel(MODEL_MAX_SIZE, 1);
+        QStandardItemModel listModel(MODEL_MAX_SIZE, 1);
+
+        QString getTerms = "SELECT DISTINCT " TERM " "
+                               "FROM " TABLE_CONSPECT ";";
         QSqlQuery terms = makeQuery(getTerms);
         for (int termIterator = 0; terms.next(); ++termIterator) {
-            int term = terms.value(termIterator).toInt();
-            QModelIndex termIndex = conspectModel->index(termIterator, 0);
-            conspectModel->setData(termIndex, term);
+            QModelIndex termIndex = conspectModel.index(termIterator, 0);
+            int term = terms.value(0).toInt();
+            conspectModel.setData(termIndex, term);
         }
 
-        QTreeView t;
-        t.setModel(conspectModel);
-        t.show();
-        return model;
+        ConspectModel::setConspectModel(&conspectModel);
+        ConspectModel::setListModel(&listModel);
+        return ConspectModel::getInstance();
     }
 };
 

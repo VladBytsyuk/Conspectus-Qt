@@ -15,8 +15,8 @@ private:
 
     /* ====================== Fields ======================= */
     static ConspectModel* mInstance;
-    QStandardItemModel* mConspectHierarchyModel;
-    QStandardItemModel* mListsModel;
+    static QStandardItemModel* mConspectHierarchyModel;
+    static QStandardItemModel* mListsModel;
     
     /* ====================== Methods ====================== */
     
@@ -35,20 +35,20 @@ public:
     }
 
 
-    void setConspectModel(QStandardItemModel* conspectModel) {
+    static void setConspectModel(QStandardItemModel* conspectModel) {
         mConspectHierarchyModel = conspectModel;
     }
 
-    QStandardItemModel* getConspectModel() {
+    static QStandardItemModel* getConspectModel() {
         return mConspectHierarchyModel;
     }
 
 
-    void setListModel(QStandardItemModel* listModel) {
+    static void setListModel(QStandardItemModel* listModel) {
         mListsModel = listModel;
     }
 
-    QStandardItemModel* getListModel() {
+    static QStandardItemModel* getListModel() {
         return mListsModel;
     }
 };
@@ -57,5 +57,7 @@ public:
 
 /* ================= Fields initialization ================= */
 ConspectModel* ConspectModel::mInstance = nullptr;
+QStandardItemModel* ConspectModel::mConspectHierarchyModel = nullptr;
+QStandardItemModel* ConspectModel::mListsModel = nullptr;
 
 #endif // CONSPECTMODEL_H
