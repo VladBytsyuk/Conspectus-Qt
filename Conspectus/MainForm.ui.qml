@@ -1,6 +1,7 @@
 import QtQuick 2.5
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.2
+import QtQuick.Controls.Styles 1.4
 
 Item {
     property int scrWidth: 640;
@@ -14,22 +15,24 @@ Item {
         y: 0
         width: scrWidth
         height: scrHeight
-        color: "#faebd7"
+        color: "#C5CAE9"
+        //color: "#faebd7"
     }
     
     property alias buttonAdd: buttonAdd
     property alias buttonView: buttonView
 
-    RowLayout {
+/*    RowLayout {
         width: 310
         height: 100
         anchors.verticalCenterOffset: 0
         anchors.horizontalCenterOffset: 0
-        anchors.centerIn: parent
+        anchors.centerIn: parent        */
 
         Button {
             id: buttonView
-            y: 25
+            x: 150
+            y: 155
             width: 150
             height: 50
             text: "VIEW LECTURE"
@@ -38,13 +41,21 @@ Item {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             Layout.preferredWidth: -1
             isDefault: true
-            visible: true
+            visible: true            
+            style: ButtonStyle {
+                background: Rectangle{
+                    color: "#80D8FF"
+                    border.color: black
+                    border.width: 3
+                    radius: 5
+                }
+            }
         }
 
         Button {
             id: buttonAdd
-            x: 160
-            y: 25
+            x: 320
+            y: 155
             width: 150
             height: 50
             text:"ADD LIST"
@@ -53,8 +64,16 @@ Item {
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             visible: true
+            style: ButtonStyle{
+                background: Rectangle{
+                    color: "#80D8FF"
+                    border.color: black
+                    border.width: 3
+                    radius: 5
+                }
+            }
         }
-    }
+
 
     Text {
         id: title

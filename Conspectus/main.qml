@@ -25,6 +25,8 @@ ApplicationWindow {
     MainForm {
         anchors.fill: parent
         buttonView.onClicked: messageDialog.show(qsTr("View lecture"))
+//        buttonView.style: ButtonStyle{
+//            color: "#F3E5F5"         }
         buttonAdd.onClicked: messageDialog.show(qsTr("Add list"))
     }
 
