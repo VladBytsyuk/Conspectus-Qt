@@ -151,9 +151,35 @@ public:
             conspectModel->insertColumns(0, 1, termIndex);
             for (int subjIterator = 0; subjects.next(); ++subjIterator) {
                 QString subject = subjects.value(0).toString();
-                conspectModel
-                        ->setData(conspectModel
-                                 ->index(subjIterator, 0, termIndex), subject);
+                QModelIndex subjIndex =
+                        conspectModel->index(subjIterator, 0, termIndex);
+                conspectModel->setData(subjIndex, subject);
+
+                QString getThemes =
+                        "SELECT DISTINCT " THEME " "
+                            "FROM " TABLE_CONSPECT " "
+                            "WHERE " TERM " = " + QString::number(term) + " "
+                            "AND " SUBJECT " = '" + subject + "'";
+                QSqlQuery themes = makeQuery(getThemes);
+                QString themesCount =
+                        "SELECT COUNT(DISTINCT " SUBJECT ") "
+                            "FROM " TABLE_CONSPECT " "
+                            "WHERE " TERM " = " + QString::number(term) + " "
+                            "AND " SUBJECT " = '" + subject + "'";
+                QSqlQuery themesSize = makeQuery(themesCount);
+                themesSize.next();
+                conspectModel->insertRows(0, themesSize.value(0).toInt(),
+                                          subjIndex);
+                conspectModel->insertColumns(0, 1, subjIndex);
+                for (int themeIterator = 0; themes.next(); ++themeIterator) {
+                    QString theme = themes.value(0).toString();
+                    QModelIndex themeIndex =
+                            conspectModel->index(themeIterator, 0, subjIndex);
+                    conspectModel->setData(themeIndex, theme);
+                }
+
+
+
             }
 
         }
