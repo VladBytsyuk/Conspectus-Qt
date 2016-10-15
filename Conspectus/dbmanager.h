@@ -162,7 +162,7 @@ public:
                             "AND " SUBJECT " = '" + subject + "'";
                 QSqlQuery themes = makeQuery(getThemes);
                 QString themesCount =
-                        "SELECT COUNT(DISTINCT " SUBJECT ") "
+                        "SELECT COUNT(DISTINCT " THEME ") "
                             "FROM " TABLE_CONSPECT " "
                             "WHERE " TERM " = " + QString::number(term) + " "
                             "AND " SUBJECT " = '" + subject + "'";
@@ -176,9 +176,33 @@ public:
                     QModelIndex themeIndex =
                             conspectModel->index(themeIterator, 0, subjIndex);
                     conspectModel->setData(themeIndex, theme);
+
+                    QString getListId =
+                            "SELECT DISTINCT " LIST_ID " "
+                                "FROM " TABLE_CONSPECT " "
+                                "WHERE " TERM " = " + QString::number(term) + " "
+                                "AND " SUBJECT " = '" + subject + "' "
+                                "AND " THEME " = '" + theme + "'";
+                    QSqlQuery lists = makeQuery(getListId);
+                    QString listsCount =
+                            "SELECT COUNT(DISTINCT " LIST_ID ") "
+                                "FROM " TABLE_CONSPECT " "
+                                "WHERE " TERM " = " + QString::number(term) + " "
+                                "AND " SUBJECT " = '" + subject + "' "
+                                "AND " THEME " = '" + theme + "'";
+                    QSqlQuery listsSize = makeQuery(listsCount);
+                    listsSize.next();
+                    conspectModel->insertRows(0, listsSize.value(0).toInt(),
+                                              themeIndex);
+                    conspectModel->insertColumns(0, 1, themeIndex);
+                    for (int listIterator = 0; lists.next(); ++listIterator) {
+                        QModelIndex listIndex =
+                                conspectModel->index(listIterator, 0, themeIndex);
+                        int listId = lists.value(0).toInt();
+                        conspectModel->setData(listIndex, listId);
+                    }
+
                 }
-
-
 
             }
 
