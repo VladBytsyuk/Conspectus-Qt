@@ -216,6 +216,31 @@ public:
             }
 
         }
+
+        QSqlQuery listTable = makeQuery("SELECT * FROM " TABLE_LIST);
+        QSqlQuery listTableCount = makeQuery("SELECT COUNT(*) FROM " TABLE_LIST);
+        listTableCount.next();
+        int listTableSize = listTableCount.value(0).toInt();
+        listModel->insertRows(0, listTableSize);
+        listModel->insertColumns(0, 3);
+        for (int listTableIterator = 0; listTable.next(); ++listTableIterator) {
+            int listId = listTable.value(0).toInt();
+            QModelIndex idIndex = listModel->index(listTableIterator, 0);
+            listModel->setData(idIndex, listId);
+
+            QString fileName = listTable.value(1).toString();
+            QModelIndex fileIndex = listModel->index(listTableIterator, 1);
+            listModel->setData(fileIndex, fileName);
+
+            QString tags = listTable.value(2).toString();
+            QModelIndex tagsIndex = listModel->index(listTableIterator, 2);
+            listModel->setData(tagsIndex, tags);
+
+            QString comments = listTable.value(3).toString();
+            QModelIndex commentsIndex = listModel->index(listTableIterator, 3);
+            listModel->setData(commentsIndex, comments);
+        }
+
         ConspectModel* model =  ConspectModel::getInstance();
         ConspectModel::setConspectModel(conspectModel);
         ConspectModel::setListModel(listModel);
