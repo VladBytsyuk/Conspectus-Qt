@@ -8,9 +8,12 @@
 #define DATABASE_NAME "conspectus_db"
 
 #define TABLE_CONSPECT "table_conspect"
+#define CONSPECT_ID "id"
 #define TERM "term"
 #define SUBJECT "subject"
+#define THEME_NO "theme_no"
 #define THEME "theme"
+#define LIST_ID_NO "list_id_no"
 #define LIST_ID "list_id"
 
 #define TABLE_LIST "table_list"
@@ -49,18 +52,18 @@ private:
     bool fillAssets() {
         QString insertMathIntro =
             "INSERT INTO " TABLE_CONSPECT " "
-                "VALUES(1, 'Mathematic', 'Intro', 12);";
+                "VALUES(13, 1, 'Mathematic', 1, 'Intro', 1, 12);";
         makeQuery(insertMathIntro);
 
         QString insertMathLimits =
             "INSERT INTO " TABLE_CONSPECT " "
-                "VALUES(1, 'Mathematic', 'Limits', 12);";
+                "VALUES(14, 1, 'Mathematic', 2, 'Limits', 1, 12);";
         makeQuery(insertMathLimits);
 
         QString insertEngGreetings =
             "INSERT INTO " TABLE_CONSPECT " "
-                "VALUES(2, 'English', 'Greetings', 32);";
-        makeQuery(insertMathLimits);
+                "VALUES(15, 2, 'English', 1, 'Greetings', 1, 32);";
+        makeQuery(insertEngGreetings);
 
         QString insertMathList =
             "INSERT INTO " TABLE_LIST " "
@@ -79,9 +82,12 @@ private:
 
         QString createConspectTableQuery =
             "CREATE TABLE IF NOT EXISTS " TABLE_CONSPECT " ("
+                CONSPECT_ID " integer PRIMARY KEY NOT NULL" ","
                 TERM " integer NOT NULL" ","
                 SUBJECT " VARCHAR(255) NOT NULL" ","
+                THEME_NO " integer NOT_NULL" ","
                 THEME " VARCHAR(255) NOT NULL" ","
+                LIST_ID_NO " integer NOT_NULL" ","
                 LIST_ID " integer NOT NULL"
             ");";
         makeQuery(createConspectTableQuery);
@@ -98,8 +104,8 @@ private:
     }
     bool isTableEmpty(QString tableName) {
         QSqlQuery query;
-        query.prepare("SELECT * FROM " + tableName);
-        return query.size() == 0;
+        query.prepare("SELECT COUNT(*) FROM " + tableName);
+        return query.value(0).toInt() == 0;
     }
 
 public:
