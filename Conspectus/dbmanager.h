@@ -128,7 +128,8 @@ public:
                                  "FROM " TABLE_CONSPECT;
         QSqlQuery termsSize = makeQuery(termsCount);
         termsSize.next();
-        conspectModel->insertRows(0, termsSize.value(0).toInt(), conspectModel->index(0,0));
+        conspectModel->insertRows(0, termsSize.value(0).toInt(),
+                                  conspectModel->index(0,0));
         for (int termIterator = 0; terms.next(); ++termIterator) {
             QModelIndex termIndex = conspectModel->index(termIterator, 0);
             int term = terms.value(0).toInt();
@@ -139,12 +140,14 @@ public:
                         "FROM " TABLE_CONSPECT " "
                         "WHERE " TERM " = " + QString::number(term);
             QSqlQuery subjects = makeQuery(getSubjects);
-            QString subjectsCount = "SELECT COUNT(DISTINCT " SUBJECT ") "
-                                        "FROM " TABLE_CONSPECT " "
-                                        "WHERE " TERM " = " + QString::number(term);
+            QString subjectsCount =
+                    "SELECT COUNT(DISTINCT " SUBJECT ") "
+                        "FROM " TABLE_CONSPECT " "
+                        "WHERE " TERM " = " + QString::number(term);
             QSqlQuery subjectsSize = makeQuery(subjectsCount);
             subjectsSize.next();
-            conspectModel->insertRows(0, subjectsSize.value(0).toInt(), termIndex);
+            conspectModel->insertRows(0, subjectsSize.value(0).toInt(),
+                                      termIndex);
             conspectModel->insertColumns(0, 1, termIndex);
             for (int subjIterator = 0; subjects.next(); ++subjIterator) {
                 QString subject = subjects.value(0).toString();
