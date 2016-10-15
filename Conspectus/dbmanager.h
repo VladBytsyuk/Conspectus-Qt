@@ -104,7 +104,8 @@ private:
     }
     bool isTableEmpty(QString tableName) {
         QSqlQuery query;
-        query.prepare("SELECT COUNT(*) FROM " + tableName);
+        query = makeQuery("SELECT COUNT(*) FROM " + tableName);
+        query.next();
         return query.value(0).toInt() == 0;
     }
 
@@ -165,7 +166,8 @@ public:
                         "SELECT DISTINCT " THEME " "
                             "FROM " TABLE_CONSPECT " "
                             "WHERE " TERM " = " + QString::number(term) + " "
-                            "AND " SUBJECT " = '" + subject + "'";
+                            "AND " SUBJECT " = '" + subject + "' "
+                            "ORDER BY " THEME_NO;
                 QSqlQuery themes = makeQuery(getThemes);
                 QString themesCount =
                         "SELECT COUNT(DISTINCT " THEME ") "
@@ -188,7 +190,8 @@ public:
                                 "FROM " TABLE_CONSPECT " "
                                 "WHERE " TERM " = " + QString::number(term) + " "
                                 "AND " SUBJECT " = '" + subject + "' "
-                                "AND " THEME " = '" + theme + "'";
+                                "AND " THEME " = '" + theme + "' "
+                                "ORDER BY " LIST_ID_NO;
                     QSqlQuery lists = makeQuery(getListId);
                     QString listsCount =
                             "SELECT COUNT(DISTINCT " LIST_ID ") "
