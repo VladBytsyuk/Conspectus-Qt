@@ -20,9 +20,9 @@ int main(int argc, char *argv[])
     tree.setModel(ConspectModel::getConspectModel());
     tree.show();
 
-    QTreeView tree1;
-    tree1.setModel(ConspectModel::getListModel());
-    tree1.show();
+//    QTreeView tree1;
+//    tree1.setModel(ConspectModel::getListModel());
+//    tree1.show();
 
     return app.exec();
 }

@@ -122,7 +122,12 @@ public:
         return mInstance;
     }
     
-    void setModel(ConspectModel* model);
+    void setModel(ConspectModel* model) {
+//        QStandardItemModel* conspectModel = ConspectModel::getConspectModel();
+//        QStandartItemModel* listModel = ConspectModel::getListModel();
+
+
+    };
 
     ConspectModel* getModel() {
         QStandardItemModel* conspectModel = ConspectModel::getConspectModel();
@@ -155,7 +160,7 @@ public:
             subjectsSize.next();
             conspectModel->insertRows(0, subjectsSize.value(0).toInt(),
                                       termIndex);
-            conspectModel->insertColumns(0, 1, termIndex);
+            conspectModel->insertColumns(0, 2, termIndex);
             for (int subjIterator = 0; subjects.next(); ++subjIterator) {
                 QString subject = subjects.value(0).toString();
                 QModelIndex subjIndex =
@@ -178,7 +183,7 @@ public:
                 themesSize.next();
                 conspectModel->insertRows(0, themesSize.value(0).toInt(),
                                           subjIndex);
-                conspectModel->insertColumns(0, 1, subjIndex);
+                conspectModel->insertColumns(0, 2, subjIndex);
                 for (int themeIterator = 0; themes.next(); ++themeIterator) {
                     QString theme = themes.value(0).toString();
                     QModelIndex themeIndex =
@@ -186,7 +191,7 @@ public:
                     conspectModel->setData(themeIndex, theme);
 
                     QString getListId =
-                            "SELECT DISTINCT " LIST_ID " "
+                            "SELECT DISTINCT " LIST_ID ", " CONSPECT_ID " "
                                 "FROM " TABLE_CONSPECT " "
                                 "WHERE " TERM " = " + QString::number(term) + " "
                                 "AND " SUBJECT " = '" + subject + "' "
@@ -203,12 +208,17 @@ public:
                     listsSize.next();
                     conspectModel->insertRows(0, listsSize.value(0).toInt(),
                                               themeIndex);
-                    conspectModel->insertColumns(0, 1, themeIndex);
+                    conspectModel->insertColumns(0, 2, themeIndex);
                     for (int listIterator = 0; lists.next(); ++listIterator) {
                         QModelIndex listIndex =
                                 conspectModel->index(listIterator, 0, themeIndex);
                         int listId = lists.value(0).toInt();
+
+                        QModelIndex idIndex =
+                                conspectModel->index(listIterator, 1, themeIndex);
+                        int id = lists.value(1).toInt();
                         conspectModel->setData(listIndex, listId);
+                        conspectModel->setData(idIndex, id);
                     }
 
                 }
