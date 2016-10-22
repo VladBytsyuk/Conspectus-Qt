@@ -123,11 +123,47 @@ public:
     }
     
     void setModel(ConspectModel* model) {
-//        QStandardItemModel* conspectModel = ConspectModel::getConspectModel();
-//        QStandartItemModel* listModel = ConspectModel::getListModel();
+        QStandardItemModel* conspectModel = ConspectModel::getConspectModel();
+        QStandardItemModel* listModel = ConspectModel::getListModel();
+
+        int listTableSize = listModel->rowCount();
+        for (int rowIterator = 0; rowIterator < listTableSize; ++rowIterator) {
+            QModelIndex listIdIndex = listModel->index(rowIterator, 0);
+            QModelIndex fileNameIndex = listModel->index(rowIterator, 1);
+            QModelIndex tagIndex = listModel->index(rowIterator, 2);
+            QModelIndex commentsIndex = listModel->index(rowIterator, 3);
+
+            int listId = listIdIndex.data().toInt();
+            QString fileName = fileNameIndex.data().toString();
+            QString tag = tagIndex.data().toString();
+            QString comments = commentsIndex.data().toString();
+
+            if (listId == -1) { // id does not exist
+                QString insertQuery =
+                        "INSERT INTO " TABLE_LIST " VALUES"
+                            "(" + QString::number(generateListId()) + ", "
+                            + fileName + ", " + tag + ", " + comments + ")";
+                makeQuery(insertQuery);
+            } else {
+                QString updateQuery =
+                        "UPDATE " TABLE_LIST " "
+                            "SET " FILE_NAME " = " + fileName + ", "
+                                TAGS " = " + tag + ", "
+                                COMMENTS " = " + comments + " "
+                            "WHERE " LIST_ID " = " + QString::number(listId);
+                makeQuery(updateQuery);
+            }
 
 
+        }
     };
+
+    int generateListId() {
+        QString maxIdQuery = "SELECT MAX(" LIST_ID ") FROM " TABLE_LIST;
+        QSqlQuery maxIdResult = makeQuery(maxIdQuery);
+        maxIdResult.next();
+        return maxIdResult.value(0).toInt();
+    }
 
     ConspectModel* getModel() {
         QStandardItemModel* conspectModel = ConspectModel::getConspectModel();
