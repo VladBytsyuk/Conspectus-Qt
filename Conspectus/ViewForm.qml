@@ -97,16 +97,40 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenterOffset: -50
         anchors.verticalCenter: parent.verticalCenter
+        style: ComboBoxStyle {
+                background: Rectangle {
+                    radius: 3
+                    color: "#9f0000"
+                }
+                label: Text {
+                    renderType: Text.NativeRendering
+                    font.bold: true
+                    color: "white"
+                    text: control.currentText
+                }
+        }
     }
 
     ComboBox {
         id: boxSubject
         width: boxWidth
         height: boxHeight
-        model: ["Maths","Economics","Physics"]
+        model: ["Maths","Economics","Physics","English"]
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenterOffset: -10
         anchors.verticalCenter: parent.verticalCenter
+        style: ComboBoxStyle {
+                background: Rectangle {
+                    radius: 3
+                    color: "#af0000"
+                }
+                label: Text {
+                    renderType: Text.NativeRendering
+                    font.bold: true
+                    color: "white"
+                    text: control.currentText
+                }
+        }
     }
 
     ComboBox {
@@ -117,8 +141,47 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenterOffset: 30
         anchors.verticalCenter: parent.verticalCenter
+        style: ComboBoxStyle {
+                background: Rectangle {
+                    radius: 3
+                    color: "#bf0000"
+                }
+                label: Text {
+                    renderType: Text.NativeRendering
+                    color: "white"
+                    font.bold: true
+                    text: control.currentText
+                }
+        }
     }
 
+    DropShadow {
+        anchors.fill: boxTerm
+        source: boxTerm
+        color: "#50000000"
+        horizontalOffset: 3
+        verticalOffset: 3
+        radius: 8
+        samples: 17
+    }
+    DropShadow {
+        anchors.fill: boxSubject
+        source: boxSubject
+        color: "#50000000"
+        horizontalOffset: 3
+        verticalOffset: 3
+        radius: 8
+        samples: 17
+    }
+    DropShadow {
+        anchors.fill: boxTheme
+        source: boxTheme
+        color: "#50000000"
+        horizontalOffset: 3
+        verticalOffset: 3
+        radius: 8
+        samples: 17
+    }
     Text {
         id: title
         text: "CONSPECTUS"
