@@ -18,7 +18,14 @@ int main(int argc, char *argv[])
     QTreeView tree;
     dbManager->getModel();
     tree.setModel(ConspectModel::getConspectModel());
-    tree.show();
+    tree.show();  
+
+
+    dbManager->setModel();
+    dbManager->getModel();
+    QTreeView secondTree;
+    secondTree.setModel(ConspectModel::getConspectModel());
+    secondTree.show();
 
 //    QTreeView tree1;
 //    tree1.setModel(ConspectModel::getListModel());

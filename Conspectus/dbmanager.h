@@ -108,8 +108,13 @@ private:
         query.next();
         return query.value(0).toInt() == 0;
     }
-
 public:
+    void clearTable(QString tableName) {
+        QString query = "DELETE FROM " + tableName;
+        makeQuery(query);
+    }
+
+//public:
     /* ==================== Constructor ==================== */
 
     /* ====================== Fields ======================= */
@@ -122,9 +127,59 @@ public:
         return mInstance;
     }
     
-    void setModel(ConspectModel* model) {
+    void setModel() {
         QStandardItemModel* conspectModel = ConspectModel::getConspectModel();
         QStandardItemModel* listModel = ConspectModel::getListModel();
+
+        clearTable(TABLE_CONSPECT);
+        clearTable(TABLE_LIST);
+
+        int termsAmount = conspectModel->rowCount();
+        for (int termIterator = 0; termIterator < termsAmount; ++termIterator) {
+            QModelIndex termIndex = conspectModel->index(termIterator, 0);
+            int term = termIndex.data().toInt();
+
+            int subjectsAmount = conspectModel->rowCount(termIndex);
+            for (int subjectIterator = 0; subjectIterator < subjectsAmount; ++subjectIterator) {
+                QModelIndex subjectIndex =
+                        conspectModel->index(subjectIterator, 0, termIndex);
+                QString subject = subjectIndex.data().toString();
+
+                int themesAmount = conspectModel->rowCount(subjectIndex);
+                for (int themeIterator = 0; themeIterator < themesAmount; ++themeIterator) {
+                    QModelIndex themeIndex =
+                            conspectModel->index(themeIterator, 0, subjectIndex);
+                    QString theme = themeIndex.data().toString();
+                    QModelIndex themeNumberIndex =
+                            conspectModel->index(themeIterator, 0, subjectIndex);
+                    int themeNumber = themeNumberIndex.data().toInt();
+
+                    int listsAmount = conspectModel->rowCount(themeIndex);
+                    for (int listIterator = 0; listIterator < listsAmount; ++listIterator) {
+                        QModelIndex listIndex =
+                                conspectModel->index(listIterator, 0, themeIndex);
+                        int listId = listIndex.data().toInt();
+                        QModelIndex listNumberIndex =
+                                conspectModel->index(listIterator, 1, themeIndex);
+                        int listNumber = listNumberIndex.data().toInt();
+                        QModelIndex idIndex =
+                                conspectModel->index(listIterator, 2, themeIndex);
+                        int id = idIndex.data().toInt();
+
+                        QString insertQuery =
+                                "INSERT INTO " TABLE_CONSPECT " VALUES"
+                                    "(" + QString::number(id) + ", "
+                                    + QString::number(term) + ", '"
+                                    + subject + "', "
+                                    + QString::number(themeNumber) + ", '"
+                                    + theme + "', "
+                                    + QString::number(listNumber) + ", "
+                                    + QString::number(listId) + ")";
+                        makeQuery(insertQuery);
+                    }
+                }
+            }
+        }
 
         int listTableSize = listModel->rowCount();
         for (int rowIterator = 0; rowIterator < listTableSize; ++rowIterator) {
@@ -134,27 +189,16 @@ public:
             QModelIndex commentsIndex = listModel->index(rowIterator, 3);
 
             int listId = listIdIndex.data().toInt();
+            listId = listId == -1 ? generateListId() : listId;
             QString fileName = fileNameIndex.data().toString();
             QString tag = tagIndex.data().toString();
             QString comments = commentsIndex.data().toString();
 
-            if (listId == -1) { // id does not exist
-                QString insertQuery =
-                        "INSERT INTO " TABLE_LIST " VALUES"
-                            "(" + QString::number(generateListId()) + ", "
-                            + fileName + ", " + tag + ", " + comments + ")";
-                makeQuery(insertQuery);
-            } else {
-                QString updateQuery =
-                        "UPDATE " TABLE_LIST " "
-                            "SET " FILE_NAME " = " + fileName + ", "
-                                TAGS " = " + tag + ", "
-                                COMMENTS " = " + comments + " "
-                            "WHERE " LIST_ID " = " + QString::number(listId);
-                makeQuery(updateQuery);
-            }
-
-
+            QString insertQuery =
+                    "INSERT INTO " TABLE_LIST " VALUES"
+                        "(" + QString::number(listId) + ", '"
+                        + fileName + "', '" + tag + "', '" + comments + "')";
+            makeQuery(insertQuery);
         }
     };
 
@@ -166,8 +210,8 @@ public:
     }
 
     ConspectModel* getModel() {
-        QStandardItemModel* conspectModel = ConspectModel::getConspectModel();
-        QStandardItemModel* listModel = ConspectModel::getListModel();
+        QStandardItemModel* conspectModel = new QStandardItemModel(0, 3);
+        QStandardItemModel* listModel = new QStandardItemModel(0, 1);
 
         QString getTerms = "SELECT DISTINCT " TERM " "
                                "FROM " TABLE_CONSPECT;
@@ -182,7 +226,6 @@ public:
             QModelIndex termIndex = conspectModel->index(termIterator, 0);
             int term = terms.value(0).toInt();
             conspectModel->setData(termIndex, term);
-
             QString getSubjects =
                     "SELECT DISTINCT " SUBJECT " "
                         "FROM " TABLE_CONSPECT " "
@@ -196,7 +239,7 @@ public:
             subjectsSize.next();
             conspectModel->insertRows(0, subjectsSize.value(0).toInt(),
                                       termIndex);
-            conspectModel->insertColumns(0, 2, termIndex);
+            conspectModel->insertColumns(0, 3, termIndex);
             for (int subjIterator = 0; subjects.next(); ++subjIterator) {
                 QString subject = subjects.value(0).toString();
                 QModelIndex subjIndex =
@@ -219,12 +262,25 @@ public:
                 themesSize.next();
                 conspectModel->insertRows(0, themesSize.value(0).toInt(),
                                           subjIndex);
-                conspectModel->insertColumns(0, 2, subjIndex);
+                conspectModel->insertColumns(0, 3, subjIndex);
                 for (int themeIterator = 0; themes.next(); ++themeIterator) {
                     QString theme = themes.value(0).toString();
                     QModelIndex themeIndex =
                             conspectModel->index(themeIterator, 0, subjIndex);
                     conspectModel->setData(themeIndex, theme);
+
+                    QString getThemeNumber =
+                            "SELECT " THEME_NO " "
+                                "FROM " TABLE_CONSPECT " "
+                                "WHERE " TERM " = " + QString::number(term) + " "
+                                "AND " SUBJECT " = '" + subject + "' "
+                                "AND " THEME " = '" + theme + "'";
+                    QSqlQuery themeNo = makeQuery(getThemeNumber);
+                    themeNo.next();
+                    int themeNumber = themeNo.value(0).toInt();
+                    QModelIndex themeNumberIndex =
+                            conspectModel->index(themeIterator, 1, subjIndex);
+                    conspectModel->setData(themeNumberIndex, themeNumber);
 
                     QString getListId =
                             "SELECT DISTINCT " LIST_ID ", " CONSPECT_ID " "
@@ -244,17 +300,32 @@ public:
                     listsSize.next();
                     conspectModel->insertRows(0, listsSize.value(0).toInt(),
                                               themeIndex);
-                    conspectModel->insertColumns(0, 2, themeIndex);
+                    conspectModel->insertColumns(0, 3, themeIndex);
                     for (int listIterator = 0; lists.next(); ++listIterator) {
                         QModelIndex listIndex =
                                 conspectModel->index(listIterator, 0, themeIndex);
                         int listId = lists.value(0).toInt();
 
                         QModelIndex idIndex =
-                                conspectModel->index(listIterator, 1, themeIndex);
+                                conspectModel->index(listIterator, 2, themeIndex);
                         int id = lists.value(1).toInt();
+
+                        QString getListIdNumber =
+                                "SELECT DISTINCT " LIST_ID_NO " "
+                                    "FROM " TABLE_CONSPECT " "
+                                    "WHERE " TERM " = " + QString::number(term) + " "
+                                    "AND " SUBJECT " = '" + subject + "' "
+                                    "AND " THEME " = '" + theme + "' "
+                                    "AND " LIST_ID " = " + QString::number(listId);
+                        QSqlQuery listNumberQuery = makeQuery(getListIdNumber);
+                        listNumberQuery.next();
+                        QModelIndex listNumberIndex =
+                                 conspectModel->index(listIterator, 1, themeIndex);
+                        int listNumber = listNumberQuery.value(0).toInt();
+
                         conspectModel->setData(listIndex, listId);
-                        conspectModel->setData(idIndex, id);
+                        conspectModel->setData(listNumberIndex, listNumber);
+                        conspectModel->setData(idIndex, id);                      
                     }
 
                 }

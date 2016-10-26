@@ -58,7 +58,7 @@ public:
 /* ================= Fields initialization ================= */
 ConspectModel* ConspectModel::mInstance = nullptr;
 QStandardItemModel* ConspectModel::mConspectHierarchyModel =
-        new QStandardItemModel(0, 2);
+        new QStandardItemModel(0, 3);
 QStandardItemModel* ConspectModel::mListsModel =
         new QStandardItemModel(0, 1);
 
