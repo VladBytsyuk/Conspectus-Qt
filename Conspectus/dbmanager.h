@@ -108,13 +108,12 @@ private:
         query.next();
         return query.value(0).toInt() == 0;
     }
-public:
     void clearTable(QString tableName) {
         QString query = "DELETE FROM " + tableName;
         makeQuery(query);
     }
 
-//public:
+public:
     /* ==================== Constructor ==================== */
 
     /* ====================== Fields ======================= */
@@ -201,6 +200,45 @@ public:
             makeQuery(insertQuery);
         }
     };
+
+    void insertRowIntoTableConspect(int id,
+                                    int term,
+                                    QString subject,
+                                    int theme_no, QString theme,
+                                    int list_id_no, int list_id) {
+        QString isTableContain =
+                "SELECT COUNT(*) "
+                    "FROM " TABLE_CONSPECT " "
+                    "WHERE " CONSPECT_ID " = " + QString::number(id);
+        QSqlQuery countQuery = makeQuery(isTableContain);
+        countQuery.next();
+        int count = countQuery.value(0).toInt();
+        qDebug() << "id = " << id;
+        qDebug() << "count = " << count;
+        if (count == 0) {
+            QString insertQuery =
+                    "INSERT INTO " TABLE_CONSPECT " "
+                        "VALUES(" + QString::number(id) + ", "
+                        + QString::number(term) + ", '"
+                        + subject + "', "
+                        + QString::number(theme_no) + ", '"
+                        + theme + "', "
+                        + QString::number(list_id_no) + ", "
+                        + QString::number(list_id) + ")";
+            makeQuery(insertQuery);
+        } else {
+            QString updateQuery =
+                    "UPDATE " TABLE_CONSPECT " "
+                        "SET " TERM " = " + QString::number(term) + ", "
+                            SUBJECT " = '" + subject + "', "
+                            THEME_NO " = " + QString::number(theme_no) + ", "
+                            THEME " = '" + theme + "', "
+                            LIST_ID_NO " = " + QString::number(list_id_no) + ", "
+                            LIST_ID " = " + QString::number(list_id) + " "
+                        "WHERE " CONSPECT_ID " = " + QString::number(id);
+            makeQuery(updateQuery);
+        }
+    }
 
     int generateListId() {
         QString maxIdQuery = "SELECT MAX(" LIST_ID ") FROM " TABLE_LIST;

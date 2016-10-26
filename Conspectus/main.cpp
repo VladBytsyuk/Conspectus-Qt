@@ -16,16 +16,12 @@ int main(int argc, char *argv[])
     DBManager* dbManager = DBManager::getInstance();
 
     QTreeView tree;
+    dbManager->insertRowIntoTableConspect(25, 3, "Physics", 1, "Speed of light", 1, 456);
     dbManager->getModel();
     tree.setModel(ConspectModel::getConspectModel());
     tree.show();  
 
 
-    dbManager->setModel();
-    dbManager->getModel();
-    QTreeView secondTree;
-    secondTree.setModel(ConspectModel::getConspectModel());
-    secondTree.show();
 
 //    QTreeView tree1;
 //    tree1.setModel(ConspectModel::getListModel());
