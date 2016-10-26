@@ -4,9 +4,12 @@ import QtQuick.Controls.Styles 1.4
 import QtGraphicalEffects 1.0
 
 Item {
-    property int buttonWidth: 200;
-    property int buttonHeight: 50;
+    property int buttonWidth: 200
+    property int buttonHeight: 50
     property int shadowOffset: 5
+    property int boxWidth: 200
+    property int boxHeight: 25
+
 
     Component {
         id: buttonStyle
@@ -44,7 +47,7 @@ Item {
             text: "CANCEL"
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.horizontalCenterOffset: -120
-            anchors.verticalCenterOffset: 150
+            anchors.verticalCenterOffset: 180
             anchors.verticalCenter: parent.verticalCenter
             visible: true            
             style: buttonStyle
@@ -56,7 +59,7 @@ Item {
             height: buttonHeight
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.horizontalCenterOffset: 120
-            anchors.verticalCenterOffset: 150
+            anchors.verticalCenterOffset: 180
             anchors.verticalCenter: parent.verticalCenter
             text:"OK"
             visible: true
@@ -84,23 +87,48 @@ Item {
     }
 
 
+
+    ComboBox {
+        id: boxTerm
+        width: boxWidth
+        height: boxHeight
+        model: [1,2,3,4,5,6,7,8]
+        inputMethodHints: Qt.ImhNoAutoUppercase
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenterOffset: -50
+        anchors.verticalCenter: parent.verticalCenter
+    }
+
+    ComboBox {
+        id: boxSubject
+        width: boxWidth
+        height: boxHeight
+        model: ["Maths","Economics","Physics"]
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenterOffset: -10
+        anchors.verticalCenter: parent.verticalCenter
+    }
+
+    ComboBox {
+        id: boxTheme
+        width: boxWidth
+        height: boxHeight
+        model: ["Limits","Summs"]
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenterOffset: 30
+        anchors.verticalCenter: parent.verticalCenter
+    }
+
     Text {
         id: title
-//        x: 220
-//        y: 65
         text: "CONSPECTUS"
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenterOffset: -125
+        anchors.verticalCenterOffset: -150
         anchors.verticalCenter: parent.verticalCenter
         font.pixelSize: 32
         font.bold: true
     }
 
-//    DropShadow {
-//        anchors.fill: title
-//        source: title
-//        color: "#20000000"
-//        horizontalOffset: shadowOffset
-//        verticalOffset: shadowOffset
-//    }
+
+
 }
