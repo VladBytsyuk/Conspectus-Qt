@@ -22,11 +22,20 @@ ApplicationWindow {
         }
     }
 
+    ViewForm {
+        id : viewForm
+        anchors.fill: parent;
+
+        function showViewForm() {
+           viewForm.visible = true;
+           mainForm.visible = false;
+        }
+    }
+
     MainForm {
+        id: mainForm;
         anchors.fill: parent
-        buttonView.onClicked: messageDialog.show(qsTr("View lecture"))
-//        buttonView.style: ButtonStyle{
-//            color: "#F3E5F5"         }
+        buttonView.onClicked: viewForm.showViewForm();//messageDialog.show(qsTr("View lecture"))
         buttonAdd.onClicked: messageDialog.show(qsTr("Add list"))
     }
 
