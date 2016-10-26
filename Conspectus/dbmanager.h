@@ -213,8 +213,6 @@ public:
         QSqlQuery countQuery = makeQuery(isTableContain);
         countQuery.next();
         int count = countQuery.value(0).toInt();
-        qDebug() << "id = " << id;
-        qDebug() << "count = " << count;
         if (count == 0) {
             QString insertQuery =
                     "INSERT INTO " TABLE_CONSPECT " "
@@ -236,6 +234,36 @@ public:
                             LIST_ID_NO " = " + QString::number(list_id_no) + ", "
                             LIST_ID " = " + QString::number(list_id) + " "
                         "WHERE " CONSPECT_ID " = " + QString::number(id);
+            makeQuery(updateQuery);
+        }
+    }
+
+    void insertRowIntoTableList(int list_id,
+                                QString file_name,
+                                QString tags,
+                                QString comments) {
+        QString isTableContain =
+                "SELECT COUNT(*) "
+                    "FROM " TABLE_LIST " "
+                    "WHERE " LIST_ID " = " + QString::number(list_id);
+        QSqlQuery countQuery = makeQuery(isTableContain);
+        countQuery.next();
+        int count = countQuery.value(0).toInt();
+        if (count == 0) {
+            QString insertQuery =
+                    "INSERT INTO " TABLE_LIST " "
+                        "VALUES(" + QString::number(list_id) + ", '"
+                        + file_name + "', '"
+                        + tags + "', '"
+                        + comments + "')";
+            makeQuery(insertQuery);
+        } else {
+            QString updateQuery =
+                    "UPDATE " TABLE_LIST " "
+                        "SET " FILE_NAME " = '" + file_name + "', "
+                            TAGS " = '" + tags + "', "
+                            COMMENTS " = '" + comments + "' "
+                        "WHERE " LIST_ID " = " + QString::number(list_id);
             makeQuery(updateQuery);
         }
     }

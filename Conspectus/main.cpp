@@ -21,6 +21,12 @@ int main(int argc, char *argv[])
     tree.setModel(ConspectModel::getConspectModel());
     tree.show();  
 
+    QTreeView tree1;
+    dbManager->insertRowIntoTableList(16, "am3.jpg", "intresting:", "forget about this");
+    dbManager->getModel();
+    tree1.setModel(ConspectModel::getListModel());
+    tree1.show();
+
 
 
 //    QTreeView tree1;
