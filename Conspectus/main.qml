@@ -30,13 +30,20 @@ ApplicationWindow {
            viewForm.visible = true;
            mainForm.visible = false;
         }
+
+        buttonCancel.onClicked: mainForm.showMainForm()
     }
 
     MainForm {
         id: mainForm;
         anchors.fill: parent
-        buttonView.onClicked: viewForm.showViewForm();//messageDialog.show(qsTr("View lecture"))
+        buttonView.onClicked: viewForm.showViewForm()//messageDialog.show(qsTr("View lecture"))
         buttonAdd.onClicked: messageDialog.show(qsTr("Add list"))
+
+        function showMainForm() {
+           viewForm.visible = false;
+           mainForm.visible = true;
+        }
     }
 
     MessageDialog {

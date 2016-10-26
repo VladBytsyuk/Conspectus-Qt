@@ -46,7 +46,7 @@ Item {
             height: buttonHeight
             text: "CANCEL"
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.horizontalCenterOffset: -120
+            anchors.horizontalCenterOffset: 120
             anchors.verticalCenterOffset: 180
             anchors.verticalCenter: parent.verticalCenter
             visible: true            
@@ -58,7 +58,7 @@ Item {
             width: buttonWidth
             height: buttonHeight
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.horizontalCenterOffset: 120
+            anchors.horizontalCenterOffset: -120
             anchors.verticalCenterOffset: 180
             anchors.verticalCenter: parent.verticalCenter
             text:"OK"
