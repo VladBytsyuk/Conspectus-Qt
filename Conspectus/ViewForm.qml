@@ -192,6 +192,20 @@ Item {
         font.bold: true
     }
 
+    Canvas{
+        id: arrow
+        imageLoaded: "assets/comboBox_arrow.png"
+        width: 25
+        height: 25
+//        onPaint: {
+//            var ctx = getContext("2d")
+//            ctx.beginPath();
+//            ctx.moveTo(x + 5, y + 10);
+//            ctx.lineTo(x + 15, y + 10);
+//            ctx.lineTo(x + 10, y + 15);
+//            ctx.fill();
+//        }
+    }
 
 
 }
