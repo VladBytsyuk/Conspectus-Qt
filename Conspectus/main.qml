@@ -22,10 +22,42 @@ ApplicationWindow {
         }
     }
 
-    MainForm {
+    ViewForm {
+        id : viewForm
+        anchors.fill: parent;
+
+        function showViewForm() {
+           viewForm.visible = true
+            addForm.visible = false
+           mainForm.visible = false
+        }
+
+        buttonCancel.onClicked: mainForm.showMainForm()
+    }
+
+    AddForm{
+        id : addForm
         anchors.fill: parent
-        buttonView.onClicked: messageDialog.show(qsTr("View lecture"))
-        buttonAdd.onClicked: messageDialog.show(qsTr("Add list"))
+
+        function showAddForm(){
+            viewForm.visible = false
+             addForm.visible = true
+            mainForm.visible = false
+        }
+        buttonCancel.onClicked: mainForm.showMainForm()
+    }
+
+    MainForm {
+        id: mainForm;
+        anchors.fill: parent
+        buttonView.onClicked: viewForm.showViewForm()//messageDialog.show(qsTr("View lecture"))
+        buttonAdd.onClicked: addForm.showAddForm()//messageDialog.show(qsTr("Add list"))
+
+        function showMainForm() {
+           viewForm.visible = false
+            addForm.visible = false
+           mainForm.visible = true
+        }
     }
 
     MessageDialog {
