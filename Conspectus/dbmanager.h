@@ -238,6 +238,15 @@ public:
         }
     }
 
+    void deleteRowFromTable(int rowId, QString tableName) {
+        QString idName = QString::compare(tableName, TABLE_CONSPECT, Qt::CaseInsensitive) == 0 ?
+                    CONSPECT_ID : LIST_ID;
+        QString deleteQuery =
+                "DELETE FROM " + tableName + " "
+                    "WHERE " + idName  + " = " + QString::number(rowId);
+        makeQuery(deleteQuery);
+    }
+
     void insertRowIntoTableList(int list_id,
                                 QString file_name,
                                 QString tags,
@@ -267,6 +276,8 @@ public:
             makeQuery(updateQuery);
         }
     }
+
+
 
     int generateListId() {
         QString maxIdQuery = "SELECT MAX(" LIST_ID ") FROM " TABLE_LIST;
