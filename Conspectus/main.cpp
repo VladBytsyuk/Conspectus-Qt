@@ -20,16 +20,13 @@ int main(int argc, char *argv[])
     tree.setModel(ConspectModel::getConspectModel());
     tree.show();  
 
-
-    dbManager->setModel();
+    QTreeView tree1;
+    dbManager->deleteRowFromTable(13, TABLE_CONSPECT);
     dbManager->getModel();
-    QTreeView secondTree;
-    secondTree.setModel(ConspectModel::getConspectModel());
-    secondTree.show();
+    tree1.setModel(ConspectModel::getConspectModel());
+    tree1.show();
 
-//    QTreeView tree1;
-//    tree1.setModel(ConspectModel::getListModel());
-//    tree1.show();
+
 
     return app.exec();
 }

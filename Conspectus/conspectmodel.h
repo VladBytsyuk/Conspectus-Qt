@@ -34,7 +34,6 @@ public:
         return mInstance;
     }
 
-
     static void setConspectModel(QStandardItemModel* conspectModel) {
         mConspectHierarchyModel = conspectModel;
     }
@@ -51,6 +50,8 @@ public:
     static QStandardItemModel* getListModel() {
         return mListsModel;
     }
+
+
 };
 
 
