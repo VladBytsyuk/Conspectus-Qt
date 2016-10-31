@@ -93,6 +93,9 @@ Item {
         width: boxWidth
         height: boxHeight
         model: [1,2,3,4,5,6,7,8]
+        Component.onCompleted: {
+            currentIndex = -1
+        }
         inputMethodHints: Qt.ImhNoAutoUppercase
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenterOffset: -50
@@ -106,7 +109,7 @@ Item {
                     renderType: Text.NativeRendering
                     font.bold: true
                     color: "white"
-                    text: control.currentText
+                    text: control.currentIndex==-1?"Term":control.currentText
                 }
         }
     }
@@ -116,6 +119,9 @@ Item {
         width: boxWidth
         height: boxHeight
         model: ["Maths","Economics","Physics","English"]
+        Component.onCompleted: {
+            currentIndex = -1
+        }
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenterOffset: -10
         anchors.verticalCenter: parent.verticalCenter
@@ -128,7 +134,7 @@ Item {
                     renderType: Text.NativeRendering
                     font.bold: true
                     color: "white"
-                    text: control.currentText
+                    text: control.currentIndex==-1?"Subject":control.currentText
                 }
         }
     }
@@ -138,6 +144,9 @@ Item {
         width: boxWidth
         height: boxHeight
         model: ["Limits","Summs"]
+        Component.onCompleted: {
+            currentIndex = -1
+        }
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenterOffset: 30
         anchors.verticalCenter: parent.verticalCenter
@@ -150,7 +159,8 @@ Item {
                     renderType: Text.NativeRendering
                     color: "white"
                     font.bold: true
-                    text: control.currentText
+                    text:
+                        control.currentIndex==-1?"Theme":control.currentText
                 }
         }
     }
@@ -194,7 +204,7 @@ Item {
 
     Canvas{
         id: arrow
-        imageLoaded: "assets/comboBox_arrow.png"
+//        imageLoaded: "assets/comboBox_arrow.png"
         width: 25
         height: 25
 //        onPaint: {
