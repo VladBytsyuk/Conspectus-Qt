@@ -35,6 +35,55 @@ Item {
     Rectangle {
         anchors.fill: parent
         color: "#f6f6f6"
+
+        TextField {
+            id: textField1
+            width: boxWidth
+            height: boxHeight
+            placeholderText: qsTr("Text Field")
+            inputMethodHints: Qt.ImhNoAutoUppercase
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenterOffset: -70
+            anchors.verticalCenter: parent.verticalCenter
+        }
+    }
+
+    Button {
+        id: buttonBrowse
+        width: 70
+        height: boxHeight
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.horizontalCenterOffset: 150
+        anchors.verticalCenterOffset: -70
+        anchors.verticalCenter: parent.verticalCenter
+        text:"Browse"
+        visible: true
+        style:  ButtonStyle {
+            background: Rectangle{
+                color: "#f0c150"
+                radius: 3
+            }
+            label: Text {
+                renderType: Text.NativeRendering
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+                font.family: "Helvetica"
+                //font.pointSize: 8
+                font.bold: true
+                color: "black"
+                text: control.text
+            }
+        }
+    }
+
+    DropShadow {
+        anchors.fill: buttonBrowse
+        source: buttonBrowse
+        color: "#50000000"
+        horizontalOffset: 3
+        verticalOffset: 3
+        radius: 8
+        samples: 17
     }
     
     property alias buttonOk: buttonOk
@@ -93,23 +142,29 @@ Item {
         width: boxWidth
         height: boxHeight
         model: [1,2,3,4,5,6,7,8]
+
+
         Component.onCompleted: {
             currentIndex = -1
+
         }
+        editable: true
+
         inputMethodHints: Qt.ImhNoAutoUppercase
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenterOffset: -50
+        anchors.verticalCenterOffset: -30
         anchors.verticalCenter: parent.verticalCenter
         style: ComboBoxStyle {
                 background: Rectangle {
                     radius: 3
                     color: "#9f0000"
                 }
-                label: Text {
+                label: Text {                    
                     renderType: Text.NativeRendering
                     font.bold: true
-                    color: "white"
-                    text: control.currentIndex===-1?"Term":control.currentText
+                    color: "black"
+                    text: control.currentIndex===-1?"Term":
+                          control.currentText
                 }
         }
     }
@@ -122,8 +177,9 @@ Item {
         Component.onCompleted: {
             currentIndex = -1
         }
+        editable: true
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenterOffset: -10
+        anchors.verticalCenterOffset: 10
         anchors.verticalCenter: parent.verticalCenter
         style: ComboBoxStyle {
                 background: Rectangle {
@@ -131,9 +187,9 @@ Item {
                     color: "#af0000"
                 }
                 label: Text {
-                    renderType: Text.NativeRendering
+                    //renderType: Text.NativeRendering
                     font.bold: true
-                    color: "white"
+                    color: "black"
                     text: control.currentIndex===-1?"Subject":control.currentText
                 }
         }
@@ -147,8 +203,9 @@ Item {
         Component.onCompleted: {
             currentIndex = -1
         }
+        editable: true
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenterOffset: 30
+        anchors.verticalCenterOffset: 50
         anchors.verticalCenter: parent.verticalCenter
         style: ComboBoxStyle {
                 background: Rectangle {
