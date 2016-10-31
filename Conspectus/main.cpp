@@ -21,9 +21,7 @@ int main(int argc, char *argv[])
     tree.show();  
 
     QTreeView tree1;
-    dbManager->deleteRowFromTable(13, TABLE_CONSPECT);
-    dbManager->getModel();
-    tree1.setModel(ConspectModel::getConspectModel());
+    tree1.setModel(ConspectModel::getListModel());
     tree1.show();
 
 

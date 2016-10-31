@@ -7,10 +7,7 @@ class ConspectModel
 {
 private:
     /* ==================== Constructor ==================== */
-    ConspectModel() {
-        mConspectHierarchyModel = new QStandardItemModel();
-        mListsModel = new QStandardItemModel();
-    }
+    ConspectModel();
 
 
     /* ====================== Fields ======================= */
@@ -27,40 +24,16 @@ public:
     /* ====================== Fields ======================= */
 
     /* ====================== Methods ====================== */
-    static ConspectModel* getInstance() {
-        if (mInstance == nullptr) {
-            mInstance = new ConspectModel();
-        }
-        return mInstance;
-    }
+    static ConspectModel* getInstance();
 
-    static void setConspectModel(QStandardItemModel* conspectModel) {
-        mConspectHierarchyModel = conspectModel;
-    }
-
-    static QStandardItemModel* getConspectModel() {
-        return mConspectHierarchyModel;
-    }
+    static void setConspectModel(QStandardItemModel* conspectModel);
+    static QStandardItemModel* getConspectModel();
 
 
-    static void setListModel(QStandardItemModel* listModel) {
-        mListsModel = listModel;
-    }
-
-    static QStandardItemModel* getListModel() {
-        return mListsModel;
-    }
+    static void setListModel(QStandardItemModel* listModel);
+    static QStandardItemModel* getListModel();
 
 
 };
-
-
-
-/* ================= Fields initialization ================= */
-ConspectModel* ConspectModel::mInstance = nullptr;
-QStandardItemModel* ConspectModel::mConspectHierarchyModel =
-        new QStandardItemModel(0, 3);
-QStandardItemModel* ConspectModel::mListsModel =
-        new QStandardItemModel(0, 1);
 
 #endif // CONSPECTMODEL_H

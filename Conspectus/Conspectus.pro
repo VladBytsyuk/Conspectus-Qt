@@ -5,7 +5,10 @@ QT += sql
 
 CONFIG += c++11
 
-SOURCES += main.cpp
+SOURCES += \
+    conspectmodel.cpp \
+    main.cpp \
+    dbmanager.cpp
 
 RESOURCES += qml.qrc
 
