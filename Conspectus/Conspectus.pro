@@ -7,7 +7,8 @@ CONFIG += c++11
 
 SOURCES += \
     conspectmodel.cpp \
-    main.cpp
+    main.cpp \
+    dbmanager.cpp
 
 RESOURCES += qml.qrc
 
