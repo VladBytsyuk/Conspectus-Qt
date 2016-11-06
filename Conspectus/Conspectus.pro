@@ -8,7 +8,8 @@ CONFIG += c++11
 SOURCES += \
     conspectmodel.cpp \
     main.cpp \
-    dbmanager.cpp
+    dbmanager.cpp \
+    filemanager.cpp
 
 RESOURCES += qml.qrc
 
@@ -22,4 +23,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     dbmanager.h \
-    conspectmodel.h
+    conspectmodel.h \
+    filemanager.h
