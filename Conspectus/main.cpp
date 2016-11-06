@@ -3,11 +3,14 @@
 #include <QStandardItemModel>
 #include <QQuickView>
 #include <QTreeView>
+#include <QTime>
 #include "dbmanager.h"
+#include "filemanager.h"
 
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
+	qsrand(QTime(0, 0, 0).secsTo(QTime::currentTime()));
     QUrl qmlUrl = QUrl(QStringLiteral("qrc:/main.qml"));
 
     QQmlApplicationEngine engine;
@@ -24,7 +27,11 @@ int main(int argc, char *argv[])
     tree1.setModel(ConspectModel::getListModel());
     tree1.show();
 
-
+	FileManager * fm = new FileManager();
+	QString temp = "J:/temp.bmp";
+	fm->copyFile(temp);
+	fm->removeFile(temp);
+	QImage img = fm->getImage(temp);
 
     return app.exec();
 }
