@@ -4,5 +4,6 @@
         <file>MainForm.qml</file>
         <file>ViewForm.qml</file>
         <file>AddForm.qml</file>
+        <file>AddListForm.qml</file>
     </qresource>
 </RCC>

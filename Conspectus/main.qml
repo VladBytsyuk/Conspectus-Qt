@@ -29,10 +29,25 @@ ApplicationWindow {
         function showViewForm() {
            viewForm.visible = true
             addForm.visible = false
+            addListForm.visible = false
            mainForm.visible = false
         }
 
         buttonCancel.onClicked: mainForm.showMainForm()
+        buttonOk.onClicked: addListForm.showAddListForm()
+    }
+
+    AddListForm{
+        id: addListForm
+        anchors.fill: parent
+
+        function showAddListForm(){
+            viewForm.visible = false
+             addForm.visible = false
+            addListForm.visible = true
+            mainForm.visible = false
+        }
+        buttonCancel.onClicked: addForm.showAddForm()
     }
 
     AddForm{
@@ -42,9 +57,11 @@ ApplicationWindow {
         function showAddForm(){
             viewForm.visible = false
              addForm.visible = true
+            addListForm.visible = false
             mainForm.visible = false
         }
         buttonCancel.onClicked: mainForm.showMainForm()
+        buttonOk.onClicked: addListForm.showAddListForm()
     }
 
     MainForm {
@@ -56,18 +73,19 @@ ApplicationWindow {
         function showMainForm() {
            viewForm.visible = false
             addForm.visible = false
+           addListForm.visible = false
            mainForm.visible = true
         }
     }
 
-    MessageDialog {
-        id: messageDialog
-        title: qsTr("Do it!")
+//    MessageDialog {
+//        id: messageDialog
+//        title: qsTr("Do it!")
 
-        function show(caption) {
-            messageDialog.text = caption;
-            messageDialog.open();
-        }
-    }
+//        function show(caption) {
+//            messageDialog.text = caption;
+//            messageDialog.open();
+//        }
+//    }
 
 }
