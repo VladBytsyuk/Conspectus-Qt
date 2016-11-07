@@ -26,7 +26,6 @@ FileManager::~FileManager(){
 
 //Copy file with given name into project directory
 bool FileManager::copyFile(QString file_name){
-    //TODO: add image info in model
 	if (!QFile(file_name).exists()){
         qDebug() << "Can't copy. File doesn't exist: " << file_name;
 		return false;
@@ -42,21 +41,26 @@ bool FileManager::copyFile(QString file_name){
 
 //Remove file with given name from project directory
 bool FileManager::removeFile(QString file_name){
-    //TODO: remove image info from model
     if (!QFile(file_name).exists()){
         qDebug() << "File doesn't exist: " << file_name;
 		return false;
-	}
-	/*else if (QFileInfo(file_name).absoluteDir() != main_dir){
+	} 
+	else if (QFileInfo(file_name).absoluteDir() != main_dir){
+		qDebug() << "Wrong directory";
 		return false;
-	}*/
-    emit removeFileSignal(QFileInfo(file_name).fileName());
-	return QFile::remove(file_name);
+	}
+	else if (!QFile::remove(file_name)){
+		qDebug() << "Can`t delete file";
+		return false;
+	} 
+	else{
+		emit removeFileSignal(QFileInfo(file_name).fileName());
+		return true;
+	}
 }
 
 //her znaet
 bool FileManager::updateFile(QString file_name){
-    //TODO: Save QImage to file
     if (!QFile(file_name).exists()){
         qDebug() << "File doesn't exist: " << file_name;
 		return false;
@@ -68,11 +72,19 @@ bool FileManager::updateFile(QString file_name){
 QImage FileManager::getImage(QString file_name){
 	QImage img;
 	if (!img.load(file_name)){
+		qDebug() << "Can't load this file: " << file_name;
+		return QImage();
+	}
+	else if (QFileInfo(file_name).absoluteDir() != main_dir){
+		qDebug() << "Wrong directory";
 		return QImage();
 	}
 	else{
-        qDebug() << "Can't load this file: " << file_name;
 		return img;
 	}
+}
+
+QString FileManager::getMainDirPath(){
+	return main_dir_path;
 }
 

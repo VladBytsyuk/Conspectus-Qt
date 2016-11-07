@@ -34,7 +34,6 @@ private:
 
     /* ====================== Fields ======================= */
     static DBManager* mInstance;
-    static FileManager* mFileManager;
 
 
     /* ====================== Methods ====================== */
@@ -67,14 +66,9 @@ public:
     int generateListId();
     ConspectModel* getModel();
 
-private slots:
-    void onAddFile(QString file_name){
-        insertRowIntoTableList(generateListId(), file_name);
-    }
-
-    void onRemoveFile(QString file_name){
-        deleteRowFromTable(findFileIdByName(file_name), TABLE_LIST);
-    }
+public slots:
+	void onAddFile(QString file_name);	
+	void onRemoveFile(QString file_name);
 };
 
 

@@ -34,15 +34,6 @@ public:
     static void setListModel(QStandardItemModel* listModel);
     static QStandardItemModel* getListModel();
 
-private slots:
-    void onAddFile(QString file_name){
-//        dbManager->insertRowIntoTableList(dbManager->generateListId(), file_name);
-    }
-
-    void onRemoveFile(QString file_name){
-//        dbManager->deleteRowFromTable(dbManager->findFileIdByName(file_name), TABLE_LIST);
-    }
-
 };
 
 #endif // CONSPECTMODEL_H

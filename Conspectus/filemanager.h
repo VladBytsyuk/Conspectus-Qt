@@ -31,6 +31,7 @@ public:
     bool removeFile(QString path);
     bool updateFile(QString path);
     QImage getImage(QString path);
+	QString getMainDirPath();
 
 signals:
     void addFileSignal(QString file_name);

@@ -2,9 +2,6 @@
 
 DBManager::DBManager()
 {
-    mFileManager = new FileManager();
-    connect(mFileManager, &FileManager::addFileSignal, this, &DBManager::onAddFile);
-    connect(mFileManager, &FileManager::removeFileSignal, this, &DBManager::onRemoveFile);
     tryToCreateDB();
     if (isTableEmpty(TABLE_CONSPECT) && isTableEmpty(TABLE_LIST)) {
         fillAssets();
@@ -247,7 +244,7 @@ int DBManager::generateListId() {
     QString maxIdQuery = "SELECT MAX(" LIST_ID ") FROM " TABLE_LIST;
     QSqlQuery maxIdResult = makeQuery(maxIdQuery);
     maxIdResult.next();
-    return maxIdResult.value(0).toInt();
+    return maxIdResult.value(0).toInt() + 1;
 }
 ConspectModel* DBManager::getModel() {
     QStandardItemModel* conspectModel = new QStandardItemModel(0, 3);
@@ -414,6 +411,15 @@ int DBManager::findFileIdByName(QString file_name) {
     return queryResult.value(0).toInt();
 }
 
+void DBManager::onAddFile(QString file_name){
+	//TODO: Add file into the model
+	insertRowIntoTableList(generateListId(), file_name);
+}
+
+void DBManager::onRemoveFile(QString file_name){
+	//TODO: Delete file from the model
+	deleteRowFromTable(findFileIdByName(file_name), TABLE_LIST);
+}
 
 /* ================= Fields initialization ================= */
 DBManager* DBManager::mInstance = nullptr;
