@@ -2,6 +2,7 @@
 
 ConspectModel::ConspectModel()
 {
+//    connect(&FileManager::)
     mConspectHierarchyModel = new QStandardItemModel();
     mListsModel = new QStandardItemModel();
 }

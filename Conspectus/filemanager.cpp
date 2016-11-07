@@ -1,4 +1,5 @@
 #include "filemanager.h"
+#include <QDebug>
 
 //Create project directrory in user root directory
 FileManager::FileManager(){
@@ -25,7 +26,9 @@ FileManager::~FileManager(){
 
 //Copy file with given name into project directory
 bool FileManager::copyFile(QString file_name){
+    //TODO: add image info in model
 	if (!QFile(file_name).exists()){
+        qDebug() << "Can't copy. File doesn't exist: " << file_name;
 		return false;
 	}
 	QFileInfo fi(file_name);
@@ -33,23 +36,29 @@ bool FileManager::copyFile(QString file_name){
 	while (!QFile::copy(file_name, new_file_name)){
 		new_file_name = main_dir_path + "/" + QString::number(qrand()) + "." + fi.suffix();
 	}
+    emit addFileSignal(QFileInfo(new_file_name).fileName());
     return true;
 }
 
 //Remove file with given name from project directory
 bool FileManager::removeFile(QString file_name){
-	if (!QFile(file_name).exists()){
+    //TODO: remove image info from model
+    if (!QFile(file_name).exists()){
+        qDebug() << "File doesn't exist: " << file_name;
 		return false;
 	}
 	/*else if (QFileInfo(file_name).absoluteDir() != main_dir){
 		return false;
 	}*/
+    emit removeFileSignal(QFileInfo(file_name).fileName());
 	return QFile::remove(file_name);
 }
 
 //her znaet
 bool FileManager::updateFile(QString file_name){
-	if (!QFile(file_name).exists()){
+    //TODO: Save QImage to file
+    if (!QFile(file_name).exists()){
+        qDebug() << "File doesn't exist: " << file_name;
 		return false;
 	}
 	return true;
@@ -62,11 +71,8 @@ QImage FileManager::getImage(QString file_name){
 		return QImage();
 	}
 	else{
+        qDebug() << "Can't load this file: " << file_name;
 		return img;
 	}
 }
 
-QString FileManager::randomNameGenerator(QString path){
-	//TODO: What name?
-    return QString();
-}

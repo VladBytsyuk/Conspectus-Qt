@@ -2,6 +2,9 @@
 
 DBManager::DBManager()
 {
+    mFileManager = new FileManager();
+    connect(mFileManager, &FileManager::addFileSignal, this, &DBManager::onAddFile);
+    connect(mFileManager, &FileManager::removeFileSignal, this, &DBManager::onRemoveFile);
     tryToCreateDB();
     if (isTableEmpty(TABLE_CONSPECT) && isTableEmpty(TABLE_LIST)) {
         fillAssets();
@@ -399,6 +402,16 @@ ConspectModel* DBManager::getModel() {
     ConspectModel::setConspectModel(conspectModel);
     ConspectModel::setListModel(listModel);
     return model;
+}
+
+int DBManager::findFileIdByName(QString file_name) {
+    QString query =
+            "SELECT " LIST_ID " "
+                "FROM " TABLE_LIST " "
+                "WHERE " FILE_NAME " = '" + file_name + "'";
+    QSqlQuery queryResult = makeQuery(query);
+    queryResult.next();
+    return queryResult.value(0).toInt();
 }
 
 

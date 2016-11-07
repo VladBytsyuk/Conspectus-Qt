@@ -3,8 +3,9 @@
 
 #include <QStandardItemModel>
 
-class ConspectModel
+class ConspectModel: public QObject
 {
+    Q_OBJECT
 private:
     /* ==================== Constructor ==================== */
     ConspectModel();
@@ -33,6 +34,14 @@ public:
     static void setListModel(QStandardItemModel* listModel);
     static QStandardItemModel* getListModel();
 
+private slots:
+    void onAddFile(QString file_name){
+//        dbManager->insertRowIntoTableList(dbManager->generateListId(), file_name);
+    }
+
+    void onRemoveFile(QString file_name){
+//        dbManager->deleteRowFromTable(dbManager->findFileIdByName(file_name), TABLE_LIST);
+    }
 
 };
 

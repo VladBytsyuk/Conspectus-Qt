@@ -9,6 +9,7 @@
 #define DIR_NAME "Conspectus_source"
 
 class FileManager: public QObject{
+    Q_OBJECT
 private:
     /* ==================== Constructor ==================== */
 
@@ -30,6 +31,10 @@ public:
     bool removeFile(QString path);
     bool updateFile(QString path);
     QImage getImage(QString path);
+
+signals:
+    void addFileSignal(QString file_name);
+    void removeFileSignal(QString file_name);
 };
 
 #endif // FILEMANAGER_H

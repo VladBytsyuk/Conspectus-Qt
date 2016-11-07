@@ -1,9 +1,11 @@
 #ifndef DBMANAGER_H
 #define DBMANAGER_H
 
+#include <QObject>
 #include <QString>
 #include <QtSql>
 #include "conspectmodel.h"
+#include "filemanager.h"
 
 #define DATABASE_NAME "conspectus_db"
 
@@ -23,14 +25,16 @@
 
 using namespace std;
 
-class DBManager
+class DBManager:public QObject
 {    
+    Q_OBJECT
 private:
     /* ==================== Constructor ==================== */
     DBManager();
 
     /* ====================== Fields ======================= */
     static DBManager* mInstance;
+    static FileManager* mFileManager;
 
 
     /* ====================== Methods ====================== */
@@ -57,10 +61,20 @@ public:
     void deleteRowFromTable(int rowId, QString tableName);
     void insertRowIntoTableList(int list_id,
                                 QString file_name,
-                                QString tags,
-                                QString comments);
+                                QString tags = QString(),
+                                QString comments = QString());
+    int findFileIdByName(QString file_name);
     int generateListId();
     ConspectModel* getModel();
+
+private slots:
+    void onAddFile(QString file_name){
+        insertRowIntoTableList(generateListId(), file_name);
+    }
+
+    void onRemoveFile(QString file_name){
+        deleteRowFromTable(findFileIdByName(file_name), TABLE_LIST);
+    }
 };
 
 
