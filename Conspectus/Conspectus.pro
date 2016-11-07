@@ -9,7 +9,8 @@ SOURCES += \
     conspectmodel.cpp \
     main.cpp \
     dbmanager.cpp \
-    filemanager.cpp
+    filemanager.cpp \
+    imagemanager.cpp
 
 RESOURCES += qml.qrc
 
@@ -24,4 +25,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     dbmanager.h \
     conspectmodel.h \
-    filemanager.h
+    filemanager.h \
+    imagemanager.h

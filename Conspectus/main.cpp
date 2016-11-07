@@ -5,6 +5,7 @@
 #include <QTreeView>
 #include <QTime>
 #include "dbmanager.h"
+#include "imagemanager.h"
 
 int main(int argc, char *argv[])
 {
@@ -26,7 +27,6 @@ int main(int argc, char *argv[])
 	//QString temp = "J:/temp.bmp";
 	//fm->copyFile(temp);
 	//fm->removeFile(temp);
-	QImage img = fm->getImage(temp);
 
     QTreeView tree;
     dbManager->getModel();
@@ -36,6 +36,8 @@ int main(int argc, char *argv[])
     QTreeView tree1;
     tree1.setModel(ConspectModel::getListModel());
     tree1.show();
+
+	ImageManager im(&(fm->getImage(temp)));
 
 	delete fm;
 	delete dbManager;
