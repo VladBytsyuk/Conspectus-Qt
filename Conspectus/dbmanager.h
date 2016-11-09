@@ -64,7 +64,7 @@ public:
                                 QString tags = QString(),
                                 QString comments = QString());
     //ConspectModel* getModel();
-    int generateListId();
+    //int generateListId();
     int findFileIdByName(QString file_name);
     QStandardItemModel* getConspectModel();
     QStandardItemModel* getListModel();
