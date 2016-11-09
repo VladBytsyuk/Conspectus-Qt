@@ -4,8 +4,9 @@
 #include <QObject>
 #include <QString>
 #include <QtSql>
-#include "conspectmodel.h"
-#include "filemanager.h"
+#include <QStandardItemModel>
+//#include "conspectmodel.h"
+//#include "filemanager.h"
 
 #define DATABASE_NAME "conspectus_db"
 
@@ -50,7 +51,7 @@ public:
 
     /* ====================== Methods ====================== */
     static DBManager* getInstance();
-    void setModel();
+    //void setModel();
     void insertRowIntoTableConspect(int id,
                                     int term,
                                     QString subject,
@@ -62,9 +63,11 @@ public:
                                 QString file_name,
                                 QString tags = QString(),
                                 QString comments = QString());
-    int findFileIdByName(QString file_name);
+    //ConspectModel* getModel();
     int generateListId();
-    ConspectModel* getModel();
+    int findFileIdByName(QString file_name);
+    QStandardItemModel* getConspectModel();
+    QStandardItemModel* getListModel();
 
 public slots:
 	void onAddFile(QString file_name);	

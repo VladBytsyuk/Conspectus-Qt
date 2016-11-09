@@ -93,7 +93,7 @@ DBManager* DBManager::getInstance() {
     return mInstance;
 }
 
-void DBManager::setModel() {
+/*void DBManager::setModel() {
     QStandardItemModel* conspectModel = ConspectModel::getConspectModel();
     QStandardItemModel* listModel = ConspectModel::getListModel();
 
@@ -166,7 +166,8 @@ void DBManager::setModel() {
                     + fileName + "', '" + tag + "', '" + comments + "')";
         makeQuery(insertQuery);
     }
-};
+};*/
+
 void DBManager::insertRowIntoTableConspect(int id,
                                 int term,
                                 QString subject,
@@ -240,15 +241,15 @@ void DBManager::insertRowIntoTableList(int list_id,
         makeQuery(updateQuery);
     }
 }
+
 int DBManager::generateListId() {
     QString maxIdQuery = "SELECT MAX(" LIST_ID ") FROM " TABLE_LIST;
     QSqlQuery maxIdResult = makeQuery(maxIdQuery);
     maxIdResult.next();
     return maxIdResult.value(0).toInt() + 1;
 }
-ConspectModel* DBManager::getModel() {
+QStandardItemModel* DBManager::getConspectModel() {
     QStandardItemModel* conspectModel = new QStandardItemModel(0, 3);
-    QStandardItemModel* listModel = new QStandardItemModel(0, 1);
 
     QString getTerms = "SELECT DISTINCT " TERM " "
                            "FROM " TABLE_CONSPECT;
@@ -370,7 +371,11 @@ ConspectModel* DBManager::getModel() {
         }
 
     }
+    return conspectModel;
+}
 
+QStandardItemModel* DBManager::getListModel() {
+    QStandardItemModel* listModel = new QStandardItemModel(0, 1);
     QSqlQuery listTable = makeQuery("SELECT * FROM " TABLE_LIST);
     QSqlQuery listTableCount = makeQuery("SELECT COUNT(*) FROM " TABLE_LIST);
     listTableCount.next();
@@ -394,11 +399,7 @@ ConspectModel* DBManager::getModel() {
         QModelIndex commentsIndex = listModel->index(listTableIterator, 3);
         listModel->setData(commentsIndex, comments);
     }
-
-    ConspectModel* model =  ConspectModel::getInstance();
-    ConspectModel::setConspectModel(conspectModel);
-    ConspectModel::setListModel(listModel);
-    return model;
+    return listModel;
 }
 
 int DBManager::findFileIdByName(QString file_name) {

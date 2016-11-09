@@ -10,7 +10,7 @@ SOURCES += \
     main.cpp \
     dbmanager.cpp \
     filemanager.cpp \
-    imagemanager.cpp
+    advancedimage.cpp
 
 RESOURCES += qml.qrc
 
@@ -26,4 +26,4 @@ HEADERS += \
     dbmanager.h \
     conspectmodel.h \
     filemanager.h \
-    imagemanager.h
+    advancedimage.h

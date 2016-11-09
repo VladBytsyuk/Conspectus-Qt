@@ -1,11 +1,12 @@
 #include <QApplication>
 #include <QQmlApplicationEngine>
-#include <QStandardItemModel>
 #include <QQuickView>
 #include <QTreeView>
 #include <QTime>
 #include "dbmanager.h"
-#include "imagemanager.h"
+#include "conspectmodel.h"
+#include "filemanager.h"
+#include "advancedimage.h"
 
 int main(int argc, char *argv[])
 {
@@ -18,18 +19,19 @@ int main(int argc, char *argv[])
 
 	FileManager * fm = new FileManager();
 	DBManager* dbManager = DBManager::getInstance();
+    ConspectModel::setConspectModel(dbManager->getConspectModel());
+    ConspectModel::setListModel(dbManager->getListModel());
 
 	QObject::connect(fm, &FileManager::addFileSignal, dbManager, &DBManager::onAddFile);
 	QObject::connect(fm, &FileManager::removeFileSignal, dbManager, &DBManager::onRemoveFile);
 
 	//QString temp = "~/test.bmp";
-	QString temp = fm->getMainDirPath() + "/21146.bmp";
+    //QString temp = fm->getMainDirPath() + "/21146.bmp";
 	//QString temp = "J:/temp.bmp";
 	//fm->copyFile(temp);
 	//fm->removeFile(temp);
 
     QTreeView tree;
-    dbManager->getModel();
     tree.setModel(ConspectModel::getConspectModel());
     tree.show();  
 
@@ -37,7 +39,7 @@ int main(int argc, char *argv[])
     tree1.setModel(ConspectModel::getListModel());
     tree1.show();
 
-	ImageManager im(&(fm->getImage(temp)));
+//	AdvancedImage im(&(fm->getImage(temp)));
 
 	delete fm;
 	delete dbManager;
