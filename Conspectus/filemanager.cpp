@@ -1,4 +1,5 @@
 #include "filemanager.h"
+#include <QDebug>
 
 //Create project directrory in user root directory
 FileManager::FileManager(){
@@ -26,6 +27,7 @@ FileManager::~FileManager(){
 //Copy file with given name into project directory
 bool FileManager::copyFile(QString file_name){
 	if (!QFile(file_name).exists()){
+        qDebug() << "Can't copy. File doesn't exist: " << file_name;
 		return false;
 	}
 	QFileInfo fi(file_name);
@@ -33,23 +35,34 @@ bool FileManager::copyFile(QString file_name){
 	while (!QFile::copy(file_name, new_file_name)){
 		new_file_name = main_dir_path + "/" + QString::number(qrand()) + "." + fi.suffix();
 	}
+    emit addFileSignal(QFileInfo(new_file_name).fileName());
     return true;
 }
 
 //Remove file with given name from project directory
 bool FileManager::removeFile(QString file_name){
-	if (!QFile(file_name).exists()){
+    if (!QFile(file_name).exists()){
+        qDebug() << "File doesn't exist: " << file_name;
+		return false;
+	} 
+	else if (QFileInfo(file_name).absoluteDir() != main_dir){
+		qDebug() << "Wrong directory";
 		return false;
 	}
-	/*else if (QFileInfo(file_name).absoluteDir() != main_dir){
+	else if (!QFile::remove(file_name)){
+		qDebug() << "Can`t delete file";
 		return false;
-	}*/
-	return QFile::remove(file_name);
+	} 
+	else{
+		emit removeFileSignal(QFileInfo(file_name).fileName());
+		return true;
+	}
 }
 
 //her znaet
 bool FileManager::updateFile(QString file_name){
-	if (!QFile(file_name).exists()){
+    if (!QFile(file_name).exists()){
+        qDebug() << "File doesn't exist: " << file_name;
 		return false;
 	}
 	return true;
@@ -59,6 +72,11 @@ bool FileManager::updateFile(QString file_name){
 QImage FileManager::getImage(QString file_name){
 	QImage img;
 	if (!img.load(file_name)){
+		qDebug() << "Can't load this file: " << file_name;
+		return QImage();
+	}
+	else if (QFileInfo(file_name).absoluteDir() != main_dir){
+		qDebug() << "Wrong directory";
 		return QImage();
 	}
 	else{
@@ -66,7 +84,7 @@ QImage FileManager::getImage(QString file_name){
 	}
 }
 
-QString FileManager::randomNameGenerator(QString path){
-	//TODO: What name?
-    return QString();
+QString FileManager::getMainDirPath(){
+	return main_dir_path;
 }
+
