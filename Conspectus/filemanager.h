@@ -5,8 +5,10 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QImage>
+#include <QScopedPointer>
 
-#define DIR_NAME "Conspectus_source"
+#define MAIN_DIR_NAME "Conspectus"
+#define SOURCE_DIR_NAME "Source"
 
 class FileManager: public QObject{
     Q_OBJECT
@@ -16,6 +18,9 @@ private:
     /* ====================== Fields ======================= */
     QDir main_dir;
     QString main_dir_path;
+	QDir source_dir;
+	QString source_dir_path;
+
     /* ====================== Methods ====================== */
     QString randomNameGenerator(QString path);
 
@@ -32,6 +37,8 @@ public:
     bool updateFile(QString path);
     QImage getImage(QString path);
 	QString getMainDirPath();
+	QString getSourceDirPath();
+	QScopedPointer<QFile> getLogFile();
 
 signals:
     void addFileSignal(QString file_name);

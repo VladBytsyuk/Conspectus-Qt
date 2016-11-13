@@ -5,6 +5,7 @@
 #include <QString>
 #include <QtSql>
 #include <QStandardItemModel>
+#include "loggingcategories.h"
 //#include "conspectmodel.h"
 //#include "filemanager.h"
 

@@ -3,6 +3,7 @@
 
 #include <QStandardItemModel>
 #include <QModelIndex>
+#include "loggingcategories.h"
 
 class ConspectModel: public QObject
 {
