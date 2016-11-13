@@ -26,6 +26,7 @@ int main(int argc, char *argv[])
 
 	FileManager * fm = new FileManager();
 	DBManager* dbManager = DBManager::getInstance();
+    ConspectModel* conspectModel = ConspectModel::getInstance();
     ConspectModel::setConspectModel(dbManager->getConspectModel());
     ConspectModel::setListModel(dbManager->getListModel());
 
@@ -36,14 +37,17 @@ int main(int argc, char *argv[])
 
 	qDebug(logDebug()) << "Started";
 
-	//QObject::connect(fm, &FileManager::addFileSignal, dbManager, &DBManager::onAddFile);
-	//QObject::connect(fm, &FileManager::removeFileSignal, dbManager, &DBManager::onRemoveFile);
+    //QObject::connect(fm, &FileManager::addFileSignal, dbManager, &DBManager::onAddFile);
+    //QObject::connect(fm, &FileManager::removeFileSignal, dbManager, &DBManager::onRemoveFile);
 
-	//QString temp = "~/test.bmp";
+    QObject::connect(fm, &FileManager::addFileSignal, conspectModel, &ConspectModel::onInsertFile);
+    QObject::connect(fm, &FileManager::removeFileSignal, conspectModel, &ConspectModel::onRemoveFile);
+
+    //QString temp = "~/test.bmp";
     QString temp = fm->getSourceDirPath() + "/1661.bmp";
 	//QString temp = "J:/temp.bmp";
 	fm->copyFile(temp);
-	fm->removeFile(temp);
+    //fm->removeFile(temp);
 
     QTreeView tree;
     tree.setModel(ConspectModel::getConspectModel());
@@ -54,7 +58,7 @@ int main(int argc, char *argv[])
     tree1.show();
 
 //	AdvancedImage im(&(fm->getImage(temp)));
-	qDebug(logDebug()) << "Stoped";
+	qDebug(logDebug()) << "Stoped"; 
 
 	delete fm;
 	delete dbManager;

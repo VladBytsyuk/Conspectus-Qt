@@ -38,16 +38,41 @@ int ConspectModel::generateListId() {
         int id = rowIndex.data().toInt();
         max_id = id > max_id ? id : max_id;
     }
-    return max_id;
+    return max_id + 1;
 }
 
 bool ConspectModel::insertFile(int id, QString file_name) {
-    //TODO:
+    int row = mListsModel->rowCount();
+    mListsModel->insertRow(row);
+
+    QModelIndex idIndex = mListsModel->index(row, 0);
+    mListsModel->setData(idIndex, id);
+
+    QModelIndex fileIndex = mListsModel->index(row, 1);
+    mListsModel->setData(fileIndex, file_name);
+
     return true;
 }
 
 bool ConspectModel::removeFile(QString file_name) {
-    //TODO:
+    int row = -1;
+    int rows_count = mListsModel->rowCount();
+
+    for (int i = 0; i < rows_count; ++i) {
+        QModelIndex index = mListsModel->index(i, 1);
+        if (index.data().toString() == file_name) {
+            row = i;
+            i = rows_count;
+        }
+    }
+    if (row == -1) {
+        qDebug() << "Can`t remove file from model, "
+                 << "because model doesn't consist this file name: "
+                 << file_name;
+        return false;
+    }
+    mListsModel->removeRow(row);
+
     return true;
 }
 
