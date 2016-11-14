@@ -71,7 +71,7 @@ public:
     QStandardItemModel* getListModel();
 
 public slots:
-	void onAddFile(QString file_name);	
+    void onInsertFile(int id, QString file_name);
 	void onRemoveFile(QString file_name);
 };
 

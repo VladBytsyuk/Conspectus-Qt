@@ -413,14 +413,14 @@ int DBManager::findFileIdByName(QString file_name) {
     return queryResult.value(0).toInt();
 }
 
-void DBManager::onAddFile(QString file_name){
-	//TODO: Add file into the model
-    //insertRowIntoTableList(generateListId(), file_name);
+void DBManager::onInsertFile(int id, QString file_name){
+    //TODO: Add file into DB
+    insertRowIntoTableList(id, file_name);
 }
 
 void DBManager::onRemoveFile(QString file_name){
-	//TODO: Delete file from the model
-    //deleteRowFromTable(findFileIdByName(file_name), TABLE_LIST);
+    //TODO: Delete file from DB
+    deleteRowFromTable(findFileIdByName(file_name), TABLE_LIST);
 }
 
 /* ================= Fields initialization ================= */

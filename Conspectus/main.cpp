@@ -14,6 +14,7 @@ QFile * logFile;
 
 //Log handler initialization
 void messageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg);
+void setSignalSlotConnections();
 
 int main(int argc, char *argv[])
 {
@@ -37,17 +38,20 @@ int main(int argc, char *argv[])
 
 	qDebug(logDebug()) << "Started";
 
-    //QObject::connect(fm, &FileManager::addFileSignal, dbManager, &DBManager::onAddFile);
-    //QObject::connect(fm, &FileManager::removeFileSignal, dbManager, &DBManager::onRemoveFile);
-
+    //TODO: Implement this method.
+    //(Maybe FileManager should be singleton? Because we need same object inside this method77)
+    setSignalSlotConnections();
     QObject::connect(fm, &FileManager::addFileSignal, conspectModel, &ConspectModel::onInsertFile);
     QObject::connect(fm, &FileManager::removeFileSignal, conspectModel, &ConspectModel::onRemoveFile);
+
+    QObject::connect(conspectModel, &ConspectModel::insertFileDBSignal, dbManager, &DBManager::onInsertFile);
+    QObject::connect(conspectModel, &ConspectModel::removeFileDBSignal, dbManager, &DBManager::onRemoveFile);
 
     //QString temp = "~/test.bmp";
     QString temp = fm->getSourceDirPath() + "/1661.bmp";
 	//QString temp = "J:/temp.bmp";
 	fm->copyFile(temp);
-    //fm->removeFile(temp);
+    fm->removeFile(temp);
 
     QTreeView tree;
     tree.setModel(ConspectModel::getConspectModel());
@@ -83,4 +87,8 @@ void messageHandler(QtMsgType type, const QMessageLogContext &context, const QSt
 
 	out << msg << endl;
 	out.flush();
+}
+
+void setSignalSlotConnections() {
+
 }
