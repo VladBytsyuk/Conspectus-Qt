@@ -11,7 +11,8 @@ SOURCES += \
     dbmanager.cpp \
     filemanager.cpp \
     advancedimage.cpp \
-    loggingcategories.cpp
+    loggingcategories.cpp \
+    addviewform.cpp
 
 RESOURCES += qml.qrc
 
@@ -28,4 +29,5 @@ HEADERS += \
     conspectmodel.h \
     filemanager.h \
     advancedimage.h \
-    loggingcategories.h
+    loggingcategories.h \
+    addviewform.h

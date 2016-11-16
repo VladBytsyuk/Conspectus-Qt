@@ -37,6 +37,7 @@ ApplicationWindow {
 
     AddForm{
         id : addForm
+        objectName: "addForm"
         anchors.fill: parent
 
         function showAddForm(){

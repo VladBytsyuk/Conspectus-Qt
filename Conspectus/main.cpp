@@ -1,4 +1,5 @@
-#include <QApplication>
+#include <QGuiApplication>
+
 #include <QLoggingCategory>
 #include <QQmlApplicationEngine>
 #include <QQuickView>
@@ -8,6 +9,7 @@
 #include "conspectmodel.h"
 #include "filemanager.h"
 #include "advancedimage.h"
+#include "addviewform.h"
 
 //Log File
 QFile * logFile;
@@ -18,12 +20,21 @@ void setSignalSlotConnections();
 
 int main(int argc, char *argv[])
 {
-    QApplication app(argc, argv);
+    QGuiApplication app(argc, argv);
 	qsrand(QTime(0, 0, 0).secsTo(QTime::currentTime()));
 
-	QUrl qmlUrl = QUrl(QStringLiteral("qrc:/main.qml"));
-	QQmlApplicationEngine engine;
-	engine.load(qmlUrl);
+    QUrl qmlUrl = QUrl(QStringLiteral("qrc:/main.qml"));
+    QQmlApplicationEngine engine;
+    engine.load(qmlUrl);
+
+//    QQmlApplicationEngine view;
+//    QQuickView view;
+//    view.setSource(QUrl("qrc:///main.qml"));
+    //qDebug()<<view.status();
+    volatile auto a = engine.rootObjects();
+
+    //view.show();
+/*
 
 	FileManager * fm = new FileManager();
 	DBManager* dbManager = DBManager::getInstance();
@@ -37,6 +48,7 @@ int main(int argc, char *argv[])
 	qInstallMessageHandler(messageHandler);
 
 	qDebug(logDebug()) << "Started";
+
 
     //TODO: Implement this method.
     //(Maybe FileManager should be singleton? Because we need same object inside this method77)
@@ -53,13 +65,16 @@ int main(int argc, char *argv[])
 	fm->copyFile(temp);
     fm->removeFile(temp);
 
-    QTreeView tree;
-    tree.setModel(ConspectModel::getConspectModel());
-    tree.show();  
+//    QTreeView tree;
+//    tree.setModel(ConspectModel::getConspectModel());
+//    tree.show();
 
-    QTreeView tree1;
-    tree1.setModel(ConspectModel::getListModel());
-    tree1.show();
+//    QTreeView tree1;
+//    tree1.setModel(ConspectModel::getListModel());
+//    tree1.show();
+
+    AddViewForm add_from(&view);
+    add_from.setTerms();
 
 //	AdvancedImage im(&(fm->getImage(temp)));
 	qDebug(logDebug()) << "Stoped"; 
@@ -67,6 +82,7 @@ int main(int argc, char *argv[])
 	delete fm;
 	delete dbManager;
 	delete logFile;
+    */
     return app.exec();
 }
 
