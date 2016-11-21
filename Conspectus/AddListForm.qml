@@ -145,22 +145,23 @@ Item {
         font.bold: true
     }
 
-    Grid {
-        id: grid1
+    Flow {
+        id: flow
 //        x: 19
 //        y: 121
+//        anchors.fill: parents
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
-        width: 599
+        width: 600
         height: 259
-//        columns:3
+//        flow: Grid.LeftToRigh
+        anchors.centerIn: parent
         spacing:2
-        Rectangle { color: "red"; width: 599; height: 259 }
-//        Rectangle { color: "green"; width: 120; height: 50 }
-//        Rectangle { color: "blue"; width: 215; height: 80 }
-//        Rectangle { color: "yellow"; width: 50; height: 50 }
-//        Rectangle { color: "black"; width: 410; height: 10 }
+        Rectangle { color: "red"; width: 600; height: 10 }
+        Rectangle { color: "green"; width: 120; height: 50 }
+        Rectangle { color: "blue"; width: 215; height: 80 }
+        Rectangle { color: "yellow"; width: 50; height: 50 }
+        Rectangle { color: "black"; width: 410; height: 10 }
     }
-
 
 }
