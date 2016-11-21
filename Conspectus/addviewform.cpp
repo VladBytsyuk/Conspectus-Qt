@@ -18,9 +18,9 @@ bool AddViewForm::setTerms() {
     QObject *boxTerm = mView->findChild<QObject*>("boxTerm");
     if (boxTerm) {
         boxTerm->setProperty("model", terms);
-        qDebug(logDebug()) << boxTerm->property("model");
     } else {
-        qWarning(logWarning()) << "Can't find ComboBox";
+        qWarning(logWarning()) << "Can't find ComboBox boxTerm";
+        return false;
     }
     return true;
 }
@@ -33,7 +33,7 @@ bool AddViewForm::setSubjects(int term) {
         return false;
     }
     QModelIndex termIndex = conspectModel->index(row, 0);
-    int subjects_count = termIndex.row();
+    int subjects_count = conspectModel->rowCount(termIndex);
     QStringList subjects;
 
     for (int i = 0; i < subjects_count; ++i) {
@@ -45,9 +45,9 @@ bool AddViewForm::setSubjects(int term) {
     QObject *boxSubject = mView->findChild<QObject*>("boxSubject");
     if (boxSubject) {
         boxSubject->setProperty("model", subjects);
-        qDebug(logDebug()) << boxSubject->property("model");
     } else {
-        qWarning(logWarning()) << "Can't find ComboBox";
+        qWarning(logWarning()) << "Can't find ComboBox boxSubject";
+        return false;
     }
 
     return true;
@@ -65,6 +65,49 @@ int AddViewForm::getTermRowInModel(int term) {
     return -1;
 }
 
-bool AddViewForm::setThemes(QString subject) {
+bool AddViewForm::setThemes(int term, QString subject) {
+    QStandardItemModel* conspectModel = ConspectModel::getConspectModel();
+    int termRow = getTermRowInModel(term);
+    if (termRow == -1) {
+        qWarning(logWarning()) << "Can't find this term: " << term;
+        return false;
+    }
+    int subjectRow = getSubjectRowInModel(termRow, subject);
+    if (termRow == -1) {
+        qWarning(logWarning()) << "Can't find this subject: " << subject;
+        return false;
+    }
+    QModelIndex termIndex = conspectModel->index(termRow, 0);
+    QModelIndex subjectIndex = conspectModel->index(subjectRow, 0, termIndex);
+    int themes_count = conspectModel->rowCount(subjectIndex);
+    QStringList themes;
+
+    for (int i = 0; i < themes_count; ++i) {
+        QModelIndex index = conspectModel->index(i, 0, subjectIndex);
+        QString theme = index.data().toString();
+        themes.push_back(theme);
+    }
+
+    QObject *boxTheme = mView->findChild<QObject*>("boxTheme");
+    if (boxTheme) {
+        boxTheme->setProperty("model", themes);
+    } else {
+        qWarning(logWarning()) << "Can't find ComboBox boxTheme";
+        return false;
+    }
+
     return true;
+}
+
+int AddViewForm::getSubjectRowInModel(int term_row, QString subject) {
+    QStandardItemModel* conspectModel = ConspectModel::getConspectModel();
+    QModelIndex termIndex = conspectModel->index(term_row, 0);
+    for (int i = 0; i < conspectModel->rowCount(termIndex); ++i) {
+        QModelIndex index = conspectModel->index(i, 0, termIndex);
+        QString subj = index.data().toString();
+        if (subj == subject) {
+            return i;
+        }
+    }
+    return -1;
 }

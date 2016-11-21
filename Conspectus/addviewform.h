@@ -11,13 +11,14 @@ class AddViewForm
 private:
     QObject* mView;
     int getTermRowInModel(int term);
+    int getSubjectRowInModel(int term_row, QString subject);
 
 public:
     AddViewForm(QObject* view);
 
     bool setTerms();
     bool setSubjects(int term);
-    bool setThemes(QString subject);
+    bool setThemes(int term, QString subject);
 };
 
 #endif // ADDVIEWFORM_H

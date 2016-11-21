@@ -201,6 +201,7 @@ Item {
         id: boxTheme
         width: boxWidth
         height: boxHeight
+        objectName: "boxTheme"
         model: ["Limits","Summs"]
         Component.onCompleted: {
             currentIndex = -1

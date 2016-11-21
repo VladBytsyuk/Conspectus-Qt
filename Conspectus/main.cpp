@@ -59,7 +59,8 @@ int main(int argc, char *argv[])
 
     AddViewForm add_from(engine.rootObjects().at(0)->findChild<QObject*>("addForm"));
     add_from.setTerms();
-    add_from.setSubjects(2);
+    add_from.setSubjects(1);
+    add_from.setThemes(1, "Mathematic");
 
 	qDebug(logDebug()) << "Stoped"; 
     /*
