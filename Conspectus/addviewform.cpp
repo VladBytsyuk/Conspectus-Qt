@@ -1,6 +1,6 @@
 #include "addviewform.h"
 
-AddViewForm::AddViewForm(QQuickView* view)
+AddViewForm::AddViewForm(QObject* view)
 {
     mView = view;
 }
@@ -18,19 +18,10 @@ bool AddViewForm::setTerms() {
 //    view.setSource(QStringLiteral("qrc:/AddForm.qml"));
 //    view.show();
 
-    QObject *object = mView->rootObject();
-    if (!object) {
-        qWarning(logWarning()) << "Can't find Object";
-    }
-    QObject *addForm = object->findChild<QObject*>("addForm");
-    if (!addForm) {
-        qWarning(logWarning()) << "Can't find AddForm";
-    }
-    QObject *boxTerm = addForm->findChild<QObject*>("boxTerm");
+    QObject *boxTerm = mView->findChild<QObject*>("boxTerm");
     if (boxTerm) {
         boxTerm->setProperty("model", terms);
         qDebug(logDebug()) << boxTerm->property("model");
-        mView->update();
     } else {
         qWarning(logWarning()) << "Can't find ComboBox";
     }

@@ -5,6 +5,7 @@
 #include <QQuickView>
 #include <QTreeView>
 #include <QDateTime>
+#include <QQmlContext>
 #include "dbmanager.h"
 #include "conspectmodel.h"
 #include "filemanager.h"
@@ -31,10 +32,9 @@ int main(int argc, char *argv[])
 //    QQuickView view;
 //    view.setSource(QUrl("qrc:///main.qml"));
     //qDebug()<<view.status();
-    volatile auto a = engine.rootObjects();
 
     //view.show();
-/*
+
 
 	FileManager * fm = new FileManager();
 	DBManager* dbManager = DBManager::getInstance();
@@ -73,12 +73,12 @@ int main(int argc, char *argv[])
 //    tree1.setModel(ConspectModel::getListModel());
 //    tree1.show();
 
-    AddViewForm add_from(&view);
+    AddViewForm add_from(engine.rootObjects().at(0)->findChild<QObject*>("addForm"));
     add_from.setTerms();
 
 //	AdvancedImage im(&(fm->getImage(temp)));
 	qDebug(logDebug()) << "Stoped"; 
-
+    /*
 	delete fm;
 	delete dbManager;
 	delete logFile;

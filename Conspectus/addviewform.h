@@ -3,18 +3,16 @@
 
 #include <QObject>
 #include <QList>
-#include <QQuickView>
-#include <QQuickItem>
 #include <QStandardItemModel>
 #include"conspectmodel.h"
 
 class AddViewForm
 {
 private:
-    QQuickView* mView;
+    QObject* mView;
 
 public:
-    AddViewForm(QQuickView* view);
+    AddViewForm(QObject* view);
 
     bool setTerms();
     bool setSubjects(int term);
