@@ -28,26 +28,20 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     engine.load(qmlUrl);
 
-//    QQmlApplicationEngine view;
-//    QQuickView view;
-//    view.setSource(QUrl("qrc:///main.qml"));
-    //qDebug()<<view.status();
-
-    //view.show();
-
-
 	FileManager * fm = new FileManager();
-	DBManager* dbManager = DBManager::getInstance();
+
+    //open log file. Start logging
+    logFile = new QFile(fm->getMainDirPath() + "/logFile.log");
+    logFile->open(QFile::Append | QFile::Text);
+    qInstallMessageHandler(messageHandler);
+
+    qDebug(logDebug()) << "Started";
+
+
+    DBManager* dbManager = DBManager::getInstance();
     ConspectModel* conspectModel = ConspectModel::getInstance();
     ConspectModel::setConspectModel(dbManager->getConspectModel());
     ConspectModel::setListModel(dbManager->getListModel());
-
-	//open log file. Start logging
-	logFile = new QFile(fm->getMainDirPath() + "/logFile.log");
-	logFile->open(QFile::Append | QFile::Text);
-	qInstallMessageHandler(messageHandler);
-
-	qDebug(logDebug()) << "Started";
 
 
     //TODO: Implement this method.
@@ -59,24 +53,14 @@ int main(int argc, char *argv[])
     QObject::connect(conspectModel, &ConspectModel::insertFileDBSignal, dbManager, &DBManager::onInsertFile);
     QObject::connect(conspectModel, &ConspectModel::removeFileDBSignal, dbManager, &DBManager::onRemoveFile);
 
-    //QString temp = "~/test.bmp";
     QString temp = fm->getSourceDirPath() + "/1661.bmp";
-	//QString temp = "J:/temp.bmp";
 	fm->copyFile(temp);
     fm->removeFile(temp);
 
-//    QTreeView tree;
-//    tree.setModel(ConspectModel::getConspectModel());
-//    tree.show();
-
-//    QTreeView tree1;
-//    tree1.setModel(ConspectModel::getListModel());
-//    tree1.show();
-
     AddViewForm add_from(engine.rootObjects().at(0)->findChild<QObject*>("addForm"));
     add_from.setTerms();
+    add_from.setSubjects(2);
 
-//	AdvancedImage im(&(fm->getImage(temp)));
 	qDebug(logDebug()) << "Stoped"; 
     /*
 	delete fm;

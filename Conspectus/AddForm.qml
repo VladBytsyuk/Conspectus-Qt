@@ -174,6 +174,7 @@ Item {
         id: boxSubject
         width: boxWidth
         height: boxHeight
+        objectName: "boxSubject"
         model: ["Maths","Economics","Physics","English"]
         Component.onCompleted: {
             currentIndex = -1

@@ -10,6 +10,7 @@ class AddViewForm
 {
 private:
     QObject* mView;
+    int getTermRowInModel(int term);
 
 public:
     AddViewForm(QObject* view);
