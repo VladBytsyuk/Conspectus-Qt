@@ -20,7 +20,8 @@ private:
     
     /* ====================== Methods ====================== */
     int generateListId();
-    bool insertFile(int id, QString file_name);
+    int insertIntoListModel(QString file_name);
+    bool insertIntoConspectModel(int id, int term, QString subject, QString theme);
     bool removeFile(QString file_name);
 
 public:
@@ -39,8 +40,9 @@ public:
     static QStandardItemModel* getListModel();
 
 public slots:
-    void onInsertFile(QString file_name);
     void onRemoveFile(QString file_name);
+    void onAddFile(QString file_name, int term, QString subject, QString theme);
+
 
 signals:
     void insertFileDBSignal(int id, QString file_name);

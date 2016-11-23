@@ -106,6 +106,10 @@ Item {
             id: buttonOk
             width: buttonWidth
             height: buttonHeight
+
+            signal okClicked(string path)
+            onClicked: buttonOk.onClick()
+
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.horizontalCenterOffset: -120
             anchors.verticalCenterOffset: 180
@@ -113,6 +117,36 @@ Item {
             text:"OK"
             visible: true
             style: buttonStyle
+
+            function onClick() {
+                var isEditTextEmpty = textField1.text === "";
+                var isTermEmpty = boxTerm.model[boxTerm.currentIndex] === "";
+                var isSubjectEmpty = boxSubject.model[boxSubject.currentIndex] === "";
+                var isThemeEmpty = boxTheme.model[boxTheme.currentIndex] === "";
+                if (isEditTextEmpty) {
+                    //TODO: highlight textField1
+                } else {
+                    //TODO: undo
+                }
+                if (isTermEmpty) {
+                    //TODO: highlight boxTerm
+                } else {
+                    //TODO: undo
+                }
+                if (isSubjectEmpty) {
+                    //TODO: highlight boxSubject
+                } else {
+                    //TODO: undo
+                }
+                if (isThemeEmpty) {
+                    //TODO: highlight BoxTheme
+                } else {
+                    //TODO: undo
+                }
+                if (!isEditTextEmpty && !isTermEmpty && !isSubjectEmpty && !isThemeEmpty) {
+                    buttonOk.okClicked(textField1.text);
+                }
+            }
         }
 
     DropShadow {

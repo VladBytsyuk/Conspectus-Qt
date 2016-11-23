@@ -12,7 +12,7 @@ SOURCES += \
     filemanager.cpp \
     advancedimage.cpp \
     loggingcategories.cpp \
-    addviewform.cpp
+    addform.cpp
 
 RESOURCES += qml.qrc
 
@@ -30,4 +30,4 @@ HEADERS += \
     filemanager.h \
     advancedimage.h \
     loggingcategories.h \
-    addviewform.h
+    addform.h

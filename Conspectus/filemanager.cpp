@@ -39,10 +39,10 @@ FileManager::~FileManager(){
 }
 
 //Copy file with given name into project directory
-bool FileManager::copyFile(QString file_name){
+QString FileManager::copyFile(QString file_name){
 	if (!QFile(file_name).exists()){
 		qCritical(logCritical()) << "Can't copy file. File doesn't exists: " << file_name;
-		return false;
+        return QString();
 	}
 	QFileInfo fi(file_name);
 	QString new_file_name = source_dir_path + "/" + QString::number(qrand()) + "." + fi.suffix();
@@ -50,8 +50,8 @@ bool FileManager::copyFile(QString file_name){
 		new_file_name = source_dir_path + "/" + QString::number(qrand()) + "." + fi.suffix();
 	}
 	qDebug(logDebug()) << "File " + QFileInfo(file_name).fileName() + " has been copied into project`s directory";
-    emit addFileSignal(QFileInfo(new_file_name).fileName());
-    return true;
+    //emit addFileSignal(QFileInfo(new_file_name).fileName());
+    return new_file_name;
 }
 
 //Remove file with given name from project directory
@@ -106,4 +106,14 @@ QString FileManager::getMainDirPath(){
 
 QString FileManager::getSourceDirPath(){
 	return source_dir_path;
+}
+
+void FileManager::onTryAddFileToFileSystem(QString file_path) {
+    QString new_file_name = copyFile(file_path);
+    if (new_file_name.isNull()){
+        qCritical(logCritical()) << "Invalid file path: " << file_path;
+        emit invalidFilePath();
+    } else {
+        emit validFilePath(new_file_name);
+    }
 }

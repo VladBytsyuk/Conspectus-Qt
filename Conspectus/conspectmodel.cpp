@@ -41,7 +41,8 @@ int ConspectModel::generateListId() {
     return max_id + 1;
 }
 
-bool ConspectModel::insertFile(int id, QString file_name) {
+int ConspectModel::insertIntoListModel(QString file_name) {
+    int id = generateListId();
     int row = mListsModel->rowCount();
     mListsModel->insertRow(row);
 
@@ -51,7 +52,12 @@ bool ConspectModel::insertFile(int id, QString file_name) {
     QModelIndex fileIndex = mListsModel->index(row, 1);
     mListsModel->setData(fileIndex, file_name);
 
-    return true;
+    emit insertFileDBSignal(id, file_name);
+    return id;
+}
+
+bool ConspectModel::insertIntoConspectModel(int id, int term, QString subject, QString theme) {
+
 }
 
 bool ConspectModel::removeFile(QString file_name) {
@@ -76,15 +82,14 @@ bool ConspectModel::removeFile(QString file_name) {
     return true;
 }
 
-void ConspectModel::onInsertFile(QString file_name) {
-    int id = generateListId();
-    this->insertFile(id, file_name);
-    emit insertFileDBSignal(id, file_name);
-}
-
 void ConspectModel::onRemoveFile(QString file_name) {
     this->removeFile(file_name);
     emit removeFileDBSignal(file_name);
+}
+
+void ConspectModel::onAddFile(QString file_name, int term, QString subject, QString theme) {
+    int id = insertIntoListModel(file_name);
+    insertIntoConspectModel(id, term, subject, theme);
 }
 
 /* ================= Fields initialization ================= */

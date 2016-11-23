@@ -32,7 +32,7 @@ public:
         /* ====================== Fields ======================= */
 
         /* ====================== Methods ====================== */
-    bool copyFile(QString file_name);
+    QString copyFile(QString file_name);
     bool removeFile(QString path);
     bool updateFile(QString path);
     QImage getImage(QString path);
@@ -43,6 +43,11 @@ public:
 signals:
     void addFileSignal(QString file_name);
     void removeFileSignal(QString file_name);
+    void invalidFilePath();
+    void validFilePath(QString file_name);
+
+public slots:
+    void onTryAddFileToFileSystem(QString file_path);
 };
 
 #endif // FILEMANAGER_H

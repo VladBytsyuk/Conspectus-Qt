@@ -10,7 +10,7 @@
 #include "conspectmodel.h"
 #include "filemanager.h"
 #include "advancedimage.h"
-#include "addviewform.h"
+#include "addform.h"
 
 //Log File
 QFile * logFile;
@@ -44,12 +44,12 @@ int main(int argc, char *argv[])
     ConspectModel::setListModel(dbManager->getListModel());
 
 
-    AddViewForm add_form(engine.rootObjects().at(0)->findChild<QObject*>("addForm"));
+    AddForm add_form(engine.rootObjects().at(0)->findChild<QObject*>("addForm"));
 
     //TODO: Implement this method.
     //(Maybe FileManager should be singleton? Because we need same object inside this method77)
     setSignalSlotConnections();
-    QObject::connect(fm, &FileManager::addFileSignal, conspectModel, &ConspectModel::onInsertFile);
+//    QObject::connect(fm, &FileManager::addFileSignal, conspectModel, &ConspectModel::onInsertFile);
     QObject::connect(fm, &FileManager::removeFileSignal, conspectModel, &ConspectModel::onRemoveFile);
 
     QObject::connect(conspectModel, &ConspectModel::insertFileDBSignal, dbManager, &DBManager::onInsertFile);
@@ -70,9 +70,9 @@ int main(int argc, char *argv[])
                      ->findChild<QObject*>("boxTheme"), SIGNAL(themeSelect(QString)),
                      &add_form, SLOT(onSetTheme(QString)));
 
-    QString temp = fm->getSourceDirPath() + "/1661.bmp";
-	fm->copyFile(temp);
-    fm->removeFile(temp);
+    //QString temp = fm->getSourceDirPath() + "/1661.bmp";
+    //fm->copyFile(temp);
+    //fm->removeFile(temp);
 
 
 	qDebug(logDebug()) << "Stoped"; 
