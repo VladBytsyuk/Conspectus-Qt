@@ -5,6 +5,10 @@ AddViewForm::AddViewForm(QObject* view)
     mView = view;
 }
 
+AddViewForm::~AddViewForm() {
+
+}
+
 bool AddViewForm::setTerms() {
     QStandardItemModel* conspectModel = ConspectModel::getConspectModel();
     int terms_count = conspectModel->rowCount();
@@ -111,3 +115,26 @@ int AddViewForm::getSubjectRowInModel(int term_row, QString subject) {
     }
     return -1;
 }
+
+
+void AddViewForm::onAddForm() {
+    this->setTerms();
+}
+
+void AddViewForm::onSetTerm(QString term) {
+    mCurrentTerm = term.toInt();
+    this->setSubjects(mCurrentTerm);
+}
+
+void AddViewForm::onSetSubject(QString subject) {
+    mCurrentSubject = subject;
+    this->setThemes(mCurrentTerm, mCurrentSubject);
+}
+
+void AddViewForm::onSetTheme(QString theme) {
+    mCurrentTheme = theme;
+}
+
+
+
+

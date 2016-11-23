@@ -40,7 +40,7 @@ Item {
             id: textField1
             width: boxWidth
             height: boxHeight
-            placeholderText: qsTr("Text Field")
+            placeholderText: qsTr("File Path")
             inputMethodHints: Qt.ImhNoAutoUppercase
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenterOffset: -70
@@ -144,12 +144,14 @@ Item {
         height: boxHeight
         model: [1,2,3,4,5,6,7,8]
 
+        signal termSelect(string term)
 
         Component.onCompleted: {
             currentIndex = -1
-
         }
+
         editable: true
+        onCurrentTextChanged: boxTerm.termSelect(model[currentIndex])
 
         inputMethodHints: Qt.ImhNoAutoUppercase
         anchors.horizontalCenter: parent.horizontalCenter
@@ -176,10 +178,16 @@ Item {
         height: boxHeight
         objectName: "boxSubject"
         model: ["Maths","Economics","Physics","English"]
+
+        signal subjectSelect(string subject)
+
         Component.onCompleted: {
             currentIndex = -1
         }
+
         editable: true
+        onCurrentTextChanged: boxSubject.subjectSelect(model[currentIndex])
+
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenterOffset: 10
         anchors.verticalCenter: parent.verticalCenter
@@ -203,10 +211,16 @@ Item {
         height: boxHeight
         objectName: "boxTheme"
         model: ["Limits","Summs"]
+
+        signal themeSelect(string theme)
+
         Component.onCompleted: {
             currentIndex = -1
         }
+
         editable: true
+        onCurrentTextChanged: boxTheme.themeSelect(model[currentIndex])
+
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenterOffset: 50
         anchors.verticalCenter: parent.verticalCenter

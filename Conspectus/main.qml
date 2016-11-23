@@ -26,10 +26,13 @@ ApplicationWindow {
         id : viewForm
         anchors.fill: parent;
 
+        signal viewFormSignal()
+
         function showViewForm() {
            viewForm.visible = true
             addForm.visible = false
            mainForm.visible = false
+           viewForm.viewFormSignal()
         }
 
         buttonCancel.onClicked: mainForm.showMainForm()
@@ -40,10 +43,13 @@ ApplicationWindow {
         objectName: "addForm"
         anchors.fill: parent
 
+        signal addFormSignal()
+
         function showAddForm(){
             viewForm.visible = false
              addForm.visible = true
             mainForm.visible = false
+             addForm.addFormSignal()
         }
         buttonCancel.onClicked: mainForm.showMainForm()
     }

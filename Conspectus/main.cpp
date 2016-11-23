@@ -44,6 +44,8 @@ int main(int argc, char *argv[])
     ConspectModel::setListModel(dbManager->getListModel());
 
 
+    AddViewForm add_form(engine.rootObjects().at(0)->findChild<QObject*>("addForm"));
+
     //TODO: Implement this method.
     //(Maybe FileManager should be singleton? Because we need same object inside this method77)
     setSignalSlotConnections();
@@ -53,14 +55,25 @@ int main(int argc, char *argv[])
     QObject::connect(conspectModel, &ConspectModel::insertFileDBSignal, dbManager, &DBManager::onInsertFile);
     QObject::connect(conspectModel, &ConspectModel::removeFileDBSignal, dbManager, &DBManager::onRemoveFile);
 
+    QObject::connect(engine.rootObjects().at(0)->findChild<QObject*>("addForm"), SIGNAL(addFormSignal()),
+                     &add_form, SLOT(onAddForm()));
+    QObject::connect(engine.rootObjects().at(0)
+                     ->findChild<QObject*>("addForm")
+                     ->findChild<QObject*>("boxTerm"), SIGNAL(termSelect(QString)),
+                     &add_form, SLOT(onSetTerm(QString)));
+    QObject::connect(engine.rootObjects().at(0)
+                     ->findChild<QObject*>("addForm")
+                     ->findChild<QObject*>("boxSubject"), SIGNAL(subjectSelect(QString)),
+                     &add_form, SLOT(onSetSubject(QString)));
+    QObject::connect(engine.rootObjects().at(0)
+                     ->findChild<QObject*>("addForm")
+                     ->findChild<QObject*>("boxTheme"), SIGNAL(themeSelect(QString)),
+                     &add_form, SLOT(onSetTheme(QString)));
+
     QString temp = fm->getSourceDirPath() + "/1661.bmp";
 	fm->copyFile(temp);
     fm->removeFile(temp);
 
-    AddViewForm add_from(engine.rootObjects().at(0)->findChild<QObject*>("addForm"));
-    add_from.setTerms();
-    add_from.setSubjects(1);
-    add_from.setThemes(1, "Mathematic");
 
 	qDebug(logDebug()) << "Stoped"; 
     /*
