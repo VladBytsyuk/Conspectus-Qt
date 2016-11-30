@@ -20,8 +20,20 @@ private:
     
     /* ====================== Methods ====================== */
     int generateListId();
+    int generateConspectId();
+    int generateListNo(int term, QString subject, QString theme);
+    int getThemeNo(int term, QString subject, QString theme);
     int insertIntoListModel(QString file_name);
     bool insertIntoConspectModel(int id, int term, QString subject, QString theme);
+    bool insertIntoConspectModel(int id, int term, QString subject, int theme_no,
+                                 QString theme, int list_no, int list_id);
+    bool insertList(QModelIndex* index, int id, int list_no, int list_id);
+    bool insertTheme(QModelIndex* index, int theme_no, QString theme,
+                                    int id, int list_no, int list_id);
+    bool insertSubject(QModelIndex* index, QString subject, int theme_no, QString theme,
+                                      int id, int list_no, int list_id);
+    bool insertTerm(int term, QString subject, int theme_no,
+                                   QString theme, int id, int list_no, int list_id);
     bool removeFile(QString file_name);
 
 public:

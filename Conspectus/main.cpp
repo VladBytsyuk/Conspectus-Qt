@@ -55,7 +55,13 @@ int main(int argc, char *argv[])
     QObject::connect(conspectModel, &ConspectModel::insertFileDBSignal, dbManager, &DBManager::onInsertFile);
     QObject::connect(conspectModel, &ConspectModel::removeFileDBSignal, dbManager, &DBManager::onRemoveFile);
 
-    QObject::connect(engine.rootObjects().at(0)->findChild<QObject*>("addForm"), SIGNAL(addFormSignal()),
+    QObject::connect(&add_form, &AddForm::tryToAddFileToFileSystem, fm, &FileManager::onTryAddFileToFileSystem);
+    QObject::connect(fm, &FileManager::invalidFilePath, &add_form, &AddForm::onInvalidFilePath);
+    QObject::connect(fm, &FileManager::validFilePath, &add_form, &AddForm::onValidFilePath);
+    QObject::connect(&add_form, &AddForm::addFileToModel, conspectModel, &ConspectModel::onAddFile);
+
+    QObject::connect(engine.rootObjects().at(0)
+                     ->findChild<QObject*>("addForm"), SIGNAL(addFormSignal()),
                      &add_form, SLOT(onAddForm()));
     QObject::connect(engine.rootObjects().at(0)
                      ->findChild<QObject*>("addForm")
@@ -69,6 +75,10 @@ int main(int argc, char *argv[])
                      ->findChild<QObject*>("addForm")
                      ->findChild<QObject*>("boxTheme"), SIGNAL(themeSelect(QString)),
                      &add_form, SLOT(onSetTheme(QString)));
+    QObject::connect(engine.rootObjects().at(0)
+                     ->findChild<QObject*>("addForm")
+                     ->findChild<QObject*>("buttonOk"), SIGNAL(okClicked(QString)),
+                     &add_form, SLOT(onOkClicked(QString)));
 
     //QString temp = fm->getSourceDirPath() + "/1661.bmp";
     //fm->copyFile(temp);

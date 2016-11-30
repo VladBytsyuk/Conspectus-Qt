@@ -106,6 +106,7 @@ Item {
             id: buttonOk
             width: buttonWidth
             height: buttonHeight
+            objectName: "buttonOk"
 
             signal okClicked(string path)
             onClicked: buttonOk.onClick()
