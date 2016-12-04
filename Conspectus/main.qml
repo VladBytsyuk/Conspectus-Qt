@@ -6,7 +6,7 @@ ApplicationWindow {
     visible: true
     width: 640
     height: 480
-    title: qsTr("Hello World")
+    title: qsTr("Conspectus")
 
     menuBar: MenuBar {
         Menu {
@@ -32,10 +32,12 @@ ApplicationWindow {
            viewForm.visible = true
             addForm.visible = false
            mainForm.visible = false
+            showForm.visible = false
            viewForm.viewFormSignal()
         }
 
         buttonCancel.onClicked: mainForm.showMainForm()
+        buttonOk.onClicked: showForm.showShowForm()
     }
 
     AddForm{
@@ -49,7 +51,25 @@ ApplicationWindow {
             viewForm.visible = false
              addForm.visible = true
             mainForm.visible = false
+            showForm.visible = false
              addForm.addFormSignal()
+        }
+        buttonCancel.onClicked: mainForm.showMainForm()
+    }
+
+    ShowForm{
+        id : showForm
+        objectName: "showForm"
+        anchors.fill: parent
+
+        signal showFormSignal()
+
+        function showShowForm(){
+            viewForm.visible = false
+             addForm.visible = false
+            mainForm.visible = false
+            showForm.visible = true
+             addForm.showFormSignal()
         }
         buttonCancel.onClicked: mainForm.showMainForm()
     }
@@ -64,6 +84,7 @@ ApplicationWindow {
            viewForm.visible = false
             addForm.visible = false
            mainForm.visible = true
+            showForm.visible = false
         }
     }
 

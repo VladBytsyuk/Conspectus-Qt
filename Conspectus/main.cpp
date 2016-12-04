@@ -48,6 +48,7 @@ int main(int argc, char *argv[])
 
     //TODO: Implement this method.
     //(Maybe FileManager should be singleton? Because we need same object inside this method77)
+    //No. Just need to pass a reference to an object
     setSignalSlotConnections();
 //    QObject::connect(fm, &FileManager::addFileSignal, conspectModel, &ConspectModel::onInsertFile);
     QObject::connect(fm, &FileManager::removeFileSignal, conspectModel, &ConspectModel::onRemoveFile);
@@ -80,18 +81,15 @@ int main(int argc, char *argv[])
                      ->findChild<QObject*>("buttonOk"), SIGNAL(okClicked(QString)),
                      &add_form, SLOT(onOkClicked(QString)));
 
-    //QString temp = fm->getSourceDirPath() + "/1661.bmp";
-    //fm->copyFile(temp);
-    //fm->removeFile(temp);
+    app.exec();
 
-
-	qDebug(logDebug()) << "Stoped"; 
-    /*
+    qDebug(logDebug()) << "Stoped";
 	delete fm;
 	delete dbManager;
 	delete logFile;
-    */
-    return app.exec();
+
+
+    return 0;
 }
 
 //Logging handler
