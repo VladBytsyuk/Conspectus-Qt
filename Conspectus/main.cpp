@@ -11,6 +11,7 @@
 #include "filemanager.h"
 #include "advancedimage.h"
 #include "addformhandler.h"
+#include "viewformhandler.h"
 
 //Log File
 QFile * logFile;
@@ -45,6 +46,7 @@ int main(int argc, char *argv[])
 
 
     AddFormHandler add_form(engine.rootObjects().at(0)->findChild<QObject*>("addForm"));
+    ViewFormHandler view_form(engine.rootObjects().at(0)->findChild<QObject*>("viewForm"));
 
     //TODO: Implement this method.
     //(Maybe FileManager should be singleton? Because we need same object inside this method77)
@@ -56,6 +58,26 @@ int main(int argc, char *argv[])
     QObject::connect(conspectModel, &ConspectModel::insertFileDBSignal, dbManager, &DBManager::onInsertFile);
     QObject::connect(conspectModel, &ConspectModel::removeFileDBSignal, dbManager, &DBManager::onRemoveFile);
 
+    QObject::connect(engine.rootObjects().at(0)
+                     ->findChild<QObject*>("viewForm"), SIGNAL(viewFormSignal()),
+                     &view_form, SLOT(onForm()));
+    QObject::connect(engine.rootObjects().at(0)
+                     ->findChild<QObject*>("viewForm")
+                     ->findChild<QObject*>("boxTerm"), SIGNAL(termSelect(QString)),
+                     &view_form, SLOT(onSetTerm(QString)));
+    QObject::connect(engine.rootObjects().at(0)
+                     ->findChild<QObject*>("viewForm")
+                     ->findChild<QObject*>("boxSubject"), SIGNAL(subjectSelect(QString)),
+                     &view_form, SLOT(onSetSubject(QString)));
+    QObject::connect(engine.rootObjects().at(0)
+                     ->findChild<QObject*>("viewForm")
+                     ->findChild<QObject*>("boxTheme"), SIGNAL(themeSelect(QString)),
+                     &view_form, SLOT(onSetTheme(QString)));
+    QObject::connect(engine.rootObjects().at(0)
+                     ->findChild<QObject*>("viewForm")
+                     ->findChild<QObject*>("buttonOk"), SIGNAL(okClicked(QString)),
+                     &view_form, SLOT(onOkClicked(QString)));
+
     QObject::connect(&add_form, &AddFormHandler::tryToAddFileToFileSystem, fm, &FileManager::onTryAddFileToFileSystem);
     QObject::connect(fm, &FileManager::invalidFilePath, &add_form, &AddFormHandler::onInvalidFilePath);
     QObject::connect(fm, &FileManager::validFilePath, &add_form, &AddFormHandler::onValidFilePath);
@@ -63,7 +85,7 @@ int main(int argc, char *argv[])
 
     QObject::connect(engine.rootObjects().at(0)
                      ->findChild<QObject*>("addForm"), SIGNAL(addFormSignal()),
-                     &add_form, SLOT(onAddForm()));
+                     &add_form, SLOT(onForm()));
     QObject::connect(engine.rootObjects().at(0)
                      ->findChild<QObject*>("addForm")
                      ->findChild<QObject*>("boxTerm"), SIGNAL(termSelect(QString)),
