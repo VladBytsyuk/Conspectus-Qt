@@ -10,7 +10,7 @@
 #include "conspectmodel.h"
 #include "filemanager.h"
 #include "advancedimage.h"
-#include "addform.h"
+#include "addformhandler.h"
 
 //Log File
 QFile * logFile;
@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
     ConspectModel::setListModel(dbManager->getListModel());
 
 
-    AddForm add_form(engine.rootObjects().at(0)->findChild<QObject*>("addForm"));
+    AddFormHandler add_form(engine.rootObjects().at(0)->findChild<QObject*>("addForm"));
 
     //TODO: Implement this method.
     //(Maybe FileManager should be singleton? Because we need same object inside this method77)
@@ -55,10 +55,10 @@ int main(int argc, char *argv[])
     QObject::connect(conspectModel, &ConspectModel::insertFileDBSignal, dbManager, &DBManager::onInsertFile);
     QObject::connect(conspectModel, &ConspectModel::removeFileDBSignal, dbManager, &DBManager::onRemoveFile);
 
-    QObject::connect(&add_form, &AddForm::tryToAddFileToFileSystem, fm, &FileManager::onTryAddFileToFileSystem);
-    QObject::connect(fm, &FileManager::invalidFilePath, &add_form, &AddForm::onInvalidFilePath);
-    QObject::connect(fm, &FileManager::validFilePath, &add_form, &AddForm::onValidFilePath);
-    QObject::connect(&add_form, &AddForm::addFileToModel, conspectModel, &ConspectModel::onAddFile);
+    QObject::connect(&add_form, &AddFormHandler::tryToAddFileToFileSystem, fm, &FileManager::onTryAddFileToFileSystem);
+    QObject::connect(fm, &FileManager::invalidFilePath, &add_form, &AddFormHandler::onInvalidFilePath);
+    QObject::connect(fm, &FileManager::validFilePath, &add_form, &AddFormHandler::onValidFilePath);
+    QObject::connect(&add_form, &AddFormHandler::addFileToModel, conspectModel, &ConspectModel::onAddFile);
 
     QObject::connect(engine.rootObjects().at(0)
                      ->findChild<QObject*>("addForm"), SIGNAL(addFormSignal()),

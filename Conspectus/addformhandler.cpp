@@ -1,15 +1,12 @@
-#include "addform.h"
+#include "addformhandler.h"
 
-AddForm::AddForm(QObject* view)
-{
+AddFormHandler::AddFormHandler(QObject* view) {
     mView = view;
 }
 
-AddForm::~AddForm() {
+AddFormHandler::~AddFormHandler() {}
 
-}
-
-bool AddForm::setTerms() {
+bool AddFormHandler::setTerms() {
     QStandardItemModel* conspectModel = ConspectModel::getConspectModel();
     int terms_count = conspectModel->rowCount();
     if (terms_count == 0) {
@@ -33,7 +30,7 @@ bool AddForm::setTerms() {
     return true;
 }
 
-bool AddForm::setSubjects(int term) {
+bool AddFormHandler::setSubjects(int term) {
     QStandardItemModel* conspectModel = ConspectModel::getConspectModel();
     int row = getTermRowInModel(term);
     if (row == -1) {
@@ -65,7 +62,7 @@ bool AddForm::setSubjects(int term) {
     return true;
 }
 
-int AddForm::getTermRowInModel(int term) {
+int AddFormHandler::getTermRowInModel(int term) {
     QStandardItemModel* conspectModel = ConspectModel::getConspectModel();
     for (int i = 0; i < conspectModel->rowCount(); ++i) {
         QModelIndex index = conspectModel->index(i, 0);
@@ -77,7 +74,7 @@ int AddForm::getTermRowInModel(int term) {
     return -1;
 }
 
-bool AddForm::setThemes(int term, QString subject) {
+bool AddFormHandler::setThemes(int term, QString subject) {
     QStandardItemModel* conspectModel = ConspectModel::getConspectModel();
     int termRow = getTermRowInModel(term);
     if (termRow == -1) {
@@ -115,7 +112,7 @@ bool AddForm::setThemes(int term, QString subject) {
     return true;
 }
 
-int AddForm::getSubjectRowInModel(int term_row, QString subject) {
+int AddFormHandler::getSubjectRowInModel(int term_row, QString subject) {
     QStandardItemModel* conspectModel = ConspectModel::getConspectModel();
     QModelIndex termIndex = conspectModel->index(term_row, 0);
     for (int i = 0; i < conspectModel->rowCount(termIndex); ++i) {
@@ -129,34 +126,34 @@ int AddForm::getSubjectRowInModel(int term_row, QString subject) {
 }
 
 
-void AddForm::onAddForm() {
+void AddFormHandler::onAddForm() {
     this->setTerms();
 }
 
-void AddForm::onSetTerm(QString term) {
+void AddFormHandler::onSetTerm(QString term) {
     mCurrentTerm = term.toInt();
     this->setSubjects(mCurrentTerm);
 }
 
-void AddForm::onSetSubject(QString subject) {
+void AddFormHandler::onSetSubject(QString subject) {
     mCurrentSubject = subject;
     this->setThemes(mCurrentTerm, mCurrentSubject);
 }
 
-void AddForm::onSetTheme(QString theme) {
+void AddFormHandler::onSetTheme(QString theme) {
     mCurrentTheme = theme;
 }
 
-void AddForm::onOkClicked(QString file_path) {
+void AddFormHandler::onOkClicked(QString file_path) {
     mCurrentFilePath = file_path;
     emit tryToAddFileToFileSystem(mCurrentFilePath);
 }
 
-void AddForm::onInvalidFilePath() {
+void AddFormHandler::onInvalidFilePath() {
     //TODO: send signal to QML / invoke JS method
 }
 
-void AddForm::onValidFilePath(QString file_name) {
+void AddFormHandler::onValidFilePath(QString file_name) {
     emit addFileToModel(file_name, mCurrentTerm, mCurrentSubject, mCurrentTheme);
 }
 

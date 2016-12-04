@@ -4,9 +4,9 @@
 #include <QObject>
 #include <QList>
 #include <QStandardItemModel>
-#include"conspectmodel.h"
+#include "conspectmodel.h"
 
-class AddForm : public QObject
+class AddFormHandler : public QObject
 {
     Q_OBJECT
 private:
@@ -21,8 +21,8 @@ private:
     int getSubjectRowInModel(int term_row, QString subject);
 
 public:
-    AddForm(QObject* view);
-    ~AddForm();
+    AddFormHandler(QObject* view);
+    ~AddFormHandler();
 
     bool setTerms();
     bool setSubjects(int term);
