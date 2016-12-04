@@ -119,11 +119,6 @@ int FormHandler::getSubjectRowInModel(int term_row, QString subject) {
     return -1;
 }
 
-
-void FormHandler::onAddForm() {
-    this->setTerms();
-}
-
 void FormHandler::onSetTerm(QString term) {
     mCurrentTerm = term.toInt();
     this->setSubjects(mCurrentTerm);
@@ -140,4 +135,8 @@ void FormHandler::onSetTheme(QString theme) {
 
 void FormHandler::onOkClicked(QString file_path) {
     mCurrentFilePath = file_path;
+}
+
+void FormHandler::onForm() {
+    this->setTerms();
 }

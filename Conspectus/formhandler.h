@@ -27,7 +27,7 @@ public:
     bool setThemes(int term, QString subject);
 
 public slots:
-    void onAddForm();
+    void onForm();
     void onSetTerm(QString term);
     void onSetSubject(QString subject);
     void onSetTheme(QString theme);

@@ -24,6 +24,7 @@ ApplicationWindow {
 
     ViewForm {
         id : viewForm
+        objectName: "viewForm"
         anchors.fill: parent;
 
         signal viewFormSignal()
