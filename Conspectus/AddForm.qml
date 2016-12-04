@@ -1,7 +1,9 @@
 import QtQuick 2.5
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
+import QtQuick.Dialogs 1.1
 import QtGraphicalEffects 1.0
+import QtQuick.Layouts 1.1
 
 Item {
     property int buttonWidth: 200
@@ -9,7 +11,6 @@ Item {
     property int shadowOffset: 5
     property int boxWidth: 200
     property int boxHeight: 25
-
 
     Component {
         id: buttonStyle
@@ -48,6 +49,20 @@ Item {
         }
     }
 
+    FileDialog {
+            id: fileDialog
+            title: "Select a file"
+            folder: shortcuts.pictures
+            nameFilters: [ "Image files (*.png *.jpg)", "All files (*)" ]
+            selectedNameFilter: "Image files (*.png *.jpg)"
+            onAccepted: {
+                var path = fileDialog.fileUrl.toString();
+                path = path.replace(/^(file:\/{3})|(qrc:\/{2})|(http:\/{2})/,"");
+                textField1.insert(0, path);
+            }
+            onRejected: { console.log("Rejected") }
+        }
+
     Button {
         id: buttonBrowse
         width: 70
@@ -74,6 +89,7 @@ Item {
                 text: control.text
             }
         }
+        onClicked: fileDialog.open()
     }
 
     DropShadow {
@@ -85,7 +101,7 @@ Item {
         radius: 8
         samples: 17
     }
-    
+
     property alias buttonOk: buttonOk
     property alias buttonCancel: buttonCancel
 
