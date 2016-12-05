@@ -5,7 +5,17 @@ QT += sql
 
 CONFIG += c++11
 
-SOURCES += main.cpp
+SOURCES += \
+    conspectmodel.cpp \
+    main.cpp \
+    dbmanager.cpp \
+    filemanager.cpp \
+    advancedimage.cpp \
+    loggingcategories.cpp \
+    addformhandler.cpp \
+    formhandler.cpp \
+    viewformhandler.cpp \
+    util.cpp
 
 RESOURCES += qml.qrc
 
@@ -19,4 +29,11 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     dbmanager.h \
-    conspectmodel.h
+    conspectmodel.h \
+    filemanager.h \
+    advancedimage.h \
+    loggingcategories.h \
+    addformhandler.h \
+    formhandler.h \
+    viewformhandler.h \
+    util.h

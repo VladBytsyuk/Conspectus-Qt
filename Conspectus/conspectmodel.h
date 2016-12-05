@@ -2,24 +2,39 @@
 #define CONSPECTMODEL_H
 
 #include <QStandardItemModel>
+#include <QModelIndex>
+#include "loggingcategories.h"
 
-class ConspectModel
+class ConspectModel: public QObject
 {
+    Q_OBJECT
 private:
     /* ==================== Constructor ==================== */
-    ConspectModel() {
-        mConspectHierarchyModel = new QStandardItemModel();
-        mListsModel = new QStandardItemModel();
-    }
+    ConspectModel();
 
 
     /* ====================== Fields ======================= */
     static ConspectModel* mInstance;
-    QStandardItemModel* mConspectHierarchyModel;
-    QStandardItemModel* mListsModel;
+    static QStandardItemModel* mConspectHierarchyModel;
+    static QStandardItemModel* mListsModel;
     
     /* ====================== Methods ====================== */
-    
+    int generateListId();
+    int generateConspectId();
+    int generateListNo(int term, QString subject, QString theme);
+    int getThemeNo(int term, QString subject, QString theme);
+    int insertIntoListModel(QString file_name);
+    bool insertIntoConspectModel(int id, int term, QString subject, QString theme);
+    bool insertIntoConspectModel(int id, int term, QString subject, int theme_no,
+                                 QString theme, int list_no, int list_id);
+    bool insertList(QModelIndex* index, int id, int list_no, int list_id);
+    bool insertTheme(QModelIndex* index, int theme_no, QString theme,
+                                    int id, int list_no, int list_id);
+    bool insertSubject(QModelIndex* index, QString subject, int theme_no, QString theme,
+                                      int id, int list_no, int list_id);
+    bool insertTerm(int term, QString subject, int theme_no,
+                                   QString theme, int id, int list_no, int list_id);
+    bool removeFile(QString file_name);
 
 public:
     /* ==================== Constructor ==================== */
@@ -27,35 +42,29 @@ public:
     /* ====================== Fields ======================= */
 
     /* ====================== Methods ====================== */
-    static ConspectModel* getInstance() {
-        if (mInstance == nullptr) {
-            mInstance = new ConspectModel();
-        }
-        return mInstance;
-    }
+    static ConspectModel* getInstance();
+
+    static void setConspectModel(QStandardItemModel* conspectModel);
+    static QStandardItemModel* getConspectModel();
 
 
-    void setConspectModel(QStandardItemModel* conspectModel) {
-        mConspectHierarchyModel = conspectModel;
-    }
+    static void setListModel(QStandardItemModel* listModel);
+    static QStandardItemModel* getListModel();
 
-    QStandardItemModel* getConspectModel() {
-        return mConspectHierarchyModel;
-    }
+public slots:
+    void onRemoveFile(QString file_name);
+    void onAddFile(QString file_name, int term, QString subject, QString theme);
 
 
-    void setListModel(QStandardItemModel* listModel) {
-        mListsModel = listModel;
-    }
+signals:
+    void insertFileDBSignal(int id, QString file_name);
+    void removeFileDBSignal(QString file_name);
+    void insertListDBSignal(int id,
+                            int term,
+                            QString subject,
+                            int theme_no, QString theme,
+                            int list_id_no, int list_id);
 
-    QStandardItemModel* getListModel() {
-        return mListsModel;
-    }
 };
-
-
-
-/* ================= Fields initialization ================= */
-ConspectModel* ConspectModel::mInstance = nullptr;
 
 #endif // CONSPECTMODEL_H
