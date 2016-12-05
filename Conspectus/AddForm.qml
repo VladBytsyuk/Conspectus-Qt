@@ -59,6 +59,7 @@ Item {
             selectedNameFilter: "Image files (*.png *.jpg)"
             onAccepted: {
                 var path = utils.convertUrlToNativeFilePath(fileDialog.fileUrl)
+                textField1.text = "";
                 textField1.insert(0, path);
             }
             onRejected: { console.log("Rejected") }
