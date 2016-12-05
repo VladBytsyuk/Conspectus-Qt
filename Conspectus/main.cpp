@@ -55,8 +55,9 @@ int main(int argc, char *argv[])
 //    QObject::connect(fm, &FileManager::addFileSignal, conspectModel, &ConspectModel::onInsertFile);
     QObject::connect(fm, &FileManager::removeFileSignal, conspectModel, &ConspectModel::onRemoveFile);
 
-    QObject::connect(conspectModel, &ConspectModel::insertFileDBSignal, dbManager, &DBManager::onInsertFile);
+    QObject::connect(conspectModel, &ConspectModel::insertFileDBSignal, dbManager, &DBManager::onInsertFileIntoListTable);
     QObject::connect(conspectModel, &ConspectModel::removeFileDBSignal, dbManager, &DBManager::onRemoveFile);
+    QObject::connect(conspectModel, &ConspectModel::insertListDBSignal, dbManager, &DBManager::onInsertListIntoConspectTable);
 
     QObject::connect(engine.rootObjects().at(0)
                      ->findChild<QObject*>("viewForm"), SIGNAL(viewFormSignal()),

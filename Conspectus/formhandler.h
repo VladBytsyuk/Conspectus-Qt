@@ -11,7 +11,6 @@ class FormHandler: public QObject
     Q_OBJECT
 
 protected:
-    QString mCurrentFilePath;
     int mCurrentTerm;
     QString mCurrentSubject;
     QString mCurrentTheme;
@@ -31,7 +30,7 @@ public slots:
     void onSetTerm(QString term);
     void onSetSubject(QString subject);
     void onSetTheme(QString theme);
-    virtual void onOkClicked(QString file_path);
+    virtual void onOkClicked(QString file_path) = 0;
 };
 
 #endif // FORMHANDLER_H

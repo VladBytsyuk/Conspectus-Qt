@@ -7,5 +7,5 @@ ViewFormHandler::ViewFormHandler(QObject* view) {
 ViewFormHandler::~ViewFormHandler() {}
 
 void ViewFormHandler::onOkClicked(QString file_path) {
-    FormHandler:onOkClicked(file_path);
+
 }

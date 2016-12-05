@@ -51,7 +51,8 @@ ApplicationWindow {
             addListForm.visible = true
             mainForm.visible = false
         }
-        buttonCancel.onClicked: addForm.showAddForm()
+
+        buttonCancel.onClicked: viewForm.showViewForm()
     }
 
     AddForm{
@@ -85,15 +86,5 @@ ApplicationWindow {
            mainForm.visible = true
         }
     }
-
-//    MessageDialog {
-//        id: messageDialog
-//        title: qsTr("Do it!")
-
-//        function show(caption) {
-//            messageDialog.text = caption;
-//            messageDialog.open();
-//        }
-//    }
 
 }

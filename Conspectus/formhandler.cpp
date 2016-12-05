@@ -129,12 +129,9 @@ void FormHandler::onSetSubject(QString subject) {
     this->setThemes(mCurrentTerm, mCurrentSubject);
 }
 
+
 void FormHandler::onSetTheme(QString theme) {
     mCurrentTheme = theme;
-}
-
-void FormHandler::onOkClicked(QString file_path) {
-    mCurrentFilePath = file_path;
 }
 
 void FormHandler::onForm() {

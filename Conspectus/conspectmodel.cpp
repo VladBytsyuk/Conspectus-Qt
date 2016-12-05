@@ -52,7 +52,7 @@ int ConspectModel::insertIntoListModel(QString file_name) {
     QModelIndex fileIndex = mListsModel->index(row, 1);
     mListsModel->setData(fileIndex, file_name);
 
-    //emit insertFileDBSignal(id, file_name);
+    emit insertFileDBSignal(id, file_name);
     return id;
 }
 
@@ -61,8 +61,13 @@ bool ConspectModel::insertIntoConspectModel(int id, int term, QString subject,
     int row_id = generateConspectId();
     int list_no = generateListNo(term, subject, theme);
     int theme_no = getThemeNo(term, subject, theme);
-    return insertIntoConspectModel(row_id, term, subject, theme_no, theme,
+    bool isInserted = insertIntoConspectModel(row_id, term, subject, theme_no, theme,
                                    list_no, id);
+    if (!isInserted) return isInserted;
+
+    emit insertListDBSignal(row_id, term, subject, theme_no, theme,
+                            list_no, id);
+    return true;
 }
 
 bool ConspectModel::insertIntoConspectModel(int id, int term, QString subject,
@@ -187,13 +192,13 @@ int ConspectModel::generateListNo(int term, QString subject, QString theme) {
                                 max_id = (max_id < current_id ? current_id : max_id);
                             }
                         }
-                        break;
+                        continue;
                     }
                 }
-                break;
+                continue;
             }
         }
-        break;
+        continue;
     }
 
     if (max_id == -1) {
@@ -224,10 +229,10 @@ int ConspectModel::getThemeNo(int term, QString subject, QString theme) {
                         }
                     }
                 }
-                break;
+                continue;
             }
         }
-        break;
+        continue;
     }
 
     if (max_no == -1) {

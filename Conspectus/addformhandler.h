@@ -7,6 +7,9 @@ class AddFormHandler : public FormHandler
 {
     Q_OBJECT
 
+private:
+    QString mCurrentFilePath;
+
 public:
     AddFormHandler(QObject* view);
     ~AddFormHandler();

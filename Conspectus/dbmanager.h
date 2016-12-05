@@ -71,8 +71,14 @@ public:
     QStandardItemModel* getListModel();
 
 public slots:
-    void onInsertFile(int id, QString file_name);
+    void onInsertFileIntoListTable(int id, QString file_name);
 	void onRemoveFile(QString file_name);
+
+    void onInsertListIntoConspectTable(int id,
+                      int term,
+                      QString subject,
+                      int theme_no, QString theme,
+                      int list_id_no, int list_id);
 };
 
 

@@ -59,6 +59,11 @@ public slots:
 signals:
     void insertFileDBSignal(int id, QString file_name);
     void removeFileDBSignal(QString file_name);
+    void insertListDBSignal(int id,
+                            int term,
+                            QString subject,
+                            int theme_no, QString theme,
+                            int list_id_no, int list_id);
 
 };
 

@@ -413,7 +413,7 @@ int DBManager::findFileIdByName(QString file_name) {
     return queryResult.value(0).toInt();
 }
 
-void DBManager::onInsertFile(int id, QString file_name){
+void DBManager::onInsertFileIntoListTable(int id, QString file_name){
     //TODO: Add file into DB
     insertRowIntoTableList(id, file_name);
 }
@@ -421,6 +421,13 @@ void DBManager::onInsertFile(int id, QString file_name){
 void DBManager::onRemoveFile(QString file_name){
     //TODO: Delete file from DB
     deleteRowFromTable(findFileIdByName(file_name), TABLE_LIST);
+}
+
+void DBManager::onInsertListIntoConspectTable(int id, int term,
+                                              QString subject,
+                                              int theme_no, QString theme,
+                                              int list_id_no, int list_id) {
+    insertRowIntoTableConspect(id, term, subject, theme_no, theme, list_id_no, list_id);
 }
 
 /* ================= Fields initialization ================= */
