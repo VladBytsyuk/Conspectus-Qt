@@ -7,7 +7,7 @@ Item {
     property int buttonWidth: 200
     property int buttonHeight: 50
     property int shadowOffset: 5
-    property int boxWidth: 200
+    property int boxWidth: 195
     property int boxHeight: 25
 
 
@@ -32,72 +32,17 @@ Item {
         }
     }
 
-//    Rectangle {
-//        anchors.fill: parent
-//        color: "#f6f6f6"
-
-//        TextField {
-//            id: textField1
-//            width: boxWidth
-//            height: boxHeight
-//            placeholderText: qsTr("Text Field")
-//            inputMethodHints: Qt.ImhNoAutoUppercase
-//            anchors.horizontalCenter: parent.horizontalCenter
-//            anchors.verticalCenterOffset: -70
-//            anchors.verticalCenter: parent.verticalCenter
-//        }
-//    }
-
-//    Button {
-//        id: buttonBrowse
-//        width: 70
-//        height: boxHeight
-//        anchors.horizontalCenter: parent.horizontalCenter
-//        anchors.horizontalCenterOffset: 150
-//        anchors.verticalCenterOffset: -70
-//        anchors.verticalCenter: parent.verticalCenter
-//        text:"Browse"
-//        visible: true
-//        style:  ButtonStyle {
-//            background: Rectangle{
-//                color: "#f0c150"
-//                radius: 3
-//            }
-//            label: Text {
-//                renderType: Text.NativeRendering
-//                verticalAlignment: Text.AlignVCenter
-//                horizontalAlignment: Text.AlignHCenter
-//                font.family: "Helvetica"
-//                //font.pointSize: 8
-//                font.bold: true
-//                color: "black"
-//                text: control.text
-//            }
-//        }
-//    }
-
-//    DropShadow {
-//        anchors.fill: buttonBrowse
-//        source: buttonBrowse
-//        color: "#50000000"
-//        horizontalOffset: 3
-//        verticalOffset: 3
-//        radius: 8
-//        samples: 17
-//    }
     
     property alias buttonEdit: buttonEdit
-    property alias buttonCancel: buttonBack
+    property alias buttonCancel: buttonCancel
 
         Button {
-            id: buttonBack
+            id: buttonCancel
             width: buttonWidth
             height: buttonHeight
-            text: "Back"
+            text: "CANCEL"
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.horizontalCenterOffset: 120
-//            anchors.verticalCenterOffset: 180
-//            anchors.verticalCenter: parent.verticalCenter
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 15
             visible: true            
@@ -114,13 +59,13 @@ Item {
 //            anchors.verticalCenter: parent.verticalCenter
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 15
-            text:"Edit"
+            text:"EDIT"
             visible: true
             style: buttonStyle
         }
 
     DropShadow {
-        anchors.fill: buttonBack
+        anchors.fill: buttonCancel
         source: buttonCancel
         color: "#50000000"
         horizontalOffset: shadowOffset
@@ -168,11 +113,11 @@ Item {
         id: flow2
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
-        anchors.topMargin: 10
+        anchors.topMargin: -20
         width: 600
         height: 30
-        Rectangle { color: "red"; width: 600; height: 30 }
-
+        Rectangle { color: "#00f0c150"; width: 600; height: 30 }
+        spacing: 5
         //___________________________________________________________________________
         ComboBox {
             id: boxTerm
@@ -183,10 +128,6 @@ Item {
                 currentIndex = -1
             }
             inputMethodHints: Qt.ImhNoAutoUppercase
-//            anchors.horizontalCenter: parent.horizontalCenter
-//            anchors.verticalCenterOffset: -50
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.left: parent.left
             style: ComboBoxStyle {
                     background: Rectangle {
                         radius: 3
@@ -209,10 +150,6 @@ Item {
             Component.onCompleted: {
                 currentIndex = -1
             }
-            anchors.horizontalCenter: parent.horizontalCenter
-//            anchors.verticalCenterOffset: -10
-            anchors.verticalCenter: parent.verticalCenter
-
             style: ComboBoxStyle {
                     background: Rectangle {
                         radius: 3
@@ -235,10 +172,6 @@ Item {
             Component.onCompleted: {
                 currentIndex = -1
             }
-//            anchors.horizontalCenter: parent.horizontalCenter
-//            anchors.verticalCenterOffset: 30
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.right: parent.right
             style: ComboBoxStyle {
                     background: Rectangle {
                         radius: 3
