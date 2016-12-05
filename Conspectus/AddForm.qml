@@ -111,8 +111,8 @@ Item {
             text: "CANCEL"
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.horizontalCenterOffset: 120
-            anchors.verticalCenterOffset: 180
-            anchors.verticalCenter: parent.verticalCenter
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 15
             visible: true            
             style: buttonStyle
         }
@@ -128,8 +128,8 @@ Item {
 
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.horizontalCenterOffset: -120
-            anchors.verticalCenterOffset: 180
-            anchors.verticalCenter: parent.verticalCenter
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 15
             text:"OK"
             visible: true
             style: buttonStyle
