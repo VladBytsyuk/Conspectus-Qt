@@ -17,8 +17,8 @@ Item {
         ButtonStyle {
 
             background: Rectangle{
-                border.color: "#f0c150"
-                border.width: control.hovered ? 2 : 1
+                border.color: control.hovered ? "#F0AE50" : "#f0c150"
+                border.width: control.pressed ? 3 : 2
                 color: control.pressed ? "#697BBD"  : "#6988bd"
                 radius: 3
             }
