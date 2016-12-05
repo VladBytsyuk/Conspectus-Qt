@@ -12,7 +12,7 @@
 #include "advancedimage.h"
 #include "addformhandler.h"
 #include "viewformhandler.h"
-
+#include "util.h"
 //Log File
 QFile * logFile;
 
@@ -25,8 +25,10 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 	qsrand(QTime(0, 0, 0).secsTo(QTime::currentTime()));
 
+    Util util;
     QUrl qmlUrl = QUrl(QStringLiteral("qrc:/main.qml"));
     QQmlApplicationEngine engine;
+    engine.rootContext()->setContextProperty("utils", &util);
     engine.load(qmlUrl);
 
 	FileManager * fm = new FileManager();

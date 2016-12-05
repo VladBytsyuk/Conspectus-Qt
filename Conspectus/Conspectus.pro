@@ -14,7 +14,8 @@ SOURCES += \
     loggingcategories.cpp \
     addformhandler.cpp \
     formhandler.cpp \
-    viewformhandler.cpp
+    viewformhandler.cpp \
+    util.cpp
 
 RESOURCES += qml.qrc
 
@@ -34,4 +35,5 @@ HEADERS += \
     loggingcategories.h \
     addformhandler.h \
     formhandler.h \
-    viewformhandler.h
+    viewformhandler.h \
+    util.h

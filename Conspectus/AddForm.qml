@@ -56,8 +56,7 @@ Item {
             nameFilters: [ "Image files (*.png *.jpg)", "All files (*)" ]
             selectedNameFilter: "Image files (*.png *.jpg)"
             onAccepted: {
-                var path = fileDialog.fileUrl.toString();
-                path = path.replace(/^(file:\/{3})|(qrc:\/{2})|(http:\/{2})/,"");
+                var path = utils.convertUrlToNativeFilePath(fileDialog.fileUrl)
                 textField1.insert(0, path);
             }
             onRejected: { console.log("Rejected") }
