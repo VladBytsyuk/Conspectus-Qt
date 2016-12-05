@@ -86,37 +86,41 @@ Item {
 //        samples: 17
 //    }
     
-    property alias buttonOk: buttonOk
-    property alias buttonCancel: buttonCancel
+    property alias buttonEdit: buttonEdit
+    property alias buttonCancel: buttonBack
 
         Button {
-            id: buttonCancel
+            id: buttonBack
             width: buttonWidth
             height: buttonHeight
-            text: "CANCEL"
+            text: "Back"
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.horizontalCenterOffset: 120
-            anchors.verticalCenterOffset: 180
-            anchors.verticalCenter: parent.verticalCenter
+//            anchors.verticalCenterOffset: 180
+//            anchors.verticalCenter: parent.verticalCenter
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 15
             visible: true            
             style: buttonStyle
         }
 
         Button {
-            id: buttonOk
+            id: buttonEdit
             width: buttonWidth
             height: buttonHeight
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.horizontalCenterOffset: -120
-            anchors.verticalCenterOffset: 180
-            anchors.verticalCenter: parent.verticalCenter
-            text:"OK"
+//            anchors.verticalCenterOffset: 180
+//            anchors.verticalCenter: parent.verticalCenter
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 15
+            text:"Edit"
             visible: true
             style: buttonStyle
         }
 
     DropShadow {
-        anchors.fill: buttonCancel
+        anchors.fill: buttonBack
         source: buttonCancel
         color: "#50000000"
         horizontalOffset: shadowOffset
@@ -126,8 +130,8 @@ Item {
     }
 
     DropShadow {
-        anchors.fill: buttonOk
-        source: buttonOk
+        anchors.fill: buttonEdit
+        source: buttonEdit
         color: "#50000000"
         horizontalOffset: shadowOffset
         verticalOffset: shadowOffset
@@ -146,15 +150,11 @@ Item {
     }
 
     Flow {
-        id: flow
-//        x: 19
-//        y: 121
-//        anchors.fill: parents
+        id: flowFoto
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
         width: 600
         height: 259
-//        flow: Grid.LeftToRigh
         anchors.centerIn: parent
         spacing:2
         Rectangle { color: "red"; width: 600; height: 10 }
@@ -162,6 +162,99 @@ Item {
         Rectangle { color: "blue"; width: 215; height: 80 }
         Rectangle { color: "yellow"; width: 50; height: 50 }
         Rectangle { color: "black"; width: 410; height: 10 }
+    }
+
+    Flow {
+        id: flow2
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.top
+        anchors.topMargin: 10
+        width: 600
+        height: 30
+        Rectangle { color: "red"; width: 600; height: 30 }
+
+        //___________________________________________________________________________
+        ComboBox {
+            id: boxTerm
+            width: boxWidth
+            height: boxHeight
+            model: [1,2,3,4,5,6,7,8]
+            Component.onCompleted: {
+                currentIndex = -1
+            }
+            inputMethodHints: Qt.ImhNoAutoUppercase
+//            anchors.horizontalCenter: parent.horizontalCenter
+//            anchors.verticalCenterOffset: -50
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.left: parent.left
+            style: ComboBoxStyle {
+                    background: Rectangle {
+                        radius: 3
+                        color: "#f0c150"
+                    }
+                    label: Text {
+                        renderType: Text.NativeRendering
+                        font.bold: true
+                        color: "white"
+                        text: control.currentIndex===-1?"Term":control.currentText
+                    }
+            }
+        }
+
+        ComboBox {
+            id: boxSubject
+            width: boxWidth
+            height: boxHeight
+            model: ["Maths","Economics","Physics","English"]
+            Component.onCompleted: {
+                currentIndex = -1
+            }
+            anchors.horizontalCenter: parent.horizontalCenter
+//            anchors.verticalCenterOffset: -10
+            anchors.verticalCenter: parent.verticalCenter
+
+            style: ComboBoxStyle {
+                    background: Rectangle {
+                        radius: 3
+                        color: "#f0c150"
+                    }
+                    label: Text {
+                        renderType: Text.NativeRendering
+                        font.bold: true
+                        color: "white"
+                        text: control.currentIndex===-1?"Subject":control.currentText
+                    }
+            }
+        }
+
+        ComboBox {
+            id: boxTheme
+            width: boxWidth
+            height: boxHeight
+            model: ["Limits","Summs"]
+            Component.onCompleted: {
+                currentIndex = -1
+            }
+//            anchors.horizontalCenter: parent.horizontalCenter
+//            anchors.verticalCenterOffset: 30
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.right: parent.right
+            style: ComboBoxStyle {
+                    background: Rectangle {
+                        radius: 3
+                        color: "#f0c150"
+                    }
+                    label: Text {
+                        renderType: Text.NativeRendering
+                        color: "white"
+                        font.bold: true
+                        text:
+                            control.currentIndex===-1?"Theme":control.currentText
+                    }
+            }
+        }
+     //__________________________________________________________________________________
+
     }
 
 }
