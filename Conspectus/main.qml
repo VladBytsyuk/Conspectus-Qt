@@ -7,6 +7,8 @@ ApplicationWindow {
     width: 640
     height: 480
     title: qsTr("Conspectus")
+    minimumWidth: 640
+    minimumHeight: 480
 
     menuBar: MenuBar {
         Menu {
