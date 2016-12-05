@@ -32,30 +32,14 @@ ApplicationWindow {
         function showViewForm() {
            viewForm.visible = true
             addForm.visible = false
-            addListForm.visible = false
            mainForm.visible = false
            viewForm.viewFormSignal()
         }
 
         buttonCancel.onClicked: mainForm.showMainForm()
-        buttonOk.onClicked: addListForm.showAddListForm()
     }
 
-    AddListForm{
-        id: addListForm
-        anchors.fill: parent
-
-        function showAddListForm(){
-            viewForm.visible = false
-             addForm.visible = false
-            addListForm.visible = true
-            mainForm.visible = false
-        }
-
-        buttonCancel.onClicked: viewForm.showViewForm()
-    }
-
-    AddForm{
+    AddForm {
         id : addForm
         objectName: "addForm"
         anchors.fill: parent
@@ -65,24 +49,21 @@ ApplicationWindow {
         function showAddForm(){
             viewForm.visible = false
              addForm.visible = true
-            addListForm.visible = false
             mainForm.visible = false
              addForm.addFormSignal()
         }
         buttonCancel.onClicked: mainForm.showMainForm()
-        buttonOk.onClicked: addListForm.showAddListForm()
     }
 
     MainForm {
         id: mainForm;
         anchors.fill: parent
-        buttonView.onClicked: viewForm.showViewForm()//messageDialog.show(qsTr("View lecture"))
-        buttonAdd.onClicked: addForm.showAddForm()//messageDialog.show(qsTr("Add list"))
+        buttonView.onClicked: viewForm.showViewForm()
+        buttonAdd.onClicked: addForm.showAddForm()
 
         function showMainForm() {
            viewForm.visible = false
             addForm.visible = false
-           addListForm.visible = false
            mainForm.visible = true
         }
     }
