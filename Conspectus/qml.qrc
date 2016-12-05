@@ -2,8 +2,7 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>MainForm.qml</file>
-        <file>ViewForm.qml</file>
         <file>AddForm.qml</file>
-        <file>AddListForm.qml</file>
+        <file>ViewForm.qml</file>
     </qresource>
 </RCC>

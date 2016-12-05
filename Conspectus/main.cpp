@@ -54,7 +54,6 @@ int main(int argc, char *argv[])
     //(Maybe FileManager should be singleton? Because we need same object inside this method77)
     //No. Just need to pass a reference to an object
     setSignalSlotConnections();
-//    QObject::connect(fm, &FileManager::addFileSignal, conspectModel, &ConspectModel::onInsertFile);
     QObject::connect(fm, &FileManager::removeFileSignal, conspectModel, &ConspectModel::onRemoveFile);
 
     QObject::connect(conspectModel, &ConspectModel::insertFileDBSignal, dbManager, &DBManager::onInsertFileIntoListTable);
