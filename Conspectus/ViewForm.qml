@@ -55,8 +55,6 @@ Item {
             height: buttonHeight
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.horizontalCenterOffset: -120
-//            anchors.verticalCenterOffset: 180
-//            anchors.verticalCenter: parent.verticalCenter
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 15
             text:"EDIT"
@@ -102,11 +100,11 @@ Item {
         height: 259
         anchors.centerIn: parent
         spacing: 10
-        Rectangle { color: "red"; width: 60; height: 40 }
-        Rectangle { color: "green"; width: 40; height: 60 }
-        Rectangle { color: "blue"; width: 40; height: 60 }
-        Rectangle { color: "yellow"; width: 60; height: 40 }
-        Rectangle { color: "black"; width: 40; height: 60 }
+        Rectangle { color: "red"; width: 120; height: 80 }
+        Rectangle { color: "green"; width: 80; height: 120 }
+        Rectangle { color: "blue"; width: 80; height: 120 }
+        Rectangle { color: "yellow"; width: 120; height: 80 }
+        Rectangle { color: "black"; width: 80; height: 120 }
     }
 
     Flow {
@@ -123,10 +121,15 @@ Item {
             id: boxTerm
             width: boxWidth
             height: boxHeight
+            objectName: "boxTerm"
             model: [1,2,3,4,5,6,7,8]
             Component.onCompleted: {
                 currentIndex = -1
             }
+
+            signal termSelect(string term)
+            onCurrentTextChanged: boxTerm.termSelect(model[currentIndex])
+
             inputMethodHints: Qt.ImhNoAutoUppercase
             style: ComboBoxStyle {
                     background: Rectangle {
@@ -146,10 +149,15 @@ Item {
             id: boxSubject
             width: boxWidth
             height: boxHeight
+            objectName: "boxSubject"
             model: ["Maths","Economics","Physics","English"]
             Component.onCompleted: {
                 currentIndex = -1
             }
+
+            signal subjectSelect(string subject)
+            onCurrentTextChanged: boxSubject.subjectSelect(model[currentIndex])
+
             style: ComboBoxStyle {
                     background: Rectangle {
                         radius: 3
@@ -168,10 +176,15 @@ Item {
             id: boxTheme
             width: boxWidth
             height: boxHeight
+            objectName: "boxTheme"
             model: ["Limits","Summs"]
             Component.onCompleted: {
                 currentIndex = -1
             }
+
+            signal themeSelect(string theme)
+            onCurrentTextChanged: boxTheme.themeSelect(model[currentIndex])
+
             style: ComboBoxStyle {
                     background: Rectangle {
                         radius: 3
