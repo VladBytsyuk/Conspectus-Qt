@@ -1,11 +1,8 @@
-#include "util.h"
+#include "utils.h"
 #include <QDir>
 #include <QUrl>
 
-Util::Util(QObject *parent) : QObject(parent)
-{
-
-}
+Util::Util(QObject *parent) : QObject(parent) {}
 
 QString Util::convertUrlToNativeFilePath(const QUrl &urlStylePath) const
 {
