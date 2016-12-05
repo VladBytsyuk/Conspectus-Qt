@@ -1,7 +1,9 @@
 import QtQuick 2.5
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
+import QtQuick.Dialogs 1.1
 import QtGraphicalEffects 1.0
+import QtQuick.Layouts 1.1
 
 Item {
     property int buttonWidth: 200
@@ -9,7 +11,6 @@ Item {
     property int shadowOffset: 5
     property int boxWidth: 200
     property int boxHeight: 25
-
 
     Component {
         id: buttonStyle
@@ -40,13 +41,27 @@ Item {
             id: textField1
             width: boxWidth
             height: boxHeight
-            placeholderText: qsTr("Text Field")
+            placeholderText: qsTr("File Path")
             inputMethodHints: Qt.ImhNoAutoUppercase
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenterOffset: -70
             anchors.verticalCenter: parent.verticalCenter
         }
     }
+
+    FileDialog {
+            id: fileDialog
+            title: "Select a file"
+            folder: shortcuts.pictures
+            nameFilters: [ "Image files (*.png *.jpg)", "All files (*)" ]
+            selectedNameFilter: "Image files (*.png *.jpg)"
+            onAccepted: {
+                var path = fileDialog.fileUrl.toString();
+                path = path.replace(/^(file:\/{3})|(qrc:\/{2})|(http:\/{2})/,"");
+                textField1.insert(0, path);
+            }
+            onRejected: { console.log("Rejected") }
+        }
 
     Button {
         id: buttonBrowse
@@ -74,6 +89,7 @@ Item {
                 text: control.text
             }
         }
+        onClicked: fileDialog.open()
     }
 
     DropShadow {
@@ -85,7 +101,7 @@ Item {
         radius: 8
         samples: 17
     }
-    
+
     property alias buttonOk: buttonOk
     property alias buttonCancel: buttonCancel
 
@@ -106,6 +122,11 @@ Item {
             id: buttonOk
             width: buttonWidth
             height: buttonHeight
+            objectName: "buttonOk"
+
+            signal okClicked(string path)
+            onClicked: buttonOk.onClick()
+
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.horizontalCenterOffset: -120
             anchors.verticalCenterOffset: 180
@@ -113,6 +134,36 @@ Item {
             text:"OK"
             visible: true
             style: buttonStyle
+
+            function onClick() {
+                var isEditTextEmpty = textField1.text === "";
+                var isTermEmpty = boxTerm.model[boxTerm.currentIndex] === "";
+                var isSubjectEmpty = boxSubject.model[boxSubject.currentIndex] === "";
+                var isThemeEmpty = boxTheme.model[boxTheme.currentIndex] === "";
+                if (isEditTextEmpty) {
+                    //TODO: highlight textField1
+                } else {
+                    //TODO: undo
+                }
+                if (isTermEmpty) {
+                    //TODO: highlight boxTerm
+                } else {
+                    //TODO: undo
+                }
+                if (isSubjectEmpty) {
+                    //TODO: highlight boxSubject
+                } else {
+                    //TODO: undo
+                }
+                if (isThemeEmpty) {
+                    //TODO: highlight BoxTheme
+                } else {
+                    //TODO: undo
+                }
+                if (!isEditTextEmpty && !isTermEmpty && !isSubjectEmpty && !isThemeEmpty) {
+                    buttonOk.okClicked(textField1.text);
+                }
+            }
         }
 
     DropShadow {
@@ -139,16 +190,19 @@ Item {
 
     ComboBox {
         id: boxTerm
+        objectName: "boxTerm"
         width: boxWidth
         height: boxHeight
         model: [1,2,3,4,5,6,7,8]
 
+        signal termSelect(string term)
 
         Component.onCompleted: {
             currentIndex = -1
-
         }
+
         editable: true
+        onCurrentTextChanged: boxTerm.termSelect(model[currentIndex])
 
         inputMethodHints: Qt.ImhNoAutoUppercase
         anchors.horizontalCenter: parent.horizontalCenter
@@ -173,11 +227,18 @@ Item {
         id: boxSubject
         width: boxWidth
         height: boxHeight
+        objectName: "boxSubject"
         model: ["Maths","Economics","Physics","English"]
+
+        signal subjectSelect(string subject)
+
         Component.onCompleted: {
             currentIndex = -1
         }
+
         editable: true
+        onCurrentTextChanged: boxSubject.subjectSelect(model[currentIndex])
+
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenterOffset: 10
         anchors.verticalCenter: parent.verticalCenter
@@ -199,11 +260,18 @@ Item {
         id: boxTheme
         width: boxWidth
         height: boxHeight
+        objectName: "boxTheme"
         model: ["Limits","Summs"]
+
+        signal themeSelect(string theme)
+
         Component.onCompleted: {
             currentIndex = -1
         }
+
         editable: true
+        onCurrentTextChanged: boxTheme.themeSelect(model[currentIndex])
+
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenterOffset: 50
         anchors.verticalCenter: parent.verticalCenter

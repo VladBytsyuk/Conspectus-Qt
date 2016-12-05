@@ -57,6 +57,11 @@ Item {
             id: buttonOk
             width: buttonWidth
             height: buttonHeight
+            objectName: "buttonOk"
+
+            signal okClicked(string path)
+            onClicked: buttonOk.onClick()
+
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.horizontalCenterOffset: -120
             anchors.verticalCenterOffset: 180
@@ -93,9 +98,15 @@ Item {
         width: boxWidth
         height: boxHeight
         model: [1,2,3,4,5,6,7,8]
+        objectName: "boxTerm"
+
+        signal termSelect(string term)
+
         Component.onCompleted: {
             currentIndex = -1
         }
+        onCurrentTextChanged: boxTerm.termSelect(model[currentIndex])
+
         inputMethodHints: Qt.ImhNoAutoUppercase
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenterOffset: -50
@@ -119,9 +130,15 @@ Item {
         width: boxWidth
         height: boxHeight
         model: ["Maths","Economics","Physics","English"]
+        objectName: "boxSubject"
+
+        signal subjectSelect(string subject)
+
         Component.onCompleted: {
             currentIndex = -1
         }
+        onCurrentTextChanged: boxSubject.subjectSelect(model[currentIndex])
+
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenterOffset: -10
         anchors.verticalCenter: parent.verticalCenter
@@ -144,9 +161,15 @@ Item {
         width: boxWidth
         height: boxHeight
         model: ["Limits","Summs"]
+        objectName: "boxTheme"
+
+        signal themeSelect(string theme)
+
         Component.onCompleted: {
             currentIndex = -1
         }
+        onCurrentTextChanged: boxTheme.themeSelect(model[currentIndex])
+
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenterOffset: 30
         anchors.verticalCenter: parent.verticalCenter
