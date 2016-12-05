@@ -110,7 +110,7 @@ Item {
     }
 
     Flow {
-        id: flow2
+        id: flowTopBar
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
         anchors.topMargin: -20
