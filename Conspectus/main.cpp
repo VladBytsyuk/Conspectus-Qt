@@ -12,7 +12,7 @@
 #include "advancedimage.h"
 #include "addformhandler.h"
 #include "viewformhandler.h"
-#include "util.h"
+#include "utils.h"
 //Log File
 QFile * logFile;
 
@@ -32,34 +32,38 @@ int main(int argc, char *argv[])
     engine.load(qmlUrl);
 
 	FileManager * fm = new FileManager();
+    DBManager* dbManager = DBManager::getInstance();
+    ConspectModel* conspectModel = ConspectModel::getInstance();
+    AddFormHandler add_form(engine.rootObjects().at(0)->findChild<QObject*>("addForm"));
+    ViewFormHandler view_form(engine.rootObjects().at(0)->findChild<QObject*>("viewForm"));
 
-    //open log file. Start logging
+    //Open log file. Start logging
     logFile = new QFile(fm->getMainDirPath() + "/logFile.log");
     logFile->open(QFile::Append | QFile::Text);
     qInstallMessageHandler(messageHandler);
 
     qDebug(logDebug()) << "Started";
 
-
-    DBManager* dbManager = DBManager::getInstance();
-    ConspectModel* conspectModel = ConspectModel::getInstance();
+    //Filling the model from the database
     ConspectModel::setConspectModel(dbManager->getConspectModel());
     ConspectModel::setListModel(dbManager->getListModel());
-
-
-    AddFormHandler add_form(engine.rootObjects().at(0)->findChild<QObject*>("addForm"));
-    ViewFormHandler view_form(engine.rootObjects().at(0)->findChild<QObject*>("viewForm"));
 
     //TODO: Implement this method.
     //(Maybe FileManager should be singleton? Because we need same object inside this method77)
     //No. Just need to pass a reference to an object
     setSignalSlotConnections();
-    QObject::connect(fm, &FileManager::removeFileSignal, conspectModel, &ConspectModel::onRemoveFile);
 
+    //BackEnd connections
     QObject::connect(conspectModel, &ConspectModel::insertFileDBSignal, dbManager, &DBManager::onInsertFileIntoListTable);
     QObject::connect(conspectModel, &ConspectModel::removeFileDBSignal, dbManager, &DBManager::onRemoveFile);
     QObject::connect(conspectModel, &ConspectModel::insertListDBSignal, dbManager, &DBManager::onInsertListIntoConspectTable);
+    QObject::connect(&add_form, &AddFormHandler::tryToAddFileToFileSystem, fm, &FileManager::onTryAddFileToFileSystem);
+    QObject::connect(fm, &FileManager::invalidFilePath, &add_form, &AddFormHandler::onInvalidFilePath);
+    QObject::connect(fm, &FileManager::validFilePath, &add_form, &AddFormHandler::onValidFilePath);
+    QObject::connect(fm, &FileManager::removeFileSignal, conspectModel, &ConspectModel::onRemoveFile);
+    QObject::connect(&add_form, &AddFormHandler::addFileToModel, conspectModel, &ConspectModel::onAddFile);
 
+    //ViewForm connections
     QObject::connect(engine.rootObjects().at(0)
                      ->findChild<QObject*>("viewForm"), SIGNAL(viewFormSignal()),
                      &view_form, SLOT(onForm()));
@@ -80,11 +84,7 @@ int main(int argc, char *argv[])
                      ->findChild<QObject*>("buttonOk"), SIGNAL(okClicked(QString)),
                      &view_form, SLOT(onOkClicked(QString)));
 
-    QObject::connect(&add_form, &AddFormHandler::tryToAddFileToFileSystem, fm, &FileManager::onTryAddFileToFileSystem);
-    QObject::connect(fm, &FileManager::invalidFilePath, &add_form, &AddFormHandler::onInvalidFilePath);
-    QObject::connect(fm, &FileManager::validFilePath, &add_form, &AddFormHandler::onValidFilePath);
-    QObject::connect(&add_form, &AddFormHandler::addFileToModel, conspectModel, &ConspectModel::onAddFile);
-
+    //AddForm connections
     QObject::connect(engine.rootObjects().at(0)
                      ->findChild<QObject*>("addForm"), SIGNAL(addFormSignal()),
                      &add_form, SLOT(onForm()));
