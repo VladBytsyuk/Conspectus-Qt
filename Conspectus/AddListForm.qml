@@ -98,15 +98,15 @@ Item {
         id: flowFoto
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
-        width: 600
+        width: parent.width - 30
         height: 259
         anchors.centerIn: parent
-        spacing:2
-        Rectangle { color: "red"; width: 600; height: 10 }
-        Rectangle { color: "green"; width: 120; height: 50 }
-        Rectangle { color: "blue"; width: 215; height: 80 }
-        Rectangle { color: "yellow"; width: 50; height: 50 }
-        Rectangle { color: "black"; width: 410; height: 10 }
+        spacing: 10
+        Rectangle { color: "red"; width: 60; height: 40 }
+        Rectangle { color: "green"; width: 40; height: 60 }
+        Rectangle { color: "blue"; width: 40; height: 60 }
+        Rectangle { color: "yellow"; width: 60; height: 40 }
+        Rectangle { color: "black"; width: 40; height: 60 }
     }
 
     Flow {
@@ -136,7 +136,7 @@ Item {
                     label: Text {
                         renderType: Text.NativeRendering
                         font.bold: true
-                        color: "white"
+                        color: "black"
                         text: control.currentIndex===-1?"Term":control.currentText
                     }
             }
@@ -158,7 +158,7 @@ Item {
                     label: Text {
                         renderType: Text.NativeRendering
                         font.bold: true
-                        color: "white"
+                        color: "black"
                         text: control.currentIndex===-1?"Subject":control.currentText
                     }
             }
@@ -179,7 +179,7 @@ Item {
                     }
                     label: Text {
                         renderType: Text.NativeRendering
-                        color: "white"
+                        color: "black"
                         font.bold: true
                         text:
                             control.currentIndex===-1?"Theme":control.currentText
