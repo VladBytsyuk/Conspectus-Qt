@@ -447,6 +447,6 @@ Item {
        anchors.bottom: parent.bottom
        anchors.bottomMargin: 2
        anchors.horizontalCenter: parent.horizontalCenter
-       Rectangle { color: "red"; width: parent.width; height: parent.height}
+       //Rectangle { color: "red"; width: parent.width; height: parent.height}
    }
 }
