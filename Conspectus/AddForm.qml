@@ -11,14 +11,18 @@ Item {
     property int shadowOffset: 5
     property int boxWidth: 200
     property int boxHeight: 25
+    property int verticalNotPressed: 16
+    property int horizontalNotPressed: 135
+    property int rOffShadowNotPressed: 8
+    property int addPressed: 2
 
     Component {
         id: buttonStyle
         ButtonStyle {
 
             background: Rectangle{
-                border.color: control.hovered ? "#F09750" : "#f0c150"
-                border.width: control.pressed ? 3 : 2
+//                border.color: control.hovered ? "#F09750" : "#f0c150"
+//                border.width: control.pressed ? 3 : 2
                 color: control.pressed ? "#697BBD"  : "#6988bd"
                 radius: 3
             }
@@ -70,15 +74,13 @@ Item {
         width: 70
         height: boxHeight
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.horizontalCenterOffset: 150
-        anchors.verticalCenterOffset: -70
+        anchors.horizontalCenterOffset: buttonBrowse.pressed ? 152 : 150
+        anchors.verticalCenterOffset: buttonBrowse.pressed ? -68 : -70
         anchors.verticalCenter: parent.verticalCenter
         text:"Browse"
         visible: true
         style:  ButtonStyle {
             background: Rectangle{
-                border.color: "#6988bd"
-                border.width: control.hovered ? 2 : 1
                 color: control.pressed ? "#F0AE50"  : "#f0c150"
                 radius: 3
             }
@@ -100,9 +102,12 @@ Item {
         anchors.fill: buttonBrowse
         source: buttonBrowse
         color: "#50000000"
-        horizontalOffset: 3
-        verticalOffset: 3
-        radius: 8
+        horizontalOffset: buttonBrowse.pressed ? 1 : 3
+        verticalOffset: buttonBrowse.pressed ? 1 : 3
+        //horizontalOffset: buttonOk.pressed ? shadowOffset-addPressed : shadowOffset
+        //verticalOffset: buttonOk.pressed ? shadowOffset-addPressed : shadowOffset
+        radius: buttonBrowse.hovered ? rOffShadowNotPressed+3 : rOffShadowNotPressed
+
         samples: 17
     }
 
@@ -115,9 +120,9 @@ Item {
             height: buttonHeight
             text: "CANCEL"
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.horizontalCenterOffset: 120
+            anchors.horizontalCenterOffset: buttonCancel.pressed ? horizontalNotPressed+addPressed : horizontalNotPressed
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: 15
+            anchors.bottomMargin: buttonCancel.pressed ? verticalNotPressed-addPressed : verticalNotPressed
             visible: true            
             style: buttonStyle
         }
@@ -132,9 +137,9 @@ Item {
             onClicked: buttonOk.onClick()
 
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.horizontalCenterOffset: -120
+            anchors.horizontalCenterOffset: buttonOk.pressed ? -horizontalNotPressed+addPressed : -horizontalNotPressed
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: 15
+            anchors.bottomMargin: buttonOk.pressed ? verticalNotPressed-addPressed : verticalNotPressed
             text:"OK"
             visible: true
             style: buttonStyle
@@ -174,19 +179,20 @@ Item {
         anchors.fill: buttonCancel
         source: buttonCancel
         color: "#50000000"
-        horizontalOffset: shadowOffset
-        verticalOffset: shadowOffset
-        radius: 8
+        horizontalOffset: buttonCancel.pressed ? shadowOffset-addPressed : shadowOffset
+        verticalOffset: buttonCancel.pressed ? shadowOffset-addPressed : shadowOffset
+        radius: buttonCancel.hovered ? rOffShadowNotPressed+8 : rOffShadowNotPressed
         samples: 17
+
     }
 
     DropShadow {
         anchors.fill: buttonOk
         source: buttonOk
         color: "#50000000"
-        horizontalOffset: shadowOffset
-        verticalOffset: shadowOffset
-        radius: 8
+        horizontalOffset: buttonOk.pressed ? shadowOffset-addPressed : shadowOffset
+        verticalOffset: buttonOk.pressed ? shadowOffset-addPressed : shadowOffset
+        radius: buttonOk.hovered ? rOffShadowNotPressed+8 : rOffShadowNotPressed
         samples: 17
     }
 
