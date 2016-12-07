@@ -26,9 +26,19 @@ bool FormHandler::setTerms() {
 
 bool FormHandler::setSubjects(int term) {
     QStandardItemModel* conspectModel = ConspectModel::getConspectModel();
+    QStringList subjects;
     int row = getTermRowInModel(term);
     if (row == -1) {
         qWarning(logWarning()) << "Can't find this term: " << term;
+        QObject *boxSubject = mView->findChild<QObject*>("boxSubject");
+        if (boxSubject) {
+            mCurrentSubject = "";
+            boxSubject->setProperty("model", subjects);
+            boxSubject->setProperty("currentIndex", -1);
+        } else {
+            qWarning(logWarning()) << "Can't find ComboBox boxSubject";
+            return false;
+        }
         return false;
     }
     QModelIndex termIndex = conspectModel->index(row, 0);
@@ -38,7 +48,6 @@ bool FormHandler::setSubjects(int term) {
         return false;
     }
 
-    QStringList subjects;
     for (int i = 0; i < subjects_count; ++i) {
         QModelIndex index = conspectModel->index(i, 0, termIndex);
         QString subject = index.data().toString();
@@ -70,14 +79,33 @@ int FormHandler::getTermRowInModel(int term) {
 
 bool FormHandler::setThemes(int term, QString subject) {
     QStandardItemModel* conspectModel = ConspectModel::getConspectModel();
+    QStringList themes;
     int termRow = getTermRowInModel(term);
     if (termRow == -1) {
         qWarning(logWarning()) << "Can't find this term: " << term;
+        QObject *boxTheme = mView->findChild<QObject*>("boxTheme");
+        if (boxTheme) {
+            mCurrentTheme = "";
+            boxTheme->setProperty("model", themes);
+            boxTheme->setProperty("currentIndex", -1);
+        } else {
+            qWarning(logWarning()) << "Can't find ComboBox boxTheme";
+            return false;
+        }
         return false;
     }
     int subjectRow = getSubjectRowInModel(termRow, subject);
-    if (termRow == -1) {
+    if (subjectRow == -1) {
         qWarning(logWarning()) << "Can't find this subject: " << subject;
+        QObject *boxTheme = mView->findChild<QObject*>("boxTheme");
+        if (boxTheme) {
+            mCurrentTheme = "";
+            boxTheme->setProperty("model", themes);
+            boxTheme->setProperty("currentIndex", -1);
+        } else {
+            qWarning(logWarning()) << "Can't find ComboBox boxTheme";
+            return false;
+        }
         return false;
     }
     QModelIndex termIndex = conspectModel->index(termRow, 0);
@@ -88,7 +116,6 @@ bool FormHandler::setThemes(int term, QString subject) {
         return false;
     }
 
-    QStringList themes;
     for (int i = 0; i < themes_count; ++i) {
         QModelIndex index = conspectModel->index(i, 0, subjectIndex);
         QString theme = index.data().toString();
@@ -134,6 +161,19 @@ void FormHandler::onSetTheme(QString theme) {
     mCurrentTheme = theme;
 }
 
+bool FormHandler::clearComboBoxes() {
+    QObject *boxTerm = mView->findChild<QObject*>("boxTerm");
+    QObject *boxSubject = mView->findChild<QObject*>("boxSubject");
+    QObject *boxTheme = mView->findChild<QObject*>("boxTheme");
+
+    boxTerm->setProperty("editText", -1);
+    boxSubject->setProperty("currentIndex", -1);
+    boxTheme->setProperty("currentIndex", -1);
+
+    return true;
+}
+
 void FormHandler::onForm() {
     this->setTerms();
+    //this->clearComboBoxes();
 }

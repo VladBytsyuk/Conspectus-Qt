@@ -55,6 +55,7 @@ Item {
             id: buttonEdit
             width: buttonWidth
             height: buttonHeight
+            objectName: "buttonEdit"
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.horizontalCenterOffset: -120
             anchors.bottom: parent.bottom
@@ -241,35 +242,200 @@ Item {
         color: "#006988bd"
         radius: 3
 
-        Flow {
-            id: flowFoto
+        ListModel {
+            id: listModel
 
-            width: parent.width
-            anchors.top: parent.top
-            anchors.topMargin: 5
-            anchors.left: parent.left
-            anchors.leftMargin: 5
-            anchors.right: parent.right
-            anchors.rightMargin: 5
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: 5
+            ListElement {
+                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                list_no: 1
+            }
 
-            spacing: 10
-            Rectangle { color: "red"; width: 120; height: 80 }
-            Rectangle { color: "green"; width: 80; height: 120 }
-            Rectangle { color: "blue"; width: 80; height: 120 }
-            Rectangle { color: "yellow"; width: 120; height: 80 }
-            Rectangle { color: "black"; width: 80; height: 120 }
-            Rectangle { color: "red"; width: 120; height: 80 }
-            Rectangle { color: "green"; width: 80; height: 120 }
-            Rectangle { color: "blue"; width: 80; height: 120 }
-            Rectangle { color: "yellow"; width: 120; height: 80 }
-            Rectangle { color: "black"; width: 80; height: 120 }
+            ListElement {
+                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                list_no: 3
+            }
 
+            ListElement {
+                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                list_no: 3
+            }
+
+            ListElement {
+                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                list_no: 1
+            }
+
+            ListElement {
+                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                list_no: 3
+            }
+
+            ListElement {
+                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                list_no: 3
+            }
+            ListElement {
+                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                list_no: 1
+            }
+
+            ListElement {
+                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                list_no: 3
+            }
+
+            ListElement {
+                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                list_no: 3
+            }
+            ListElement {
+                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                list_no: 1
+            }
+
+            ListElement {
+                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                list_no: 3
+            }
+
+            ListElement {
+                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                list_no: 3
+            }
+            ListElement {
+                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                list_no: 1
+            }
+
+            ListElement {
+                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                list_no: 3
+            }
+
+            ListElement {
+                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                list_no: 3
+            }
+            ListElement {
+                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                list_no: 1
+            }
+
+            ListElement {
+                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                list_no: 3
+            }
+
+            ListElement {
+                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                list_no: 3
+            }
+
+            ListElement {
+                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                list_no: 1
+            }
+
+            ListElement {
+                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                list_no: 3
+            }
+
+            ListElement {
+                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                list_no: 3
+            }
+
+            ListElement {
+                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                list_no: 1
+            }
+
+            ListElement {
+                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                list_no: 3
+            }
+
+            ListElement {
+                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                list_no: 3
+            }
+            ListElement {
+                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                list_no: 1
+            }
+
+            ListElement {
+                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                list_no: 3
+            }
+
+            ListElement {
+                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                list_no: 3
+            }
+            ListElement {
+                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                list_no: 1
+            }
+
+            ListElement {
+                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                list_no: 3
+            }
+
+            ListElement {
+                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                list_no: 3
+            }
+            ListElement {
+                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                list_no: 1
+            }
+
+            ListElement {
+                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                list_no: 3
+            }
+
+            ListElement {
+                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                list_no: 3
+            }
+            ListElement {
+                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                list_no: 1
+            }
+
+            ListElement {
+                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                list_no: 3
+            }
+
+            ListElement {
+                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                list_no: 3
+            }
         }
 
-        function add(){
+        Component {
+            id: delegateId
+            Column {
+                Image { width:90; height: 90; source: "file:///" + source1; anchors.horizontalCenter: parent.horizontalCenter }
+                Text { text: list_no; anchors.horizontalCenter: parent.horizontalCenter }
+            }
+        }
 
+        GridView {
+            width: 300; height: 200
+            anchors.fill: parent
+
+
+            id: gridView
+
+            model: listModel
+
+            delegate: delegateId
         }
    }
 }

@@ -203,7 +203,7 @@ int ConspectModel::generateListNo(int term, QString subject, QString theme) {
 
     if (max_id == -1) {
         qCritical(logCritical()) << "Can't generate list_no for Conspect Model";
-        return max_id;
+        return 1;
     }
     return max_id + 1;
 }
@@ -237,7 +237,7 @@ int ConspectModel::getThemeNo(int term, QString subject, QString theme) {
 
     if (max_no == -1) {
         qCritical(logCritical()) << "Can't get theme_no for Conspect Model";
-        return max_no;
+        return 1;
     }
     return max_no + 1;
 }
