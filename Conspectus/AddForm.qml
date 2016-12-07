@@ -213,6 +213,7 @@ Item {
 
         editable: true
         onCurrentTextChanged: boxTerm.termSelect(model[currentIndex])
+        onEditTextChanged: boxTerm.termSelect(boxTerm.editText.toString())
 
         inputMethodHints: Qt.ImhNoAutoUppercase
         anchors.horizontalCenter: parent.horizontalCenter
@@ -248,6 +249,7 @@ Item {
 
         editable: true
         onCurrentTextChanged: boxSubject.subjectSelect(model[currentIndex])
+        onEditTextChanged: boxSubject.subjectSelect(boxSubject.editText.toString())
 
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenterOffset: 10
@@ -281,6 +283,7 @@ Item {
 
         editable: true
         onCurrentTextChanged: boxTheme.themeSelect(model[currentIndex])
+        onEditTextChanged: boxTheme.themeSelect(boxTheme.editText.toString())
 
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenterOffset: 50

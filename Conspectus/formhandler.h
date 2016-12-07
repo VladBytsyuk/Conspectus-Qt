@@ -20,10 +20,13 @@ protected:
     int getTermRowInModel(int term);
     int getSubjectRowInModel(int term_row, QString subject);
 
+    bool clearComboBoxes();
+
 public:
     bool setTerms();
     bool setSubjects(int term);
     bool setThemes(int term, QString subject);
+
 
 public slots:
     void onForm();
