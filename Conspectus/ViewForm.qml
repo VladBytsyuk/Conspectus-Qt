@@ -9,15 +9,16 @@ Item {
     property int shadowOffset: 5
     property int boxWidth: 195
     property int boxHeight: 25
+    property int verticalNotPressed: 16
+    property int horizontalNotPressed: 135
+    property int rOffShadowNotPressed: 8
+    property int addPressed: 2
 
 
     Component {
         id: buttonStyle
         ButtonStyle {
-
             background: Rectangle{
-                border.color: control.hovered ? "#F09750" : "#f0c150"
-                border.width: control.pressed ? 3 : 2
                 color: control.pressed ? "#697BBD"  : "#6988bd"
                 radius: 3
             }
@@ -44,9 +45,9 @@ Item {
             height: buttonHeight
             text: "CANCEL"
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.horizontalCenterOffset: 120
+            anchors.horizontalCenterOffset: buttonCancel.pressed ? horizontalNotPressed+addPressed : horizontalNotPressed
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: 15
+            anchors.bottomMargin: buttonCancel.pressed ? verticalNotPressed-addPressed : verticalNotPressed
             visible: true            
             style: buttonStyle
         }
@@ -57,9 +58,9 @@ Item {
             height: buttonHeight
             objectName: "buttonEdit"
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.horizontalCenterOffset: -120
+            anchors.horizontalCenterOffset: buttonEdit.pressed ? -horizontalNotPressed+addPressed : -horizontalNotPressed
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: 15
+            anchors.bottomMargin: buttonEdit.pressed ? verticalNotPressed-addPressed : verticalNotPressed
             text:"EDIT"
             visible: true
             style: buttonStyle
@@ -69,9 +70,9 @@ Item {
         anchors.fill: buttonCancel
         source: buttonCancel
         color: "#50000000"
-        horizontalOffset: shadowOffset
-        verticalOffset: shadowOffset
-        radius: 8
+        horizontalOffset: buttonCancel.pressed ? shadowOffset-addPressed : shadowOffset
+        verticalOffset: buttonCancel.pressed ? shadowOffset-addPressed : shadowOffset
+        radius: buttonCancel.hovered ? rOffShadowNotPressed+8 : rOffShadowNotPressed
         samples: 17
     }
 
@@ -79,9 +80,9 @@ Item {
         anchors.fill: buttonEdit
         source: buttonEdit
         color: "#50000000"
-        horizontalOffset: shadowOffset
-        verticalOffset: shadowOffset
-        radius: 8
+        horizontalOffset: buttonEdit.pressed ? shadowOffset-addPressed : shadowOffset
+        verticalOffset: buttonEdit.pressed ? shadowOffset-addPressed : shadowOffset
+        radius: buttonEdit.hovered ? rOffShadowNotPressed+8 : rOffShadowNotPressed
         samples: 17
     }
 
@@ -236,7 +237,7 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: topBar.bottom
         anchors.topMargin: 5
-        anchors.bottom: buttonCancel.top
+        anchors.bottom: flowEditCancel.top
         anchors.bottomMargin: 5
         border.color: "#6988bd"
         color: "#006988bd"
@@ -437,5 +438,15 @@ Item {
 
             delegate: delegateId
         }
+   }
+
+   Flow {
+       id: flowEditCancel
+       width: parent.width
+       height: buttonHeight + 15
+       anchors.bottom: parent.bottom
+       anchors.bottomMargin: 2
+       anchors.horizontalCenter: parent.horizontalCenter
+       Rectangle { color: "red"; width: parent.width; height: parent.height}
    }
 }

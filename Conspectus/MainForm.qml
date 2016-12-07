@@ -5,17 +5,18 @@ import QtQuick.Controls.Styles 1.4
 import QtGraphicalEffects 1.0
 
 Item {
-    property int buttonWidth: 200;
-    property int buttonHeight: 100;
+    property int buttonWidth: 200
+    property int buttonHeight: 100
     property int shadowOffset: 5
+    property int verticalNotPressed: 20
+    property int horizontalNotPressed: 135
+    property int rOffShadowNotPressed: 12
+    property int addPressed: 2
 
     Component {
         id: buttonStyle
         ButtonStyle {
-
             background: Rectangle{
-                border.color: control.hovered ? "#F09750" : "#f0c150"
-                border.width: control.pressed ? 3 : 2
                 color: control.pressed ? "#697BBD"  : "#6988bd"
                 radius: 3
             }
@@ -46,8 +47,8 @@ Item {
             height: buttonHeight
             text: "VIEW LECTURE"
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.horizontalCenterOffset: -120
-            anchors.verticalCenterOffset: 25
+            anchors.horizontalCenterOffset: buttonView.pressed ? -horizontalNotPressed+addPressed : -horizontalNotPressed
+            anchors.verticalCenterOffset: buttonView.pressed ? verticalNotPressed+addPressed : verticalNotPressed
             anchors.verticalCenter: parent.verticalCenter
             visible: true            
             style: buttonStyle
@@ -58,8 +59,8 @@ Item {
             width: buttonWidth
             height: buttonHeight
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.horizontalCenterOffset: 120
-            anchors.verticalCenterOffset: 25
+            anchors.horizontalCenterOffset: buttonAdd.pressed ? horizontalNotPressed+addPressed : horizontalNotPressed
+            anchors.verticalCenterOffset: buttonAdd.pressed ? verticalNotPressed+addPressed : verticalNotPressed
             anchors.verticalCenter: parent.verticalCenter
             text:"ADD LIST"
             visible: true
@@ -69,19 +70,19 @@ Item {
         anchors.fill: buttonAdd
         source: buttonAdd
         color: "#50000000"
-        horizontalOffset: shadowOffset
-        verticalOffset: shadowOffset
-        radius: 12
-        samples: 25
+        horizontalOffset: buttonAdd.pressed ? shadowOffset-addPressed : shadowOffset
+        verticalOffset: buttonAdd.pressed ? shadowOffset-addPressed : shadowOffset
+        samples: 25//buttonAdd.hovered ? 25 : 45
+        radius: buttonAdd.hovered ? rOffShadowNotPressed+8 : rOffShadowNotPressed
     }
 
     DropShadow {
         anchors.fill: buttonView
         source: buttonView
         color: "#50000000"
-        horizontalOffset: shadowOffset
-        verticalOffset: shadowOffset
-        radius: 12
+        horizontalOffset: buttonView.pressed ? shadowOffset-addPressed : shadowOffset
+        verticalOffset: buttonView.pressed ? shadowOffset-addPressed : shadowOffset
+        radius: buttonView.hovered ? rOffShadowNotPressed+8 : rOffShadowNotPressed
         samples: 25
     }
 
