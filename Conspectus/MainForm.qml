@@ -14,9 +14,9 @@ Item {
         ButtonStyle {
 
             background: Rectangle{
-                color: "#6988bd"
-//                    border.color: "#65cedb"
-//                    border.width: 1
+                border.color: control.hovered ? "#F09750" : "#f0c150"
+                border.width: control.pressed ? 3 : 2
+                color: control.pressed ? "#697BBD"  : "#6988bd"
                 radius: 3
             }
             label: Text {

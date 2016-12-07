@@ -17,7 +17,9 @@ Item {
         ButtonStyle {
 
             background: Rectangle{
-                color: "#6988bd"
+                border.color: control.hovered ? "#F09750" : "#f0c150"
+                border.width: control.pressed ? 3 : 2
+                color: control.pressed ? "#697BBD"  : "#6988bd"
                 radius: 3
             }
             label: Text {
@@ -57,6 +59,7 @@ Item {
             selectedNameFilter: "Image files (*.png *.jpg)"
             onAccepted: {
                 var path = utils.convertUrlToNativeFilePath(fileDialog.fileUrl)
+                textField1.text = "";
                 textField1.insert(0, path);
             }
             onRejected: { console.log("Rejected") }
@@ -74,7 +77,9 @@ Item {
         visible: true
         style:  ButtonStyle {
             background: Rectangle{
-                color: "#f0c150"
+                border.color: "#6988bd"
+                border.width: control.hovered ? 2 : 1
+                color: control.pressed ? "#F0AE50"  : "#f0c150"
                 radius: 3
             }
             label: Text {

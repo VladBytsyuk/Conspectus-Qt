@@ -16,7 +16,9 @@ Item {
         ButtonStyle {
 
             background: Rectangle{
-                color: "#6988bd"
+                border.color: control.hovered ? "#F09750" : "#f0c150"
+                border.width: control.pressed ? 3 : 2
+                color: control.pressed ? "#697BBD"  : "#6988bd"
                 radius: 3
             }
             label: Text {
@@ -82,125 +84,192 @@ Item {
         samples: 17
     }
 
-    Text {
-        id: title
-        text: "CONSPECTUS"
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenterOffset: -160
-        anchors.verticalCenter: parent.verticalCenter
-        font.pixelSize: 32
-        font.bold: true
-    }
 
-    Flow {
-        id: flowFoto
+    /**
+    * Top bar
+    */
+    Rectangle {
+        id: topBar
+        width: parent.width - 16
+        height: 60
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenter: parent.verticalCenter
-        width: parent.width - 30
-        height: 259
-        anchors.centerIn: parent
-        spacing: 10
-        Rectangle { color: "red"; width: 120; height: 80 }
-        Rectangle { color: "green"; width: 80; height: 120 }
-        Rectangle { color: "blue"; width: 80; height: 120 }
-        Rectangle { color: "yellow"; width: 120; height: 80 }
-        Rectangle { color: "black"; width: 80; height: 120 }
-    }
+        border.color: "#6988bd"
+        color: "#006988bd"
+        radius: 3
 
-    Flow {
-        id: flow2
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: parent.top
-        anchors.topMargin: -20
-        width: 600
-        height: 30
-        Rectangle { color: "#00f0c150"; width: 600; height: 30 }
-        spacing: 5
-        //___________________________________________________________________________
-        ComboBox {
-            id: boxTerm
-            width: boxWidth
-            height: boxHeight
-            objectName: "boxTerm"
-            model: [1,2,3,4,5,6,7,8]
-            Component.onCompleted: {
-                currentIndex = -1
+        Flow {
+            id: flowTopBarText
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.top: parent.top
+            anchors.topMargin: 5
+            width: 600
+            height: 30
+            spacing: 5
+
+            Text {
+                width: boxWidth
+                height: boxHeight
+                horizontalAlignment: TextInput.AlignHCenter
+                text: "Term"
+                font.pixelSize: 12
             }
 
-            signal termSelect(string term)
-            onCurrentTextChanged: boxTerm.termSelect(model[currentIndex])
+            Text {
+                width: boxWidth
+                height: boxHeight
+                horizontalAlignment: TextInput.AlignHCenter
+                text: "Subject"
+                font.pixelSize: 12
+            }
 
-            inputMethodHints: Qt.ImhNoAutoUppercase
-            style: ComboBoxStyle {
-                    background: Rectangle {
-                        radius: 3
-                        color: "#f0c150"
-                    }
-                    label: Text {
-                        renderType: Text.NativeRendering
-                        font.bold: true
-                        color: "black"
-                        text: control.currentIndex===-1?"Term":control.currentText
-                    }
+            Text {
+                width: boxWidth
+                height: boxHeight
+                horizontalAlignment: TextInput.AlignHCenter
+                text: "Theme"
+                font.pixelSize: 12
             }
         }
 
-        ComboBox {
-            id: boxSubject
-            width: boxWidth
-            height: boxHeight
-            objectName: "boxSubject"
-            model: ["Maths","Economics","Physics","English"]
-            Component.onCompleted: {
-                currentIndex = -1
+        Flow {
+            id: flowTopBar
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 5
+            width: 600
+            height: 30
+            spacing: 5
+
+            ComboBox {
+                id: boxTerm
+                width: boxWidth
+                height: boxHeight
+                objectName: "boxTerm"
+                model: [1,2,3,4,5,6,7,8]
+                Component.onCompleted: {
+                    currentIndex = -1
+                }
+
+                signal termSelect(string term)
+                onCurrentTextChanged: boxTerm.termSelect(model[currentIndex])
+
+                inputMethodHints: Qt.ImhNoAutoUppercase
+                style: ComboBoxStyle {
+                        background: Rectangle {
+                            radius: 3
+                            color: "#f0c150"
+                        }
+                        label: Text {
+                            renderType: Text.NativeRendering
+                            font.bold: true
+                            color: "black"
+                            text: control.currentIndex===-1?"Term":control.currentText
+                        }
+                }
             }
 
-            signal subjectSelect(string subject)
-            onCurrentTextChanged: boxSubject.subjectSelect(model[currentIndex])
+            ComboBox {
+                id: boxSubject
+                width: boxWidth
+                height: boxHeight
+                objectName: "boxSubject"
+                model: ["Maths","Economics","Physics","English"]
+                Component.onCompleted: {
+                    currentIndex = -1
+                }
 
-            style: ComboBoxStyle {
-                    background: Rectangle {
-                        radius: 3
-                        color: "#f0c150"
-                    }
-                    label: Text {
-                        renderType: Text.NativeRendering
-                        font.bold: true
-                        color: "black"
-                        text: control.currentIndex===-1?"Subject":control.currentText
-                    }
+                signal subjectSelect(string subject)
+                onCurrentTextChanged: boxSubject.subjectSelect(model[currentIndex])
+
+                style: ComboBoxStyle {
+                        background: Rectangle {
+                            radius: 3
+                            color: "#f0c150"
+                        }
+                        label: Text {
+                            renderType: Text.NativeRendering
+                            font.bold: true
+                            color: "black"
+                            text: control.currentIndex===-1?"Subject":control.currentText
+                        }
+                }
             }
-        }
 
-        ComboBox {
-            id: boxTheme
-            width: boxWidth
-            height: boxHeight
-            objectName: "boxTheme"
-            model: ["Limits","Summs"]
-            Component.onCompleted: {
-                currentIndex = -1
+            ComboBox {
+                id: boxTheme
+                width: boxWidth
+                height: boxHeight
+                objectName: "boxTheme"
+                model: ["Limits","Summs"]
+                Component.onCompleted: {
+                    currentIndex = -1
+                }
+
+                signal themeSelect(string theme)
+                onCurrentTextChanged: boxTheme.themeSelect(model[currentIndex])
+
+                style: ComboBoxStyle {
+                        background: Rectangle {
+                            radius: 3
+                            color: "#f0c150"
+                        }
+                        label: Text {
+                            renderType: Text.NativeRendering
+                            color: "black"
+                            font.bold: true
+                            text:
+                                control.currentIndex===-1?"Theme":control.currentText
+                        }
+                }
             }
 
-            signal themeSelect(string theme)
-            onCurrentTextChanged: boxTheme.themeSelect(model[currentIndex])
-
-            style: ComboBoxStyle {
-                    background: Rectangle {
-                        radius: 3
-                        color: "#f0c150"
-                    }
-                    label: Text {
-                        renderType: Text.NativeRendering
-                        color: "black"
-                        font.bold: true
-                        text:
-                            control.currentIndex===-1?"Theme":control.currentText
-                    }
-            }
-        }
-     //__________________________________________________________________________________
-
+        } //End Top bar
     }
 
+    /**
+    * Photo bar
+    */
+    Rectangle {
+        id: photoBar
+        width: parent.width - 16
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: topBar.bottom
+        anchors.topMargin: 5
+        anchors.bottom: buttonCancel.top
+        anchors.bottomMargin: 5
+        border.color: "#6988bd"
+        color: "#006988bd"
+        radius: 3
+
+        Flow {
+            id: flowFoto
+
+            width: parent.width
+            anchors.top: parent.top
+            anchors.topMargin: 5
+            anchors.left: parent.left
+            anchors.leftMargin: 5
+            anchors.right: parent.right
+            anchors.rightMargin: 5
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 5
+
+            spacing: 10
+            Rectangle { color: "red"; width: 120; height: 80 }
+            Rectangle { color: "green"; width: 80; height: 120 }
+            Rectangle { color: "blue"; width: 80; height: 120 }
+            Rectangle { color: "yellow"; width: 120; height: 80 }
+            Rectangle { color: "black"; width: 80; height: 120 }
+            Rectangle { color: "red"; width: 120; height: 80 }
+            Rectangle { color: "green"; width: 80; height: 120 }
+            Rectangle { color: "blue"; width: 80; height: 120 }
+            Rectangle { color: "yellow"; width: 120; height: 80 }
+            Rectangle { color: "black"; width: 80; height: 120 }
+
+        }
+
+        function add(){
+
+        }
+   }
 }
