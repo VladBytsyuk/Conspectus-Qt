@@ -247,197 +247,176 @@ Item {
             id: listModel
 
             ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                src: "K:\IMGL5314.jpg"
                 list_no: 1
             }
 
             ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
-                list_no: 3
-            }
-
-            ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
-                list_no: 3
-            }
-
-            ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                src: "K:\IMGL5314.jpg"
                 list_no: 1
             }
 
             ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
-                list_no: 3
-            }
-
-            ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
-                list_no: 3
+                src: "K:\IMGL5314.jpg"
+                list_no: 1
             }
             ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                src: "K:\IMGL5314.jpg"
+                list_no: 1
+            }
+            ListElement {
+                src: "K:\IMGL5314.jpg"
+                list_no: 1
+            }
+            ListElement {
+                src: "K:\IMGL5314.jpg"
+                list_no: 1
+            }
+            ListElement {
+                src: "K:\IMGL5314.jpg"
                 list_no: 1
             }
 
             ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
-                list_no: 3
-            }
-
-            ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
-                list_no: 3
+                src: "K:\IMGL5314.jpg"
+                list_no: 1
             }
             ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                src: "K:\IMGL5314.jpg"
+                list_no: 1
+            }
+            ListElement {
+                src: "K:\IMGL5314.jpg"
+                list_no: 1
+            }
+            ListElement {
+                src: "K:\IMGL5314.jpg"
+                list_no: 1
+            }
+            ListElement {
+                src: "K:\IMGL5314.jpg"
+                list_no: 1
+            }
+            ListElement {
+                src: "K:\IMGL5314.jpg"
+                list_no: 1
+            }
+            ListElement {
+                src: "K:\IMGL5314.jpg"
                 list_no: 1
             }
 
             ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
-                list_no: 3
-            }
-
-            ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
-                list_no: 3
-            }
-            ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                src: "K:\IMGL5314.jpg"
                 list_no: 1
             }
 
             ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
-                list_no: 3
-            }
-
-            ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
-                list_no: 3
-            }
-            ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                src: "K:\IMGL5314.jpg"
                 list_no: 1
             }
 
             ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
-                list_no: 3
+                src: "K:\IMGL5314.jpg"
+                list_no: 1
             }
-
             ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
-                list_no: 3
+                src: "K:\IMGL5314.jpg"
+                list_no: 1
             }
-
             ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                src: "K:\IMGL5314.jpg"
+                list_no: 1
+            }
+            ListElement {
+                src: "K:\IMGL5314.jpg"
+                list_no: 1
+            }
+            ListElement {
+                src: "K:\IMGL5314.jpg"
                 list_no: 1
             }
 
             ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
-                list_no: 3
-            }
-
-            ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
-                list_no: 3
-            }
-
-            ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                src: "K:\IMGL5314.jpg"
                 list_no: 1
             }
-
             ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
-                list_no: 3
-            }
-
-            ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
-                list_no: 3
-            }
-            ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                src: "K:\IMGL5314.jpg"
                 list_no: 1
             }
-
             ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
-                list_no: 3
-            }
-
-            ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
-                list_no: 3
-            }
-            ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                src: "K:\IMGL5314.jpg"
                 list_no: 1
             }
-
             ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
-                list_no: 3
-            }
-
-            ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
-                list_no: 3
-            }
-            ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                src: "K:\IMGL5314.jpg"
                 list_no: 1
             }
-
             ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
-                list_no: 3
-            }
-
-            ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
-                list_no: 3
-            }
-            ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                src: "K:\IMGL5314.jpg"
                 list_no: 1
             }
-
             ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
-                list_no: 3
+                src: "K:\IMGL5314.jpg"
+                list_no: 1
             }
-
             ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
-                list_no: 3
+                src: "K:\IMGL5314.jpg"
+                list_no: 1
             }
         }
 
         Component {
             id: delegateId
             Column {
-                Image { width:90; height: 90; source: "file:///" + source1; anchors.horizontalCenter: parent.horizontalCenter }
+                Image { width:90; height: 90; source: "file:///" + src; anchors.horizontalCenter: parent.horizontalCenter }
                 Text { text: list_no; anchors.horizontalCenter: parent.horizontalCenter }
             }
         }
+        ScrollView {
+            id: scrollBar
+            width: parent.width
+            height: parent.height
 
-        GridView {
-            width: 300; height: 200
-            anchors.fill: parent
+            flickableItem.interactive: true
+            verticalScrollBarPolicy : Qt.ScrollBarAsNeeded
 
+            Keys.onUpPressed: scrollBar.decrease()
+            Keys.onDownPressed: scrollBar.increase()
 
-            id: gridView
+            GridView {
+                width: 300; height: 200
+                anchors.fill: parent
 
-            model: listModel
+                id: gridView
 
-            delegate: delegateId
-        }
+                model: listModel
+
+                delegate: delegateId
+
+            }
+
+            /*style: ScrollViewStyle {
+                    transientScrollBars: true
+                    handle: Item {
+                        implicitWidth: 14
+                        implicitHeight: 26
+                        Rectangle {
+                            color: "#424246"
+                            anchors.fill: parent
+                            anchors.topMargin: 6
+                            anchors.leftMargin: 4
+                            anchors.rightMargin: 4
+                            anchors.bottomMargin: 6
+                        }
+                    }
+                    scrollBarBackground: Item {
+                        implicitWidth: 14
+                        implicitHeight: 26
+                    }
+            }*/
+       }
    }
 
    Flow {
