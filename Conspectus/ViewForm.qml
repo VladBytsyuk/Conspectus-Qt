@@ -236,10 +236,10 @@ Item {
         width: parent.width - 16
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: topBar.bottom
-        anchors.topMargin: 5
+        anchors.topMargin: 10
         anchors.bottom: flowEditCancel.top
-        anchors.bottomMargin: 5
-        border.color: "#6988bd"
+        anchors.bottomMargin: 10
+        border.color: "#006988bd"
         color: "#006988bd"
         radius: 3
 
@@ -369,11 +369,58 @@ Item {
 
         Component {
             id: delegateId
-            Column {
-                Image { width:90; height: 90; source: "file:///" + src; anchors.horizontalCenter: parent.horizontalCenter }
-                Text { text: list_no; anchors.horizontalCenter: parent.horizontalCenter }
+            Rectangle {
+                id: delegateArea
+                width: 130
+                height: 140
+                color: "#006988bd"
+
+                Image {
+                    id: delegateImage
+                    anchors.fill: parent
+                    anchors.topMargin: 10
+                    anchors.bottomMargin: 20
+                    anchors.leftMargin: 10
+                    anchors.rightMargin: 10
+                    source: "file:///" + src;
+                }
+
+                Text {
+                    text: list_no
+                    anchors.horizontalCenter: delegateImage.horizontalCenter
+                    anchors.top: delegateImage.bottom
+                    anchors.topMargin: 5
+                }
+
+
+                MouseArea {
+                    anchors.fill: parent
+                    acceptedButtons: Qt.LeftButton | Qt.RightButton
+                    onClicked: {
+                        if (mouse.button & Qt.RightButton) {
+                            gridView.currentIndex = index
+                        } else if (mouse.button & Qt.LeftButton) {
+                            gridView.currentIndex = index
+                        }
+                    }
+                }
             }
         }
+
+        Component {
+            id: highlight
+            Rectangle {
+                color: "#90B9C9E4"
+                radius: 3
+                width: gridView.currentItem.width
+                height: gridView.currentItem.height
+                //x: gridView.currentItem.x
+                //y: gridView.currentItem.y
+                //Behavior on x { SpringAnimation { spring: 5; damping: 0.2 } }
+                //Behavior on y { SpringAnimation { spring: 5; damping: 0.2 } }
+            }
+        }
+
         ScrollView {
             id: scrollBar
             width: parent.width
@@ -385,17 +432,7 @@ Item {
             Keys.onUpPressed: scrollBar.decrease()
             Keys.onDownPressed: scrollBar.increase()
 
-            GridView {
-                width: 300; height: 200
-                anchors.fill: parent
-
-                id: gridView
-
-                model: listModel
-
-                delegate: delegateId
-
-            }
+            focus: true
 
             /*style: ScrollViewStyle {
                     transientScrollBars: true
@@ -416,6 +453,22 @@ Item {
                         implicitHeight: 26
                     }
             }*/
+
+            GridView {
+                anchors.fill: parent
+                cellWidth: 130
+                cellHeight: 150
+                highlight: highlight
+                highlightFollowsCurrentItem: true
+                focus: true
+
+                id: gridView
+
+                model: listModel
+
+                delegate: delegateId
+
+            }
        }
    }
 
