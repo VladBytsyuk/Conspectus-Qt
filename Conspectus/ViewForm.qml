@@ -373,7 +373,20 @@ Item {
                 id: delegateArea
                 width: 130
                 height: 140
-                color: "#006988bd"
+                radius: 3
+                color: delegateMA.containsMouse ? "#70B9C9E4" : "#00B9C9E4"
+                states: State {
+                            name: "Set100%color"
+                            PropertyChanges { target: delegateArea; color: "#B9C9E4" }
+                        }
+                        State {
+                            name: "Set70%color"
+                            PropertyChanges { target: delegateArea; color: "#70B9C9E4" }
+                        }
+                        State {
+                            name: "Set0%color"
+                            PropertyChanges { target: delegateArea; color: "#00B9C9E4" }
+                        }
 
                 Image {
                     id: delegateImage
@@ -392,29 +405,34 @@ Item {
                     anchors.topMargin: 5
                 }
 
-
                 MouseArea {
+                    id: delegateMA
                     anchors.fill: parent
                     acceptedButtons: Qt.LeftButton | Qt.RightButton
                     hoverEnabled: true
-                    onHoveredChanged: {
-                        gridView.currentIndex = index;
-                    }
                     onClicked: {
                         if (mouse.button & Qt.RightButton) {
                             gridView.currentIndex = index;
                         } else if (mouse.button & Qt.LeftButton) {
-                            gridView.currentIndex = index
+                            gridView.currentIndex = index;
+                        }
+                    }
+                    onDoubleClicked: {
+                        if (mouse.button & Qt.RightButton) {
+                            gridView.currentIndex = index;
+                        } else if (mouse.button & Qt.LeftButton) {
+                            gridView.currentIndex = index;
                         }
                     }
                 }
+
             }
         }
 
         Component {
             id: highlight
             Rectangle {
-                color: "#70B9C9E4"
+                color: "#B9C9E4"
                 radius: 3
                 width: gridView.currentItem.width
                 height: gridView.currentItem.height
