@@ -14,7 +14,6 @@ Item {
     property int rOffShadowNotPressed: 8
     property int addPressed: 2
 
-
     Component {
         id: buttonStyle
         ButtonStyle {
@@ -375,6 +374,9 @@ Item {
                 height: 140
                 radius: 3
                 color: delegateMA.containsMouse ? "#70B9C9E4" : "#00B9C9E4"
+
+                signal openingPicture(string path)
+
                 states: State {
                             name: "Set100%color"
                             PropertyChanges { target: delegateArea; color: "#B9C9E4" }
@@ -421,6 +423,7 @@ Item {
                         if (mouse.button & Qt.RightButton) {
                             gridView.currentIndex = index;
                         } else if (mouse.button & Qt.LeftButton) {
+                            delegateArea.openingPicture(src);
                             gridView.currentIndex = index;
                         }
                     }
@@ -481,7 +484,7 @@ Item {
                 cellWidth: 130
                 cellHeight: 150
                 highlight: highlight
-                //highlightFollowsCurrentItem: true
+                highlightFollowsCurrentItem: true
                 focus: true
 
                 id: gridView

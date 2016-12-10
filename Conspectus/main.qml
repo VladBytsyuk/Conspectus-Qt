@@ -4,11 +4,11 @@ import QtQuick.Dialogs 1.2
 
 ApplicationWindow {
     visible: true
-    width: 640
-    height: 480
+    width: 690
+    height: 610
     title: qsTr("Conspectus")
-    minimumWidth: 640
-    minimumHeight: 480
+    minimumWidth: 690
+    minimumHeight: 610
 
     menuBar: MenuBar {
         Menu {
