@@ -396,9 +396,13 @@ Item {
                 MouseArea {
                     anchors.fill: parent
                     acceptedButtons: Qt.LeftButton | Qt.RightButton
+                    hoverEnabled: true
+                    onHoveredChanged: {
+                        gridView.currentIndex = index;
+                    }
                     onClicked: {
                         if (mouse.button & Qt.RightButton) {
-                            gridView.currentIndex = index
+                            gridView.currentIndex = index;
                         } else if (mouse.button & Qt.LeftButton) {
                             gridView.currentIndex = index
                         }
@@ -410,7 +414,7 @@ Item {
         Component {
             id: highlight
             Rectangle {
-                color: "#90B9C9E4"
+                color: "#70B9C9E4"
                 radius: 3
                 width: gridView.currentItem.width
                 height: gridView.currentItem.height
@@ -459,7 +463,7 @@ Item {
                 cellWidth: 130
                 cellHeight: 150
                 highlight: highlight
-                highlightFollowsCurrentItem: true
+                //highlightFollowsCurrentItem: true
                 focus: true
 
                 id: gridView
