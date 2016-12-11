@@ -398,6 +398,7 @@ Item {
                     anchors.leftMargin: 10
                     anchors.rightMargin: 10
                     source: "file:///" + src;
+                    fillMode: Image.PreserveAspectFit
                 }
 
                 Text {
@@ -423,7 +424,9 @@ Item {
                         if (mouse.button & Qt.RightButton) {
                             gridView.currentIndex = index;
                         } else if (mouse.button & Qt.LeftButton) {
-                            delegateArea.openingPicture(src);
+                            showForm.showImage(src);
+                            showForm.showShowForm();
+                            //delegateArea.openingPicture(src);
                             gridView.currentIndex = index;
                         }
                     }

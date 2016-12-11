@@ -35,6 +35,7 @@ ApplicationWindow {
            viewForm.visible = true
             addForm.visible = false
            mainForm.visible = false
+            showForm.visible = false
            viewForm.viewFormSignal()
         }
 
@@ -52,13 +53,14 @@ ApplicationWindow {
             viewForm.visible = false
              addForm.visible = true
             mainForm.visible = false
+            showForm.visible = false
              addForm.addFormSignal()
         }
         buttonCancel.onClicked: mainForm.showMainForm()
     }
 
     MainForm {
-        id: mainForm;
+        id: mainForm
         anchors.fill: parent
         buttonView.onClicked: viewForm.showViewForm()
         buttonAdd.onClicked: addForm.showAddForm()
@@ -67,7 +69,25 @@ ApplicationWindow {
            viewForm.visible = false
             addForm.visible = false
            mainForm.visible = true
+            showForm.visible = false
         }
+    }
+
+    ShowForm {
+        id: showForm
+        anchors.fill: parent
+        objectName: "showForm"
+        visible: false
+
+        property string path: "file:///" + "K:\IMGL5314.jpg"
+
+        function showShowForm(string) {
+           viewForm.visible = false
+            addForm.visible = false
+           mainForm.visible = false
+            showForm.visible = true
+        }
+        buttonCancel.onClicked: viewForm.showViewForm()
     }
 
 }
