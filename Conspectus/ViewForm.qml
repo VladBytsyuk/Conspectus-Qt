@@ -14,7 +14,6 @@ Item {
     property int rOffShadowNotPressed: 8
     property int addPressed: 2
 
-
     Component {
         id: buttonStyle
         ButtonStyle {
@@ -236,10 +235,10 @@ Item {
         width: parent.width - 16
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: topBar.bottom
-        anchors.topMargin: 5
+        anchors.topMargin: 10
         anchors.bottom: flowEditCancel.top
-        anchors.bottomMargin: 5
-        border.color: "#6988bd"
+        anchors.bottomMargin: 10
+        border.color: "#006988bd"
         color: "#006988bd"
         radius: 3
 
@@ -247,197 +246,258 @@ Item {
             id: listModel
 
             ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                src: "K:\IMGL5314.jpg"
                 list_no: 1
             }
 
             ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
-                list_no: 3
-            }
-
-            ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
-                list_no: 3
-            }
-
-            ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                src: "K:\IMGL5314.jpg"
                 list_no: 1
             }
 
             ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
-                list_no: 3
-            }
-
-            ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
-                list_no: 3
+                src: "K:\IMGL5314.jpg"
+                list_no: 1
             }
             ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                src: "K:\IMGL5314.jpg"
+                list_no: 1
+            }
+            ListElement {
+                src: "K:\IMGL5314.jpg"
+                list_no: 1
+            }
+            ListElement {
+                src: "K:\IMGL5314.jpg"
+                list_no: 1
+            }
+            ListElement {
+                src: "K:\IMGL5314.jpg"
                 list_no: 1
             }
 
             ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
-                list_no: 3
-            }
-
-            ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
-                list_no: 3
+                src: "K:\IMGL5314.jpg"
+                list_no: 1
             }
             ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                src: "K:\IMGL5314.jpg"
+                list_no: 1
+            }
+            ListElement {
+                src: "K:\IMGL5314.jpg"
+                list_no: 1
+            }
+            ListElement {
+                src: "K:\IMGL5314.jpg"
+                list_no: 1
+            }
+            ListElement {
+                src: "K:\IMGL5314.jpg"
+                list_no: 1
+            }
+            ListElement {
+                src: "K:\IMGL5314.jpg"
+                list_no: 1
+            }
+            ListElement {
+                src: "K:\IMGL5314.jpg"
                 list_no: 1
             }
 
             ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
-                list_no: 3
-            }
-
-            ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
-                list_no: 3
-            }
-            ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                src: "K:\IMGL5314.jpg"
                 list_no: 1
             }
 
             ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
-                list_no: 3
-            }
-
-            ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
-                list_no: 3
-            }
-            ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                src: "K:\IMGL5314.jpg"
                 list_no: 1
             }
 
             ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
-                list_no: 3
+                src: "K:\IMGL5314.jpg"
+                list_no: 1
             }
-
             ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
-                list_no: 3
+                src: "K:\IMGL5314.jpg"
+                list_no: 1
             }
-
             ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                src: "K:\IMGL5314.jpg"
+                list_no: 1
+            }
+            ListElement {
+                src: "K:\IMGL5314.jpg"
+                list_no: 1
+            }
+            ListElement {
+                src: "K:\IMGL5314.jpg"
                 list_no: 1
             }
 
             ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
-                list_no: 3
-            }
-
-            ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
-                list_no: 3
-            }
-
-            ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                src: "K:\IMGL5314.jpg"
                 list_no: 1
             }
-
             ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
-                list_no: 3
-            }
-
-            ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
-                list_no: 3
-            }
-            ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                src: "K:\IMGL5314.jpg"
                 list_no: 1
             }
-
             ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
-                list_no: 3
-            }
-
-            ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
-                list_no: 3
-            }
-            ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                src: "K:\IMGL5314.jpg"
                 list_no: 1
             }
-
             ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
-                list_no: 3
-            }
-
-            ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
-                list_no: 3
-            }
-            ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                src: "K:\IMGL5314.jpg"
                 list_no: 1
             }
-
             ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
-                list_no: 3
-            }
-
-            ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
-                list_no: 3
-            }
-            ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
+                src: "K:\IMGL5314.jpg"
                 list_no: 1
             }
-
             ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
-                list_no: 3
+                src: "K:\IMGL5314.jpg"
+                list_no: 1
             }
-
             ListElement {
-                source1: "/home/vbytsyuk/Conspectus/Source/253742137.jpg"
-                list_no: 3
+                src: "K:\IMGL5314.jpg"
+                list_no: 1
             }
         }
 
         Component {
             id: delegateId
-            Column {
-                Image { width:90; height: 90; source: "file:///" + source1; anchors.horizontalCenter: parent.horizontalCenter }
-                Text { text: list_no; anchors.horizontalCenter: parent.horizontalCenter }
+            Rectangle {
+                id: delegateArea
+                width: 130
+                height: 140
+                radius: 3
+                color: delegateMA.containsMouse ? "#70B9C9E4" : "#00B9C9E4"
+
+                signal openingPicture(string path)
+
+                states: State {
+                            name: "Set100%color"
+                            PropertyChanges { target: delegateArea; color: "#B9C9E4" }
+                        }
+                        State {
+                            name: "Set70%color"
+                            PropertyChanges { target: delegateArea; color: "#70B9C9E4" }
+                        }
+                        State {
+                            name: "Set0%color"
+                            PropertyChanges { target: delegateArea; color: "#00B9C9E4" }
+                        }
+
+                Image {
+                    id: delegateImage
+                    anchors.fill: parent
+                    anchors.topMargin: 10
+                    anchors.bottomMargin: 20
+                    anchors.leftMargin: 10
+                    anchors.rightMargin: 10
+                    source: "file:///" + src;
+                    fillMode: Image.PreserveAspectFit
+                }
+
+                Text {
+                    text: list_no
+                    anchors.horizontalCenter: delegateImage.horizontalCenter
+                    anchors.top: delegateImage.bottom
+                    anchors.topMargin: 5
+                }
+
+                MouseArea {
+                    id: delegateMA
+                    anchors.fill: parent
+                    acceptedButtons: Qt.LeftButton | Qt.RightButton
+                    hoverEnabled: true
+                    onClicked: {
+                        if (mouse.button & Qt.RightButton) {
+                            gridView.currentIndex = index;
+                        } else if (mouse.button & Qt.LeftButton) {
+                            gridView.currentIndex = index;
+                        }
+                    }
+                    onDoubleClicked: {
+                        if (mouse.button & Qt.RightButton) {
+                            gridView.currentIndex = index;
+                        } else if (mouse.button & Qt.LeftButton) {
+                            showForm.showImage(src);
+                            showForm.showShowForm();
+                            //delegateArea.openingPicture(src);
+                            gridView.currentIndex = index;
+                        }
+                    }
+                }
+
             }
         }
 
-        GridView {
-            width: 300; height: 200
-            anchors.fill: parent
-
-
-            id: gridView
-
-            model: listModel
-
-            delegate: delegateId
+        Component {
+            id: highlight
+            Rectangle {
+                color: "#B9C9E4"
+                radius: 3
+                width: gridView.currentItem.width
+                height: gridView.currentItem.height
+                //x: gridView.currentItem.x
+                //y: gridView.currentItem.y
+                //Behavior on x { SpringAnimation { spring: 5; damping: 0.2 } }
+                //Behavior on y { SpringAnimation { spring: 5; damping: 0.2 } }
+            }
         }
+
+        ScrollView {
+            id: scrollBar
+            width: parent.width
+            height: parent.height
+
+            flickableItem.interactive: true
+            verticalScrollBarPolicy : Qt.ScrollBarAsNeeded
+
+            Keys.onUpPressed: scrollBar.decrease()
+            Keys.onDownPressed: scrollBar.increase()
+
+            focus: true
+
+            /*style: ScrollViewStyle {
+                    transientScrollBars: true
+                    handle: Item {
+                        implicitWidth: 14
+                        implicitHeight: 26
+                        Rectangle {
+                            color: "#424246"
+                            anchors.fill: parent
+                            anchors.topMargin: 6
+                            anchors.leftMargin: 4
+                            anchors.rightMargin: 4
+                            anchors.bottomMargin: 6
+                        }
+                    }
+                    scrollBarBackground: Item {
+                        implicitWidth: 14
+                        implicitHeight: 26
+                    }
+            }*/
+
+            GridView {
+                anchors.fill: parent
+                cellWidth: 130
+                cellHeight: 150
+                highlight: highlight
+                highlightFollowsCurrentItem: true
+                focus: true
+
+                id: gridView
+
+                model: listModel
+
+                delegate: delegateId
+
+            }
+       }
    }
 
    Flow {
