@@ -246,124 +246,76 @@ Item {
             id: listModel
 
             ListElement {
-                src: "K:\IMGL5314.jpg"
+                src: "/home/vbytsyuk/Conspectus/Source/530223884.jpg"
                 list_no: 1
             }
 
             ListElement {
-                src: "K:\IMGL5314.jpg"
+                src: "/home/vbytsyuk/Conspectus/Source/530223884.jpg"
                 list_no: 1
             }
 
             ListElement {
-                src: "K:\IMGL5314.jpg"
-                list_no: 1
-            }
-            ListElement {
-                src: "K:\IMGL5314.jpg"
-                list_no: 1
-            }
-            ListElement {
-                src: "K:\IMGL5314.jpg"
-                list_no: 1
-            }
-            ListElement {
-                src: "K:\IMGL5314.jpg"
-                list_no: 1
-            }
-            ListElement {
-                src: "K:\IMGL5314.jpg"
+                src: "/home/vbytsyuk/Conspectus/Source/530223884.jpg"
                 list_no: 1
             }
 
             ListElement {
-                src: "K:\IMGL5314.jpg"
-                list_no: 1
-            }
-            ListElement {
-                src: "K:\IMGL5314.jpg"
-                list_no: 1
-            }
-            ListElement {
-                src: "K:\IMGL5314.jpg"
-                list_no: 1
-            }
-            ListElement {
-                src: "K:\IMGL5314.jpg"
-                list_no: 1
-            }
-            ListElement {
-                src: "K:\IMGL5314.jpg"
-                list_no: 1
-            }
-            ListElement {
-                src: "K:\IMGL5314.jpg"
-                list_no: 1
-            }
-            ListElement {
-                src: "K:\IMGL5314.jpg"
+                src: "/home/vbytsyuk/Conspectus/Source/530223884.jpg"
                 list_no: 1
             }
 
             ListElement {
-                src: "K:\IMGL5314.jpg"
+                src: "/home/vbytsyuk/Conspectus/Source/530223884.jpg"
                 list_no: 1
             }
 
             ListElement {
-                src: "K:\IMGL5314.jpg"
+                src: "/home/vbytsyuk/Conspectus/Source/530223884.jpg"
                 list_no: 1
             }
 
             ListElement {
-                src: "K:\IMGL5314.jpg"
-                list_no: 1
-            }
-            ListElement {
-                src: "K:\IMGL5314.jpg"
-                list_no: 1
-            }
-            ListElement {
-                src: "K:\IMGL5314.jpg"
-                list_no: 1
-            }
-            ListElement {
-                src: "K:\IMGL5314.jpg"
-                list_no: 1
-            }
-            ListElement {
-                src: "K:\IMGL5314.jpg"
+                src: "/home/vbytsyuk/Conspectus/Source/530223884.jpg"
                 list_no: 1
             }
 
             ListElement {
-                src: "K:\IMGL5314.jpg"
+                src: "/home/vbytsyuk/Conspectus/Source/530223884.jpg"
                 list_no: 1
             }
+
             ListElement {
-                src: "K:\IMGL5314.jpg"
+                src: "/home/vbytsyuk/Conspectus/Source/530223884.jpg"
                 list_no: 1
             }
+
             ListElement {
-                src: "K:\IMGL5314.jpg"
+                src: "/home/vbytsyuk/Conspectus/Source/530223884.jpg"
                 list_no: 1
             }
+
             ListElement {
-                src: "K:\IMGL5314.jpg"
+                src: "/home/vbytsyuk/Conspectus/Source/530223884.jpg"
                 list_no: 1
             }
+
             ListElement {
-                src: "K:\IMGL5314.jpg"
+                src: "/home/vbytsyuk/Conspectus/Source/530223884.jpg"
                 list_no: 1
             }
+
             ListElement {
-                src: "K:\IMGL5314.jpg"
+                src: "/home/vbytsyuk/Conspectus/Source/530223884.jpg"
                 list_no: 1
             }
+
             ListElement {
-                src: "K:\IMGL5314.jpg"
+                src: "/home/vbytsyuk/Conspectus/Source/530223884.jpg"
                 list_no: 1
             }
+
+
         }
 
         Component {

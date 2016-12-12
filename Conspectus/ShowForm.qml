@@ -84,7 +84,7 @@ Item {
             width: parent.width
             anchors.fill: parent
             visible: true
-            source: "file:///K:\IMGL5314.jpg"
+            source: "file:///home/vbytsyuk/Conspectus/Source/530223884.jpg"
         }
     }
 }
