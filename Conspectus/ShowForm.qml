@@ -79,12 +79,12 @@ Item {
         anchors.right: parent.right
         anchors.leftMargin: 10
         anchors.rightMargin: 10
-        Image {
+        /*Image {
             id: mainImage
             width: parent.width
             anchors.fill: parent
             visible: true
-            source: "file:///home/vbytsyuk/Conspectus/Source/530223884.jpg"
-        }
+            source:
+        }*/
     }
 }

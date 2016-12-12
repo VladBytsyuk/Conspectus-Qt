@@ -246,72 +246,73 @@ Item {
             id: listModel
 
             ListElement {
-                src: "/home/vbytsyuk/Conspectus/Source/530223884.jpg"
+                src: "K:\IMGL5047.jpg"
                 list_no: 1
             }
 
             ListElement {
-                src: "/home/vbytsyuk/Conspectus/Source/530223884.jpg"
+                src: "K:\IMGL5047.jpg"
                 list_no: 1
             }
 
             ListElement {
-                src: "/home/vbytsyuk/Conspectus/Source/530223884.jpg"
+                src: "K:\IMGL5047.jpg"
+                list_no: 1
+            }
+            ListElement {
+                src: "K:\IMGL5047.jpg"
                 list_no: 1
             }
 
             ListElement {
-                src: "/home/vbytsyuk/Conspectus/Source/530223884.jpg"
+                src: "K:\IMGL5047.jpg"
                 list_no: 1
             }
 
             ListElement {
-                src: "/home/vbytsyuk/Conspectus/Source/530223884.jpg"
+                src: "K:\IMGL5047.jpg"
+                list_no: 1
+            }
+            ListElement {
+                src: "K:\IMGL5047.jpg"
                 list_no: 1
             }
 
             ListElement {
-                src: "/home/vbytsyuk/Conspectus/Source/530223884.jpg"
+                src: "K:\IMGL5047.jpg"
                 list_no: 1
             }
 
             ListElement {
-                src: "/home/vbytsyuk/Conspectus/Source/530223884.jpg"
+                src: "K:\IMGL5047.jpg"
+                list_no: 1
+            }
+            ListElement {
+                src: "K:\IMGL5047.jpg"
                 list_no: 1
             }
 
             ListElement {
-                src: "/home/vbytsyuk/Conspectus/Source/530223884.jpg"
+                src: "K:\IMGL5047.jpg"
                 list_no: 1
             }
 
             ListElement {
-                src: "/home/vbytsyuk/Conspectus/Source/530223884.jpg"
+                src: "K:\IMGL5047.jpg"
+                list_no: 1
+            }
+            ListElement {
+                src: "K:\IMGL5047.jpg"
                 list_no: 1
             }
 
             ListElement {
-                src: "/home/vbytsyuk/Conspectus/Source/530223884.jpg"
+                src: "K:\IMGL5047.jpg"
                 list_no: 1
             }
 
             ListElement {
-                src: "/home/vbytsyuk/Conspectus/Source/530223884.jpg"
-                list_no: 1
-            }
-
-            ListElement {
-                src: "/home/vbytsyuk/Conspectus/Source/530223884.jpg"
-                list_no: 1
-            }
-
-            ListElement {
-                src: "/home/vbytsyuk/Conspectus/Source/530223884.jpg"
-                list_no: 1
-            }
-
-            ListElement {
-                src: "/home/vbytsyuk/Conspectus/Source/530223884.jpg"
+                src: "K:\IMGL5047.jpg"
                 list_no: 1
             }
 
@@ -330,16 +331,9 @@ Item {
                 signal openingPicture(string path)
 
                 states: State {
-                            name: "Set100%color"
-                            PropertyChanges { target: delegateArea; color: "#B9C9E4" }
-                        }
-                        State {
-                            name: "Set70%color"
-                            PropertyChanges { target: delegateArea; color: "#70B9C9E4" }
-                        }
-                        State {
-                            name: "Set0%color"
-                            PropertyChanges { target: delegateArea; color: "#00B9C9E4" }
+                            name: "expanded"
+                            PropertyChanges { target: delegateArea; height: gridView.height; width: gridView.width; anchors.left: gridView.left; anchors.right: gridView.right;}
+                            PropertyChanges { target: gridView; contentX:delegateArea.x; contentY: delegateArea.y; interactive: false;}
                         }
 
                 Image {
@@ -374,16 +368,12 @@ Item {
                     }
                     onDoubleClicked: {
                         if (mouse.button & Qt.RightButton) {
-                            gridView.currentIndex = index;
+                            delegateArea.state = "";
                         } else if (mouse.button & Qt.LeftButton) {
-                            showForm.showImage(src);
-                            showForm.showShowForm();
-                            //delegateArea.openingPicture(src);
-                            gridView.currentIndex = index;
+                            delegateArea.state = "expanded";
                         }
                     }
                 }
-
             }
         }
 
@@ -394,10 +384,6 @@ Item {
                 radius: 3
                 width: gridView.currentItem.width
                 height: gridView.currentItem.height
-                //x: gridView.currentItem.x
-                //y: gridView.currentItem.y
-                //Behavior on x { SpringAnimation { spring: 5; damping: 0.2 } }
-                //Behavior on y { SpringAnimation { spring: 5; damping: 0.2 } }
             }
         }
 
@@ -405,34 +391,13 @@ Item {
             id: scrollBar
             width: parent.width
             height: parent.height
-
-            flickableItem.interactive: true
+            //flickableItem.interactive: false
             verticalScrollBarPolicy : Qt.ScrollBarAsNeeded
 
             Keys.onUpPressed: scrollBar.decrease()
             Keys.onDownPressed: scrollBar.increase()
 
             focus: true
-
-            /*style: ScrollViewStyle {
-                    transientScrollBars: true
-                    handle: Item {
-                        implicitWidth: 14
-                        implicitHeight: 26
-                        Rectangle {
-                            color: "#424246"
-                            anchors.fill: parent
-                            anchors.topMargin: 6
-                            anchors.leftMargin: 4
-                            anchors.rightMargin: 4
-                            anchors.bottomMargin: 6
-                        }
-                    }
-                    scrollBarBackground: Item {
-                        implicitWidth: 14
-                        implicitHeight: 26
-                    }
-            }*/
 
             GridView {
                 anchors.fill: parent
@@ -441,7 +406,7 @@ Item {
                 highlight: highlight
                 highlightFollowsCurrentItem: true
                 focus: true
-
+                //interactive: false
                 id: gridView
 
                 model: listModel
@@ -459,6 +424,5 @@ Item {
        anchors.bottom: parent.bottom
        anchors.bottomMargin: 2
        anchors.horizontalCenter: parent.horizontalCenter
-       //Rectangle { color: "red"; width: parent.width; height: parent.height}
    }
 }

@@ -4,16 +4,9 @@
 
 #include <QDebug>
 
-ResourceImageProvider::ResourceImageProvider(QQuickImageProvider::ImageType type) :
-    QQuickImageProvider(type)
-{
-    // This space intentionally left blank.
-}
+ResourceImageProvider::ResourceImageProvider(QQuickImageProvider::ImageType type) : QQuickImageProvider(type) {}
 
-ResourceImageProvider::~ResourceImageProvider()
-{
-    // This space intentionally left blank.
-}
+ResourceImageProvider::~ResourceImageProvider() {}
 
 QImage ResourceImageProvider::requestImage(const QString& id, QSize* size, const QSize& requestedSize)
 {
