@@ -15,7 +15,8 @@ SOURCES += \
     addformhandler.cpp \
     formhandler.cpp \
     viewformhandler.cpp \
-    utils.cpp
+    utils.cpp \
+    resourceimageprovider.cpp
 
 RESOURCES += qml.qrc
 
@@ -36,4 +37,5 @@ HEADERS += \
     addformhandler.h \
     formhandler.h \
     viewformhandler.h \
-    utils.h
+    utils.h \
+    resourceimageprovider.h

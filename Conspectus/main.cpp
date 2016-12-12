@@ -12,6 +12,7 @@
 #include "advancedimage.h"
 #include "addformhandler.h"
 #include "viewformhandler.h"
+#include "resourceimageprovider.h"
 #include "utils.h"
 //Log File
 QFile * logFile;
@@ -28,6 +29,7 @@ int main(int argc, char *argv[])
     Util util;
     QUrl qmlUrl = QUrl(QStringLiteral("qrc:/main.qml"));
     QQmlApplicationEngine engine;
+    engine.addImageProvider(QLatin1String("qrc"), new ResourceImageProvider(QQuickImageProvider::Pixmap));
     engine.rootContext()->setContextProperty("utils", &util);
     engine.load(qmlUrl);
 
