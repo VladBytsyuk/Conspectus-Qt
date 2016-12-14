@@ -32,7 +32,7 @@ public slots:
     void onForm();
     void onSetTerm(QString term);
     void onSetSubject(QString subject);
-    void onSetTheme(QString theme);
+    virtual void onSetTheme(QString theme);
     virtual void onOkClicked(QString file_path) = 0;
 };
 

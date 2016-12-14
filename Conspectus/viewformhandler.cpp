@@ -63,3 +63,13 @@ QStringList ViewFormHandler::getFileNames(const QList<int> &listIds) {
     }
     return fileSources;
 }
+
+bool ViewFormHandler::invokeSetImages() {
+    QStringList list = getImageSources(mCurrentTerm, mCurrentSubject, mCurrentTheme);
+    return true;
+}
+
+void ViewFormHandler::onSetTheme(QString theme) {
+    FormHandler::onSetTheme(theme);
+    this->invokeSetImages();
+}

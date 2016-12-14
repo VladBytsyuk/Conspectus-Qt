@@ -10,6 +10,7 @@ class ViewFormHandler : public FormHandler
 private:
     QList<int> getListIds(int term, QString subject, QString theme);
     QStringList getFileNames(const QList<int> &listIds);
+    bool invokeSetImages();
 
 public:
     ViewFormHandler(QObject* view);
@@ -18,6 +19,7 @@ public:
     QStringList getImageSources(int term, QString subject, QString theme);
 
 public slots:
+    void onSetTheme(QString theme);
     void onOkClicked(QString file_path);
 };
 

@@ -3,6 +3,7 @@ import QtQuick.Controls 1.4
 import QtQuick.Dialogs 1.2
 
 ApplicationWindow {
+    id: appWindow
     visible: true
     width: 690
     height: 610
@@ -91,7 +92,7 @@ ApplicationWindow {
            mainForm.visible = false
             showForm.visible = true
         }
-        buttonDiscard.onClicked: viewForm.showViewForm()
+        buttonCancel.onClicked: viewForm.showViewForm()
     }
 
 }
