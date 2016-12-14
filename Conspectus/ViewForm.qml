@@ -246,122 +246,82 @@ Item {
             id: listModel
 
             ListElement {
-                src: "K:\IMGL5314.jpg"
+                src: "C:\\21391.jpg"
                 list_no: 1
             }
 
             ListElement {
-                src: "K:\IMGL5314.jpg"
+                src: "C:\\21391.jpg"
                 list_no: 1
             }
 
             ListElement {
-                src: "K:\IMGL5314.jpg"
-                list_no: 1
-            }
-            ListElement {
-                src: "K:\IMGL5314.jpg"
-                list_no: 1
-            }
-            ListElement {
-                src: "K:\IMGL5314.jpg"
-                list_no: 1
-            }
-            ListElement {
-                src: "K:\IMGL5314.jpg"
-                list_no: 1
-            }
-            ListElement {
-                src: "K:\IMGL5314.jpg"
+                src: "C:\\21391.jpg"
                 list_no: 1
             }
 
             ListElement {
-                src: "K:\IMGL5314.jpg"
-                list_no: 1
-            }
-            ListElement {
-                src: "K:\IMGL5314.jpg"
-                list_no: 1
-            }
-            ListElement {
-                src: "K:\IMGL5314.jpg"
-                list_no: 1
-            }
-            ListElement {
-                src: "K:\IMGL5314.jpg"
-                list_no: 1
-            }
-            ListElement {
-                src: "K:\IMGL5314.jpg"
-                list_no: 1
-            }
-            ListElement {
-                src: "K:\IMGL5314.jpg"
-                list_no: 1
-            }
-            ListElement {
-                src: "K:\IMGL5314.jpg"
+                src: "C:\\21391.jpg"
                 list_no: 1
             }
 
             ListElement {
-                src: "K:\IMGL5314.jpg"
+                src: "C:\\21391.jpg"
                 list_no: 1
             }
 
             ListElement {
-                src: "K:\IMGL5314.jpg"
+                src: "C:\\21391.jpg"
                 list_no: 1
             }
 
             ListElement {
-                src: "K:\IMGL5314.jpg"
-                list_no: 1
-            }
-            ListElement {
-                src: "K:\IMGL5314.jpg"
-                list_no: 1
-            }
-            ListElement {
-                src: "K:\IMGL5314.jpg"
-                list_no: 1
-            }
-            ListElement {
-                src: "K:\IMGL5314.jpg"
-                list_no: 1
-            }
-            ListElement {
-                src: "K:\IMGL5314.jpg"
+                src: "C:\\21391.jpg"
                 list_no: 1
             }
 
             ListElement {
-                src: "K:\IMGL5314.jpg"
+                src: "C:\\21391.jpg"
                 list_no: 1
             }
+
             ListElement {
-                src: "K:\IMGL5314.jpg"
+                src: "C:\\21391.jpg"
                 list_no: 1
             }
+
             ListElement {
-                src: "K:\IMGL5314.jpg"
+                src: "C:\\21391.jpg"
                 list_no: 1
             }
+
             ListElement {
-                src: "K:\IMGL5314.jpg"
+                src: "C:\\21391.jpg"
                 list_no: 1
             }
+
             ListElement {
-                src: "K:\IMGL5314.jpg"
+                src: "C:\\21391.jpg"
                 list_no: 1
             }
+
             ListElement {
-                src: "K:\IMGL5314.jpg"
+                src: "C:\\21391.jpg"
                 list_no: 1
             }
+
             ListElement {
-                src: "K:\IMGL5314.jpg"
+                src: "C:\\21391.jpg"
+                list_no: 1
+            }
+
+            ListElement {
+                src: "C:\\21391.jpg"
+                list_no: 1
+            }
+
+            ListElement {
+                src: "C:\\21391.jpg"
                 list_no: 1
             }
         }
