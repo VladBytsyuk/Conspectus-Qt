@@ -114,6 +114,6 @@ void FileManager::onTryAddFileToFileSystem(QString file_path) {
         qCritical(logCritical()) << "Invalid file path: " << file_path;
         emit invalidFilePath();
     } else {
-        emit validFilePath(new_file_name);
+        emit validFilePath(QFileInfo(new_file_name).fileName());
     }
 }

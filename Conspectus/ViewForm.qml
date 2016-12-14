@@ -14,6 +14,9 @@ Item {
     property int rOffShadowNotPressed: 8
     property int addPressed: 2
 
+
+    property alias buttonCancel: buttonCancel
+
     Component {
         id: buttonStyle
         ButtonStyle {
@@ -35,35 +38,18 @@ Item {
     }
 
     
-    property alias buttonEdit: buttonEdit
-    property alias buttonCancel: buttonCancel
-
-        Button {
-            id: buttonCancel
-            width: buttonWidth
-            height: buttonHeight
-            text: "CANCEL"
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.horizontalCenterOffset: buttonCancel.pressed ? horizontalNotPressed+addPressed : horizontalNotPressed
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: buttonCancel.pressed ? verticalNotPressed-addPressed : verticalNotPressed
-            visible: true            
-            style: buttonStyle
-        }
-
-        Button {
-            id: buttonEdit
-            width: buttonWidth
-            height: buttonHeight
-            objectName: "buttonEdit"
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.horizontalCenterOffset: buttonEdit.pressed ? -horizontalNotPressed+addPressed : -horizontalNotPressed
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: buttonEdit.pressed ? verticalNotPressed-addPressed : verticalNotPressed
-            text:"EDIT"
-            visible: true
-            style: buttonStyle
-        }
+    Button {
+        id: buttonCancel
+        width: buttonWidth
+        height: buttonHeight
+        text: "CANCEL"
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.horizontalCenterOffset: buttonCancel.pressed ? addPressed : 0
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: buttonCancel.pressed ? verticalNotPressed-addPressed : verticalNotPressed
+        visible: true
+        style: buttonStyle
+    }
 
     DropShadow {
         anchors.fill: buttonCancel
@@ -74,17 +60,6 @@ Item {
         radius: buttonCancel.hovered ? rOffShadowNotPressed+8 : rOffShadowNotPressed
         samples: 17
     }
-
-    DropShadow {
-        anchors.fill: buttonEdit
-        source: buttonEdit
-        color: "#50000000"
-        horizontalOffset: buttonEdit.pressed ? shadowOffset-addPressed : shadowOffset
-        verticalOffset: buttonEdit.pressed ? shadowOffset-addPressed : shadowOffset
-        radius: buttonEdit.hovered ? rOffShadowNotPressed+8 : rOffShadowNotPressed
-        samples: 17
-    }
-
 
     /**
     * Top bar
@@ -246,76 +221,39 @@ Item {
             id: listModel
 
             ListElement {
-                src: "K:\IMGL5047.jpg"
+                src: "241024931.jpg"
+                list_no: 1
+            }ListElement {
+                src: "241024931.jpg"
+                list_no: 1
+            }ListElement {
+                src: "241024931.jpg"
+                list_no: 1
+            }ListElement {
+                src: "241024931.jpg"
+                list_no: 1
+            }ListElement {
+                src: "241024931.jpg"
+                list_no: 1
+            }ListElement {
+                src: "241024931.jpg"
+                list_no: 1
+            }ListElement {
+                src: "241024931.jpg"
+                list_no: 1
+            }ListElement {
+                src: "241024931.jpg"
+                list_no: 1
+            }ListElement {
+                src: "241024931.jpg"
+                list_no: 1
+            }ListElement {
+                src: "241024931.jpg"
+                list_no: 1
+            }ListElement {
+                src: "241024931.jpg"
                 list_no: 1
             }
-
-            ListElement {
-                src: "K:\IMGL5047.jpg"
-                list_no: 1
-            }
-
-            ListElement {
-                src: "K:\IMGL5047.jpg"
-                list_no: 1
-            }
-            ListElement {
-                src: "K:\IMGL5047.jpg"
-                list_no: 1
-            }
-
-            ListElement {
-                src: "K:\IMGL5047.jpg"
-                list_no: 1
-            }
-
-            ListElement {
-                src: "K:\IMGL5047.jpg"
-                list_no: 1
-            }
-            ListElement {
-                src: "K:\IMGL5047.jpg"
-                list_no: 1
-            }
-
-            ListElement {
-                src: "K:\IMGL5047.jpg"
-                list_no: 1
-            }
-
-            ListElement {
-                src: "K:\IMGL5047.jpg"
-                list_no: 1
-            }
-            ListElement {
-                src: "K:\IMGL5047.jpg"
-                list_no: 1
-            }
-
-            ListElement {
-                src: "K:\IMGL5047.jpg"
-                list_no: 1
-            }
-
-            ListElement {
-                src: "K:\IMGL5047.jpg"
-                list_no: 1
-            }
-            ListElement {
-                src: "K:\IMGL5047.jpg"
-                list_no: 1
-            }
-
-            ListElement {
-                src: "K:\IMGL5047.jpg"
-                list_no: 1
-            }
-
-            ListElement {
-                src: "K:\IMGL5047.jpg"
-                list_no: 1
-            }
-
 
         }
 
@@ -328,14 +266,6 @@ Item {
                 radius: 3
                 color: delegateMA.containsMouse ? "#70B9C9E4" : "#00B9C9E4"
 
-                signal openingPicture(string path)
-
-                states: State {
-                            name: "expanded"
-                            PropertyChanges { target: delegateArea; height: gridView.height; width: gridView.width; anchors.left: gridView.left; anchors.right: gridView.right;}
-                            PropertyChanges { target: gridView; contentX:delegateArea.x; contentY: delegateArea.y; interactive: false;}
-                        }
-
                 Image {
                     id: delegateImage
                     anchors.fill: parent
@@ -343,7 +273,7 @@ Item {
                     anchors.bottomMargin: 20
                     anchors.leftMargin: 10
                     anchors.rightMargin: 10
-                    source: "file:///" + src;
+                    source: "image://sourceDir/" + src;
                     fillMode: Image.PreserveAspectFit
                 }
 
@@ -370,7 +300,9 @@ Item {
                         if (mouse.button & Qt.RightButton) {
                             delegateArea.state = "";
                         } else if (mouse.button & Qt.LeftButton) {
-                            delegateArea.state = "expanded";
+                            showForm.showShowForm();
+                            showForm.setSource(src);
+//                            delegateArea.state = "expanded";
                         }
                     }
                 }
@@ -391,7 +323,6 @@ Item {
             id: scrollBar
             width: parent.width
             height: parent.height
-            //flickableItem.interactive: false
             verticalScrollBarPolicy : Qt.ScrollBarAsNeeded
 
             Keys.onUpPressed: scrollBar.decrease()
@@ -406,7 +337,6 @@ Item {
                 highlight: highlight
                 highlightFollowsCurrentItem: true
                 focus: true
-                //interactive: false
                 id: gridView
 
                 model: listModel

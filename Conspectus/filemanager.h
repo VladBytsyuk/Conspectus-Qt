@@ -37,7 +37,7 @@ public:
     bool updateFile(QString path);
     QImage getImage(QString path);
 	QString getMainDirPath();
-	QString getSourceDirPath();
+    QString getSourceDirPath();
 	QScopedPointer<QFile> getLogFile();
 
 signals:

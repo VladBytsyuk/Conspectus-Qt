@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
     Util util;
     QUrl qmlUrl = QUrl(QStringLiteral("qrc:/main.qml"));
     QQmlApplicationEngine engine;
-    engine.addImageProvider(QLatin1String("qrc"), new ResourceImageProvider(QQuickImageProvider::Pixmap));
+    engine.addImageProvider(QLatin1String("sourceDir"), new ResourceImageProvider(QQuickImageProvider::Image));
     engine.rootContext()->setContextProperty("utils", &util);
     engine.load(qmlUrl);
 
