@@ -92,7 +92,7 @@ ApplicationWindow {
            mainForm.visible = false
             showForm.visible = true
         }
-        buttonDiscard.onClicked: viewForm.showViewForm()
+        buttonCancel.onClicked: viewForm.showViewForm()
     }
 
 }
