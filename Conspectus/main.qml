@@ -57,7 +57,11 @@ ApplicationWindow {
             showForm.visible = false
              addForm.addFormSignal()
         }
-        buttonCancel.onClicked: mainForm.showMainForm()
+
+        buttonCancel.onClicked: {
+            addForm.unHighLight();
+            mainForm.showMainForm();
+        }
     }
 
     MainForm {
@@ -80,7 +84,7 @@ ApplicationWindow {
         objectName: "showForm"
         visible: false
 
-        property string path: "file:///" + "K:\IMGL5314.jpg"
+        property string path: "file:///" + "C:\\21391.jpg"
 
         function showShowForm(string) {
            viewForm.visible = false
@@ -88,7 +92,7 @@ ApplicationWindow {
            mainForm.visible = false
             showForm.visible = true
         }
-        buttonCancel.onClicked: viewForm.showViewForm()
+        buttonDiscard.onClicked: viewForm.showViewForm()
     }
 
 }

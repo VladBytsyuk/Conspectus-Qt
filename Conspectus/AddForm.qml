@@ -16,6 +16,13 @@ Item {
     property int rOffShadowNotPressed: 8
     property int addPressed: 2
 
+    function unHighLight() {
+        rectTextField.state = ""
+        boxTerm.state = ""
+        boxSubject.state = ""
+        boxTheme.state = ""
+    }
+
     Component {
         id: buttonStyle
         ButtonStyle {
@@ -43,15 +50,40 @@ Item {
         anchors.fill: parent
         color: "#f6f6f6"
 
-        TextField {
-            id: textField1
-            width: boxWidth
-            height: boxHeight
-            placeholderText: qsTr("File Path")
-            inputMethodHints: Qt.ImhNoAutoUppercase
+        Rectangle{
+            id: rectTextField
+            color:"#00000000"
+            width: boxWidth + 1
+            height: boxHeight + 1
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenterOffset: -70
             anchors.verticalCenter: parent.verticalCenter
+            radius: 4
+
+            TextField {
+                id: textField1
+                width: boxWidth
+                height: boxHeight
+                placeholderText: qsTr("File Path")
+                inputMethodHints: Qt.ImhNoAutoUppercase
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
+            }
+            states: State {
+                name: "highlight"
+                PropertyChanges {target: dropShadowTextField; color: "#8f0000";
+                                horizontalOffset: 0; verticalOffset: 0;}
+            }
+        }
+        DropShadow {
+            id: dropShadowTextField
+            anchors.fill: rectTextField
+            source: rectTextField
+            color: "#50000000"
+            horizontalOffset: 3
+            verticalOffset: 3
+            radius: 8
+            samples: 17
         }
     }
 
@@ -78,6 +110,11 @@ Item {
         anchors.verticalCenterOffset: buttonBrowse.pressed ? -68 : -70
         anchors.verticalCenter: parent.verticalCenter
         text:"Browse"
+        states: State {
+            name: "highlight"
+            PropertyChanges {target: dropShadowBrowse; color: "#9f0000";
+                            horizontalOffset: -10; verticalOffset: 0;}
+        }
         visible: true
         style:  ButtonStyle {
             background: Rectangle{
@@ -99,6 +136,7 @@ Item {
     }
 
     DropShadow {
+        id: dropShadowBrowse
         anchors.fill: buttonBrowse
         source: buttonBrowse
         color: "#50000000"
@@ -145,29 +183,31 @@ Item {
             style: buttonStyle
 
             function onClick() {
-                var isEditTextEmpty = textField1.text === "";
-                var isTermEmpty = boxTerm.model[boxTerm.currentIndex] === "";
-                var isSubjectEmpty = boxSubject.model[boxSubject.currentIndex] === "";
-                var isThemeEmpty = boxTheme.model[boxTheme.currentIndex] === "";
+                var isEditTextEmpty = textField1.text == "";
+                //console.log(boxTerm.currentIndex);
+                //console.log(boxTerm.model[boxTerm.currentIndex]);
+                var isTermEmpty = boxTerm.model[boxTerm.currentIndex] === undefined;
+                var isSubjectEmpty = boxSubject.model[boxSubject.currentIndex] === undefined;
+                var isThemeEmpty = boxTheme.model[boxTheme.currentIndex] === undefined;
                 if (isEditTextEmpty) {
-                    //TODO: highlight textField1
+                    rectTextField.state = "highlight"
                 } else {
-                    //TODO: undo
+                    rectTextField.state = ""
                 }
                 if (isTermEmpty) {
-                    //TODO: highlight boxTerm
+                    boxTerm.state = "highlight";
                 } else {
-                    //TODO: undo
+                    boxTerm.state = ""
                 }
                 if (isSubjectEmpty) {
-                    //TODO: highlight boxSubject
+                    boxSubject.state = "highlight"
                 } else {
-                    //TODO: undo
+                    boxSubject.state = ""
                 }
                 if (isThemeEmpty) {
-                    //TODO: highlight BoxTheme
+                     boxTheme.state = "highlight"
                 } else {
-                    //TODO: undo
+                    boxTheme.state = ""
                 }
                 if (!isEditTextEmpty && !isTermEmpty && !isSubjectEmpty && !isThemeEmpty) {
                     buttonOk.okClicked(textField1.text);
@@ -211,6 +251,12 @@ Item {
             currentIndex = -1
         }
 
+        states: State {
+            name: "highlight"
+            PropertyChanges {target: dropShadowTerm; color: "#9f0000";
+                             horizontalOffset: 0; verticalOffset: 0;}
+        }
+
         editable: true
         onCurrentTextChanged: boxTerm.termSelect(model[currentIndex])
         onEditTextChanged: boxTerm.termSelect(boxTerm.editText.toString())
@@ -247,6 +293,12 @@ Item {
             currentIndex = -1
         }
 
+        states: State {
+            name: "highlight"
+            PropertyChanges {target: dropShadowSubject; color: "#af0000";
+                            horizontalOffset: 0; verticalOffset: 0;}
+        }
+
         editable: true
         onCurrentTextChanged: boxSubject.subjectSelect(model[currentIndex])
         onEditTextChanged: boxSubject.subjectSelect(boxSubject.editText.toString())
@@ -281,6 +333,12 @@ Item {
             currentIndex = -1
         }
 
+        states: State {
+            name: "highlight"
+            PropertyChanges {target: dropShadowTheme; color: "#bf0000";
+                horizontalOffset: 0; verticalOffset: 0}
+        }
+
         editable: true
         onCurrentTextChanged: boxTheme.themeSelect(model[currentIndex])
         onEditTextChanged: boxTheme.themeSelect(boxTheme.editText.toString())
@@ -304,6 +362,7 @@ Item {
     }
 
     DropShadow {
+        id: dropShadowTerm
         anchors.fill: boxTerm
         source: boxTerm
         color: "#50000000"
@@ -313,6 +372,7 @@ Item {
         samples: 17
     }
     DropShadow {
+        id: dropShadowSubject
         anchors.fill: boxSubject
         source: boxSubject
         color: "#50000000"
@@ -322,6 +382,7 @@ Item {
         samples: 17
     }
     DropShadow {
+        id: dropShadowTheme
         anchors.fill: boxTheme
         source: boxTheme
         color: "#50000000"
