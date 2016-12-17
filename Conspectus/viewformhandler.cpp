@@ -64,11 +64,11 @@ QStringList ViewFormHandler::getFileNames(const QList<int> &listIds) {
     return fileSources;
 }
 
-void ViewFormHandler::setImageToQml(QString file_name) {
+void ViewFormHandler::setImageToQml(QString file_name, int list_no) {
     QObject *listModel = mView->findChild<QObject*>("photoBar")->findChild<QObject*>("listModel");
     QVariant empty;
     QMetaObject::invokeMethod(listModel, "onSetImageToQml", Q_RETURN_ARG(QVariant, empty),
-                              Q_ARG(QVariant, file_name));
+                              Q_ARG(QVariant, file_name), Q_ARG(QVariant, list_no));
 }
 
 void ViewFormHandler::clearViewsFromView() {
@@ -82,7 +82,7 @@ bool ViewFormHandler::invokeSetImages() {
     QStringList list = getImageSources(mCurrentTerm, mCurrentSubject, mCurrentTheme);
     clearViewsFromView();
     for (int i = 0; i < list.size(); ++i) {
-        setImageToQml(list.at(i));
+        setImageToQml(list.at(i), i + 1);
     }
     return true;
 }

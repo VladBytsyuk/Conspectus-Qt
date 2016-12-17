@@ -222,8 +222,8 @@ Item {
             id: listModel
             objectName: "listModel"
 
-            function onSetImageToQml(fileName) {
-                listModel.append({ "src": fileName, "list_no": 2 });
+            function onSetImageToQml(fileName, list_no) {
+                listModel.append({ "src": fileName, "list_no": list_no });
             }
 
             function clearView(smth) {

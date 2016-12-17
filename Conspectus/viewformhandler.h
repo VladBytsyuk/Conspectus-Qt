@@ -17,7 +17,7 @@ public:
     ~ViewFormHandler();
 
     QStringList getImageSources(int term, QString subject, QString theme);
-    void setImageToQml(QString file_name);
+    void setImageToQml(QString file_name, int list_no);
     void clearViewsFromView();
 
 public slots:
