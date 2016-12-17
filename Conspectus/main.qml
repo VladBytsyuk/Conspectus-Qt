@@ -84,8 +84,6 @@ ApplicationWindow {
         objectName: "showForm"
         visible: false
 
-        property string path: "file:///" + "C:\\21391.jpg"
-
         function showShowForm(string) {
            viewForm.visible = false
             addForm.visible = false

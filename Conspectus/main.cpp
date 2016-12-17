@@ -81,10 +81,6 @@ int main(int argc, char *argv[])
                      ->findChild<QObject*>("viewForm")
                      ->findChild<QObject*>("boxTheme"), SIGNAL(themeSelect(QString)),
                      &view_form, SLOT(onSetTheme(QString)));
-    QObject::connect(engine.rootObjects().at(0)
-                     ->findChild<QObject*>("viewForm")
-                     ->findChild<QObject*>("buttonEdit"), SIGNAL(okClicked(QString)),
-                     &view_form, SLOT(onOkClicked(QString)));
 
     //AddForm connections
     QObject::connect(engine.rootObjects().at(0)
