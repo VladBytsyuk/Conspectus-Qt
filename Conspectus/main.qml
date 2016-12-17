@@ -36,7 +36,7 @@ ApplicationWindow {
            viewForm.visible = true
             addForm.visible = false
            mainForm.visible = false
-            showForm.visible = false
+           showForm.visible = false
            viewForm.viewFormSignal()
         }
 
