@@ -2,6 +2,7 @@ import QtQuick 2.5
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import QtGraphicalEffects 1.0
+import QtQml.Models 2.2
 
 Item {
     property int buttonWidth: 200
@@ -73,6 +74,9 @@ Item {
         color: "#006988bd"
         radius: 3
 
+        /**
+        * Top bar text
+        */
         Flow {
             id: flowTopBarText
             anchors.horizontalCenter: parent.horizontalCenter
@@ -107,6 +111,9 @@ Item {
             }
         }
 
+        /**
+        * Top bar buttons
+        */
         Flow {
             id: flowTopBar
             anchors.horizontalCenter: parent.horizontalCenter
@@ -214,113 +221,192 @@ Item {
         anchors.topMargin: 10
         anchors.bottom: flowEditCancel.top
         anchors.bottomMargin: 10
-        border.color: "#006988bd"
+        border.color: "#6988bd"
         color: "#006988bd"
         radius: 3
 
-        ListModel {
-            id: listModel
-            objectName: "listModel"
-
-            function onSetImageToQml(fileName, list_no) {
-                listModel.append({ "src": fileName, "list_no": list_no });
-            }
-
-            function clearView(smth) {
-                listModel.clear();
-            }
+        function onSetImageToQml(fileName, list_no) {
+            listModel.append({ "src": fileName, "list_no": list_no });
         }
 
-        Component {
-            id: delegateId
-            Rectangle {
-                id: delegateArea
-                width: 130
-                height: 140
-                radius: 3
-                color: delegateMA.containsMouse ? "#70B9C9E4" : "#00B9C9E4"
-
-                Image {
-                    id: delegateImage
-                    anchors.fill: parent
-                    anchors.topMargin: 10
-                    anchors.bottomMargin: 20
-                    anchors.leftMargin: 10
-                    anchors.rightMargin: 10
-                    source: "image://sourceDir/" + src;
-                    fillMode: Image.PreserveAspectFit
-                }
-
-                Text {
-                    text: list_no
-                    anchors.horizontalCenter: delegateImage.horizontalCenter
-                    anchors.top: delegateImage.bottom
-                    anchors.topMargin: 5
-                }
-
-                MouseArea {
-                    id: delegateMA
-                    anchors.fill: parent
-                    acceptedButtons: Qt.LeftButton | Qt.RightButton
-                    hoverEnabled: true
-                    onClicked: {
-                        if (mouse.button & Qt.RightButton) {
-                            gridView.currentIndex = index;
-                        } else if (mouse.button & Qt.LeftButton) {
-                            gridView.currentIndex = index;
-                        }
-                    }
-                    onDoubleClicked: {
-                        if (mouse.button & Qt.RightButton) {
-                            delegateArea.state = "";
-                        } else if (mouse.button & Qt.LeftButton) {
-                            showForm.showShowForm();
-                            showForm.setSource(src);
-//                            delegateArea.state = "expanded";
-                        }
-                    }
-                }
-            }
+        function clearView(smth) {
+            listModel.clear();
         }
 
+
+        /**
+        * Grid highlight
+        */
         Component {
             id: highlight
             Rectangle {
                 color: "#B9C9E4"
                 radius: 3
-                width: gridView.currentItem.width
-                height: gridView.currentItem.height
+                width: root.currentItem.width
+                height: root.currentItem.height
             }
         }
 
+        /**
+        * Grid scroll view + grid body
+        */
         ScrollView {
             id: scrollBar
             width: parent.width
             height: parent.height
             verticalScrollBarPolicy : Qt.ScrollBarAsNeeded
 
-            Keys.onUpPressed: scrollBar.decrease()
-            Keys.onDownPressed: scrollBar.increase()
-
             focus: true
 
             GridView {
+                id: root
+                width: 320; height: 480
                 anchors.fill: parent
-                cellWidth: 130
-                cellHeight: 150
-                highlight: highlight
-                highlightFollowsCurrentItem: true
+                cellWidth: 130; cellHeight: 150
+                //highlight: highlight
+                //highlightFollowsCurrentItem: true
                 focus: true
-                id: gridView
 
-                model: listModel
+                displaced: Transition {
+                    NumberAnimation { properties: "x,y"; easing.type: Easing.OutQuad }
+                }
 
-                delegate: delegateId
+                model: DelegateModel {
+                    id: visualModel
+                    model: ListModel {
+                        id: listModel
+                        objectName: "listModel"
+                        ListElement { src: "IMGL5403.jpg"; list_no: 1; }
+                        ListElement { src: "32260.jpg"; list_no: 2; }
+                        ListElement { src: "IMGL5403.jpg"; list_no: 3; }
+                        ListElement { src: "IMGL5403.jpg"; list_no: 4; }
+                        ListElement { src: "IMGL5403.jpg"; list_no: 5; }
+                        ListElement { src: "IMGL5403.jpg"; list_no: 6; }
+                        ListElement { src: "IMGL5403.jpg"; list_no: 7; }
+                        ListElement { src: "IMGL5403.jpg"; list_no: 8; }
+                        ListElement { src: "IMGL5403.jpg"; list_no: 9; }
+                        ListElement { src: "IMGL5403.jpg"; list_no: 1; }
+                        ListElement { src: "IMGL5403.jpg"; list_no: 1; }
+                        ListElement { src: "IMGL5403.jpg"; list_no: 1; }
+                        ListElement { src: "IMGL5403.jpg"; list_no: 1; }
+                        ListElement { src: "IMGL5403.jpg"; list_no: 1; }
+                        ListElement { src: "IMGL5403.jpg"; list_no: 1; }
+                        ListElement { src: "IMGL5403.jpg"; list_no: 1; }
+                        ListElement { src: "IMGL5403.jpg"; list_no: 1; }
+                    }
+                    delegate: MouseArea {
+                        id: delegateRoot
+                        acceptedButtons: Qt.LeftButton | Qt.RightButton
+                        hoverEnabled: true
 
+                        property bool held: false
+
+                        property int visualIndex: DelegateModel.itemsIndex
+
+                        width: root.cellWidth; height: root.cellHeight
+                        drag.target:  held ? icon : undefined
+
+                        Rectangle {
+                            id: icon
+                            width: 125; height: 145
+                            anchors {
+                                horizontalCenter: parent.horizontalCenter;
+                                verticalCenter: parent.verticalCenter
+                            }
+
+                            radius: 3
+                            color: delegateRoot.containsMouse ? "#70B9C9E4" : "#00B9C9E4"
+                            //border.color: "black"
+
+                            Drag.active: delegateRoot.drag.active
+                            Drag.source: delegateRoot
+                            Drag.hotSpot.x: 36
+                            Drag.hotSpot.y: 36
+
+                            states: [
+                                State {
+                                    when: icon.Drag.active
+                                    ParentChange {
+                                        target: icon
+                                        parent: root
+                                    }
+
+                                    AnchorChanges {
+                                        target: icon;
+                                        anchors.horizontalCenter: undefined;
+                                        anchors.verticalCenter: undefined
+                                    }
+                                }
+                            ]
+
+                            /**
+                            * Delegate image
+                            */
+                            Image {
+                                id: delegateImage
+                                anchors.fill: parent
+                                anchors.topMargin: 10
+                                anchors.bottomMargin: 20
+                                anchors.leftMargin: 10
+                                anchors.rightMargin: 10
+                                source: "image://sourceDir/" + src;
+                                fillMode: Image.PreserveAspectFit
+                                opacity: parent.opacity
+                            }
+
+                            /**
+                            * Delegate text
+                            */
+                            Text {
+                                text: list_no
+                                anchors.horizontalCenter: delegateImage.horizontalCenter
+                                anchors.top: delegateImage.bottom
+                                anchors.topMargin: 5
+                                opacity: parent.opacity
+                            }
+                        } //End icon
+
+
+                        DropArea {
+                            anchors { fill: parent; margins: 15 }
+
+                            onEntered: visualModel.items.move(drag.source.visualIndex, delegateRoot.visualIndex)
+                        }
+
+                        onClicked: {
+                            if (mouse.button & Qt.RightButton) {
+                                root.currentIndex = index;
+                            } else if (mouse.button & Qt.LeftButton) {
+                                root.currentIndex = index;
+                            }
+                        }
+
+                        onDoubleClicked: {
+                            if (mouse.button & Qt.LeftButton) {
+                                showForm.showShowForm();
+                                showForm.setSource(src);
+                            }
+                        }
+
+                        onPressAndHold: {
+                            held = true;
+                            icon.opacity = 0.7;
+                        }
+
+                        onReleased: {
+                            held = false;
+                            icon.opacity = 1;
+                        }
+                    }
+                }
             }
-       }
-   }
 
+       }
+   } // End photo bar
+
+    /**
+    * Bottom bar
+    */
    Flow {
        id: flowEditCancel
        width: parent.width
@@ -328,5 +414,5 @@ Item {
        anchors.bottom: parent.bottom
        anchors.bottomMargin: 2
        anchors.horizontalCenter: parent.horizontalCenter
-   }
+   } //End bottom bar
 }
