@@ -110,6 +110,17 @@ Item {
             height: 30
             spacing: 5
 
+            Image {
+                source: "/assets/garbage.png"
+                width: 30
+                fillMode: Image.PreserveAspectFit
+            }
+            Image {
+                source: "/assets/printer.png"
+                width: 30
+                fillMode: Image.PreserveAspectFit
+            }
+
 
        } //End Top bar
     }
