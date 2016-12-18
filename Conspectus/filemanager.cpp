@@ -61,8 +61,7 @@ QString FileManager::copyFile(QString file_name){
 	}
 
     QString preview_file_name = source_dir_path + "/" + PREVIEW_NAME + "/" + short_file_name;
-    QFile::copy(file_name, preview_file_name);
-    QImage image(preview_file_name);
+    QImage image(file_name);
     image = image.scaledToWidth(480);
     image.save(preview_file_name, 0, 0);
 
