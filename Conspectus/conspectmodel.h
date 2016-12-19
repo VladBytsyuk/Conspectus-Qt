@@ -54,6 +54,7 @@ public:
 public slots:
     void onRemoveFile(QString file_name);
     void onAddFile(QString file_name, int term, QString subject, QString theme);
+    void onChangeOrdering(int term, QString subject, QString theme, int previous_index, int current_index);
 
 
 signals:
@@ -64,6 +65,11 @@ signals:
                             QString subject,
                             int theme_no, QString theme,
                             int list_id_no, int list_id);
+    void updateRowInConspectTable(int id,
+                   int term,
+                   QString subject,
+                   int theme_no, QString theme,
+                   int list_id_no, int list_id);
 
 };
 
