@@ -63,7 +63,7 @@ QString FileManager::copyFile(QString file_name){
     QString preview_file_name = source_dir_path + "/" + PREVIEW_NAME + "/" + short_file_name;
     QImage image(file_name);
     image = image.scaledToWidth(480);
-    image.save(preview_file_name, 0, 0);
+    image.save(preview_file_name, 0, 80);
 
 	qDebug(logDebug()) << "File " + QFileInfo(file_name).fileName() + " has been copied into project`s directory";
     return new_file_name;
