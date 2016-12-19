@@ -383,7 +383,12 @@ Item {
                         onReleased: {
                             held = false;
                             icon.opacity = 1;
-                            root.orderChanged(lastDraggedIndex, delegateRoot.visualIndex);
+                            console.log(lastDraggedIndex + " " + delegateRoot.visualIndex);
+                            if (lastDraggedIndex != -1 &&
+                                    delegateRoot.visualIndex != -1 &&
+                                    lastDraggedIndex != delegateRoot.visualIndex) {
+                                root.orderChanged(lastDraggedIndex, delegateRoot.visualIndex);
+                            }
                         }
                     }
                 }

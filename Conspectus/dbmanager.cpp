@@ -22,17 +22,17 @@ QSqlQuery DBManager::makeQuery(QString queryString) {
 bool DBManager::fillAssets() {
     QString insertMathIntro =
         "INSERT INTO " TABLE_CONSPECT " "
-            "VALUES(13, 1, 'Mathematic', 1, 'Intro', 1, 12);";
+            "VALUES(13, 1, 'Mathematic', 1, 'Intro', 1, 13);";
     makeQuery(insertMathIntro);
 
     QString insertMathLimits =
         "INSERT INTO " TABLE_CONSPECT " "
-            "VALUES(14, 1, 'Mathematic', 2, 'Limits', 1, 12);";
+            "VALUES(14, 1, 'Mathematic', 2, 'Limits', 1, 13);";
     makeQuery(insertMathLimits);
 
     QString insertEngGreetings =
         "INSERT INTO " TABLE_CONSPECT " "
-            "VALUES(15, 2, 'English', 1, 'Greetings', 1, 32);";
+            "VALUES(15, 2, 'English', 1, 'Greetings', 1, 13);";
     makeQuery(insertEngGreetings);
 
     QString insertMathList =

@@ -10,12 +10,12 @@ void ViewFormHandler::onOkClicked(QString file_path) {
 
 }
 
-QStringList ViewFormHandler::getImageSources(int term, QString subject, QString theme) {
-    QList<int> listIds = getListIds(term, subject, theme);
+QStringList ViewFormHandler::getImageSources(int term, QString subject, QString theme, QList<int> *list_nos) {
+    QList<int> listIds = getListIds(term, subject, theme, list_nos);
     return getFileNames(listIds);
 }
 
-QList<int> ViewFormHandler::getListIds(int term, QString subject, QString theme) {
+QList<int> ViewFormHandler::getListIds(int term, QString subject, QString theme, QList<int> *list_nos) {
     QStandardItemModel* conspectModel = ConspectModel::getConspectModel();
     QList<int> ids;
 
@@ -39,6 +39,9 @@ QList<int> ViewFormHandler::getListIds(int term, QString subject, QString theme)
                                 QModelIndex listIndex = conspectModel->index(listIterator, 0, themeIndex);
                                 int current_list_id = listIndex.data().toInt();
                                 ids.push_back(current_list_id);
+                                QModelIndex listNoIndex = conspectModel->index(listIterator, 1, themeIndex);
+                                int list_no = listNoIndex.data().toInt();
+                                list_nos->push_back(list_no);
                             }
                             return ids;
                         }
@@ -79,10 +82,16 @@ void ViewFormHandler::clearViewsFromView() {
 }
 
 bool ViewFormHandler::invokeSetImages() {
-    QStringList list = getImageSources(mCurrentTerm, mCurrentSubject, mCurrentTheme);
+    QList<int> list_nos;
+    QStringList list = getImageSources(mCurrentTerm, mCurrentSubject, mCurrentTheme, &list_nos);
     clearViewsFromView();
+    QMap<int, QString> images;
     for (int i = 0; i < list.size(); ++i) {
-        setImageToQml(list.at(i), i + 1);
+        images[list_nos[i]] = list.at(i);
+    }
+    qSort(list_nos);
+    for (auto it = list_nos.begin(); it != list_nos.end(); ++it) {
+        setImageToQml(images[*it], *it);
     }
     return true;
 }

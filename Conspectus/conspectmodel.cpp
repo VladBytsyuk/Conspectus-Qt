@@ -301,6 +301,7 @@ void ConspectModel::onChangeOrdering(int term, QString subject, QString theme, i
                                 int list_id = listIdIndex.data().toInt();
                                 QModelIndex listNoIndex = mConspectHierarchyModel->index(listIterator, 1, themeIndex);
                                 int current_list_no = listNoIndex.data().toInt();
+                                int prev_list_no = current_list_no;
                                 current_list_no--;
 
                                 bool isDragForward = previous_index < current_index;
@@ -311,16 +312,18 @@ void ConspectModel::onChangeOrdering(int term, QString subject, QString theme, i
                                         current_list_no--;
                                     }
                                 } else {
-                                    if (current_list_no == current_index) {
-                                        current_list_no = previous_index;
+                                    if (current_list_no == previous_index) {
+                                        current_list_no = current_index;
                                     } else if (current_list_no >= current_index && current_list_no <= previous_index - 1) {
                                         current_list_no++;
                                     }
                                 }
 
                                 current_list_no++;
-                                mConspectHierarchyModel->setData(listNoIndex, current_list_no);
-                                emit updateRowInConspectTable(id, term, subject, theme_no, theme, current_list_no, list_id);
+                                if (current_list_no != prev_list_no) {
+                                    mConspectHierarchyModel->setData(listNoIndex, current_list_no);
+                                    emit updateRowInConspectTable(id, term, subject, theme_no, theme, current_list_no, list_id);
+                                }
                             }
                             return;
                         }
