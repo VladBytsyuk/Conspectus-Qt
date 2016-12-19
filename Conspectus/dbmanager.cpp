@@ -430,5 +430,12 @@ void DBManager::onInsertListIntoConspectTable(int id, int term,
     insertRowIntoTableConspect(id, term, subject, theme_no, theme, list_id_no, list_id);
 }
 
+void DBManager::onUpdateRowInConspectTable(int id, int term,
+                                           QString subject,
+                                           int theme_no, QString theme,
+                                           int list_id_no, int list_id) {
+    insertRowIntoTableConspect(id, term, subject, theme_no, theme, list_id_no, list_id);
+}
+
 /* ================= Fields initialization ================= */
 DBManager* DBManager::mInstance = nullptr;

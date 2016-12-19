@@ -275,6 +275,62 @@ void ConspectModel::onAddFile(QString file_name, int term, QString subject, QStr
     insertIntoConspectModel(id, term, subject, theme);
 }
 
+void ConspectModel::onChangeOrdering(int term, QString subject, QString theme, int previous_index, int current_index) {
+    int terms_count = mConspectHierarchyModel->rowCount();
+    for (int termIterator = 0; termIterator < terms_count; ++termIterator) {
+        QModelIndex termIndex = mConspectHierarchyModel->index(termIterator, 0);
+        int current_term = termIndex.data().toInt();
+        if (current_term == term) {
+            int subjects_count = mConspectHierarchyModel->rowCount(termIndex);
+            for (int subjectIterator = 0; subjectIterator < subjects_count; ++subjectIterator) {
+                QModelIndex subjectIndex = mConspectHierarchyModel->index(subjectIterator, 0, termIndex);
+                QString current_subject = subjectIndex.data().toString();
+                if (current_subject == subject) {
+                    int themes_count = mConspectHierarchyModel->rowCount(subjectIndex);
+                    for (int themeIterator = 0; themeIterator < themes_count; ++themeIterator) {
+                        QModelIndex themeIndex = mConspectHierarchyModel->index(themeIterator, 0, subjectIndex);
+                        QString current_theme = themeIndex.data().toString();
+                        if (current_theme == theme) {
+                            QModelIndex themeNoIndex = mConspectHierarchyModel->index(themeIterator, 1, subjectIndex);
+                            int theme_no = themeNoIndex.data().toInt();
+                            int lists_count = mConspectHierarchyModel->rowCount(themeIndex);
+                            for (int listIterator = 0; listIterator < lists_count; ++ listIterator) {
+                                QModelIndex idIndex = mConspectHierarchyModel->index(listIterator, 2, themeIndex);
+                                int id = idIndex.data().toInt();
+                                QModelIndex listIdIndex = mConspectHierarchyModel->index(listIterator, 0, themeIndex);
+                                int list_id = listIdIndex.data().toInt();
+                                QModelIndex listNoIndex = mConspectHierarchyModel->index(listIterator, 1, themeIndex);
+                                int current_list_no = listNoIndex.data().toInt();
+                                current_list_no--;
+
+                                bool isDragForward = previous_index < current_index;
+                                if (isDragForward) {
+                                    if (current_list_no == previous_index) {
+                                        current_list_no = current_index;
+                                    } else if (current_list_no >= previous_index + 1 && current_list_no <= current_index) {
+                                        current_list_no--;
+                                    }
+                                } else {
+                                    if (current_list_no == current_index) {
+                                        current_list_no = previous_index;
+                                    } else if (current_list_no >= current_index && current_list_no <= previous_index - 1) {
+                                        current_list_no++;
+                                    }
+                                }
+
+                                current_list_no++;
+                                mConspectHierarchyModel->setData(listNoIndex, current_list_no);
+                                emit updateRowInConspectTable(id, term, subject, theme_no, theme, current_list_no, list_id);
+                            }
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 /* ================= Fields initialization ================= */
 ConspectModel* ConspectModel::mInstance = nullptr;
 QStandardItemModel* ConspectModel::mConspectHierarchyModel =

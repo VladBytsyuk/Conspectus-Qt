@@ -260,12 +260,15 @@ Item {
 
             GridView {
                 id: root
+                objectName: "gridView"
                 width: 320; height: 480
                 anchors.fill: parent
                 cellWidth: 130; cellHeight: 150
-                //highlight: highlight
-                //highlightFollowsCurrentItem: true
+                highlight: highlight
+                highlightFollowsCurrentItem: true
                 focus: true
+
+                signal orderChanged(int prevIndex, int currIndex);
 
                 displaced: Transition {
                     NumberAnimation { properties: "x,y"; easing.type: Easing.OutQuad }
@@ -276,23 +279,6 @@ Item {
                     model: ListModel {
                         id: listModel
                         objectName: "listModel"
-                        ListElement { src: "IMGL5403.jpg"; list_no: 1; }
-                        ListElement { src: "32260.jpg"; list_no: 2; }
-                        ListElement { src: "IMGL5403.jpg"; list_no: 3; }
-                        ListElement { src: "IMGL5403.jpg"; list_no: 4; }
-                        ListElement { src: "IMGL5403.jpg"; list_no: 5; }
-                        ListElement { src: "IMGL5403.jpg"; list_no: 6; }
-                        ListElement { src: "IMGL5403.jpg"; list_no: 7; }
-                        ListElement { src: "IMGL5403.jpg"; list_no: 8; }
-                        ListElement { src: "IMGL5403.jpg"; list_no: 9; }
-                        ListElement { src: "IMGL5403.jpg"; list_no: 1; }
-                        ListElement { src: "IMGL5403.jpg"; list_no: 1; }
-                        ListElement { src: "IMGL5403.jpg"; list_no: 1; }
-                        ListElement { src: "IMGL5403.jpg"; list_no: 1; }
-                        ListElement { src: "IMGL5403.jpg"; list_no: 1; }
-                        ListElement { src: "IMGL5403.jpg"; list_no: 1; }
-                        ListElement { src: "IMGL5403.jpg"; list_no: 1; }
-                        ListElement { src: "IMGL5403.jpg"; list_no: 1; }
                     }
                     delegate: MouseArea {
                         id: delegateRoot
@@ -300,7 +286,7 @@ Item {
                         hoverEnabled: true
 
                         property bool held: false
-
+                        property int  lastDraggedIndex: -1
                         property int visualIndex: DelegateModel.itemsIndex
 
                         width: root.cellWidth; height: root.cellHeight
@@ -370,7 +356,7 @@ Item {
                         DropArea {
                             anchors { fill: parent; margins: 15 }
 
-                            onEntered: visualModel.items.move(drag.source.visualIndex, delegateRoot.visualIndex)
+                            onEntered: visualModel.items.move(drag.source.visualIndex, delegateRoot.visualIndex);
                         }
 
                         onClicked: {
@@ -391,11 +377,13 @@ Item {
                         onPressAndHold: {
                             held = true;
                             icon.opacity = 0.7;
+                            lastDraggedIndex = index;
                         }
 
                         onReleased: {
                             held = false;
                             icon.opacity = 1;
+                            root.orderChanged(lastDraggedIndex, delegateRoot.visualIndex);
                         }
                     }
                 }

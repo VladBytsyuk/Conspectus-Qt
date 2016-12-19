@@ -91,3 +91,16 @@ void ViewFormHandler::onSetTheme(QString theme) {
     FormHandler::onSetTheme(theme);
     this->invokeSetImages();
 }
+
+void ViewFormHandler::changeModelOrdering(int previous_index, int current_index) {
+    emit changeOrder(mCurrentTerm, mCurrentSubject, mCurrentTheme, previous_index, current_index);
+}
+
+void ViewFormHandler::reloadGridView() {
+    this->invokeSetImages();
+}
+
+void ViewFormHandler::onOrderChanged(int previous_index, int current_index) {
+    changeModelOrdering(previous_index, current_index);
+    reloadGridView();
+}
