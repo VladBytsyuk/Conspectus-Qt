@@ -207,6 +207,7 @@ Item {
     */
     Rectangle {
         id: photoBar
+        objectName: "photoBar"
         width: parent.width - 16
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: topBar.bottom
@@ -219,42 +220,15 @@ Item {
 
         ListModel {
             id: listModel
+            objectName: "listModel"
 
-            ListElement {
-                src: "241024931.jpg"
-                list_no: 1
-            }ListElement {
-                src: "241024931.jpg"
-                list_no: 1
-            }ListElement {
-                src: "241024931.jpg"
-                list_no: 1
-            }ListElement {
-                src: "241024931.jpg"
-                list_no: 1
-            }ListElement {
-                src: "241024931.jpg"
-                list_no: 1
-            }ListElement {
-                src: "241024931.jpg"
-                list_no: 1
-            }ListElement {
-                src: "241024931.jpg"
-                list_no: 1
-            }ListElement {
-                src: "241024931.jpg"
-                list_no: 1
-            }ListElement {
-                src: "241024931.jpg"
-                list_no: 1
-            }ListElement {
-                src: "241024931.jpg"
-                list_no: 1
-            }ListElement {
-                src: "241024931.jpg"
-                list_no: 1
+            function onSetImageToQml(fileName) {
+                listModel.append({ "src": fileName, "list_no": 2 });
             }
 
+            function clearView(smth) {
+                listModel.clear();
+            }
         }
 
         Component {
@@ -273,7 +247,7 @@ Item {
                     anchors.bottomMargin: 20
                     anchors.leftMargin: 10
                     anchors.rightMargin: 10
-                    source: "image://sourceDir/" + src;
+                    source: "image://sourceDir/Preview/" + src;
                     fillMode: Image.PreserveAspectFit
                 }
 
@@ -290,19 +264,14 @@ Item {
                     acceptedButtons: Qt.LeftButton | Qt.RightButton
                     hoverEnabled: true
                     onClicked: {
-                        if (mouse.button & Qt.RightButton) {
-                            gridView.currentIndex = index;
-                        } else if (mouse.button & Qt.LeftButton) {
+                        if ((mouse.button & Qt.RightButton) || (mouse.button & Qt.LeftButton)) {
                             gridView.currentIndex = index;
                         }
                     }
                     onDoubleClicked: {
-                        if (mouse.button & Qt.RightButton) {
-                            delegateArea.state = "";
-                        } else if (mouse.button & Qt.LeftButton) {
+                        if (mouse.button & Qt.LeftButton) {
                             showForm.showShowForm();
                             showForm.setSource(src);
-//                            delegateArea.state = "expanded";
                         }
                     }
                 }

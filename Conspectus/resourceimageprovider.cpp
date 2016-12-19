@@ -15,7 +15,6 @@ QImage ResourceImageProvider::requestImage(const QString& id, QSize* size, const
     FileManager fm;
     QString absolute_path = fm.getSourceDirPath() + "/" + id;
     QImage image = fm.getImage(absolute_path);
-
     QImage result;
 
     if (requestedSize.isValid()) {
@@ -24,6 +23,7 @@ QImage ResourceImageProvider::requestImage(const QString& id, QSize* size, const
         result = image;
     }
     *size = result.size();
+
     return result;
 }
 

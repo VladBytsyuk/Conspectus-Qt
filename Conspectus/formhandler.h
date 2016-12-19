@@ -11,7 +11,7 @@ class FormHandler: public QObject
     Q_OBJECT
 
 protected:
-    int mCurrentTerm;
+    int mCurrentTerm = -1;
     QString mCurrentSubject;
     QString mCurrentTheme;
 

@@ -14,6 +14,11 @@ FileManager::FileManager(){
 		source_dir.mkdir(QString(SOURCE_DIR_NAME));
 		source_dir.cd(QString(SOURCE_DIR_NAME));
 	}
+    if (!source_dir.cd(QString(PREVIEW_NAME))) {
+        source_dir.mkdir(QString(PREVIEW_NAME));
+    }
+    source_dir.cd(QString(".."));
+    source_dir.cd(QString(SOURCE_DIR_NAME));
     main_dir_path = main_dir.path();
 	source_dir_path = source_dir.path();
 }
@@ -29,8 +34,11 @@ FileManager::FileManager(QString path){
 	source_dir = main_dir;
 	if (!source_dir.cd(QString(SOURCE_DIR_NAME))){
 		source_dir.mkdir(QString(SOURCE_DIR_NAME));
-		source_dir.cd(QString(SOURCE_DIR_NAME));
+        source_dir.cd(QString(SOURCE_DIR_NAME));
 	}
+    if (!source_dir.cd(QString(PREVIEW_NAME))) {
+        source_dir.mkdir(QString(PREVIEW_NAME));
+    }
     main_dir_path = main_dir.path();
 	source_dir_path = main_dir.path();
 }
@@ -45,12 +53,19 @@ QString FileManager::copyFile(QString file_name){
         return QString();
 	}
 	QFileInfo fi(file_name);
-	QString new_file_name = source_dir_path + "/" + QString::number(qrand()) + "." + fi.suffix();
-	while (!QFile::copy(file_name, new_file_name)){
-		new_file_name = source_dir_path + "/" + QString::number(qrand()) + "." + fi.suffix();
+    QString short_file_name = QString::number(qrand()) + "." + fi.suffix();
+    QString new_file_name = source_dir_path + "/" + short_file_name;
+    while (!QFile::copy(file_name, new_file_name)){
+        short_file_name = QString::number(qrand()) + "." + fi.suffix();
+        new_file_name = source_dir_path + "/" + short_file_name;
 	}
+
+    QString preview_file_name = source_dir_path + "/" + PREVIEW_NAME + "/" + short_file_name;
+    QImage image(file_name);
+    image = image.scaledToWidth(480);
+    image.save(preview_file_name, 0, 0);
+
 	qDebug(logDebug()) << "File " + QFileInfo(file_name).fileName() + " has been copied into project`s directory";
-    //emit addFileSignal(QFileInfo(new_file_name).fileName());
     return new_file_name;
 }
 
@@ -91,10 +106,10 @@ QImage FileManager::getImage(QString file_name){
 		qCritical(logCritical()) << "Can't load this image: " << file_name << ". Its format probably wrong";
 		return QImage();
 	}
-	else if (QFileInfo(file_name).absoluteDir() != source_dir){
-		qCritical(logCritical()) << "Wrong directory. Access denied";
-		return QImage();
-	}
+//	else if (QFileInfo(file_name).absoluteDir() != source_dir){
+//		qCritical(logCritical()) << "Wrong directory. Access denied";
+//		return QImage();
+//	}
 	else{
 		return img;
 	}

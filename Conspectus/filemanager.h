@@ -9,6 +9,7 @@
 
 #define MAIN_DIR_NAME "Conspectus"
 #define SOURCE_DIR_NAME "Source"
+#define PREVIEW_NAME "Preview"
 
 class FileManager: public QObject{
     Q_OBJECT

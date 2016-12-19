@@ -36,7 +36,7 @@ ApplicationWindow {
            viewForm.visible = true
             addForm.visible = false
            mainForm.visible = false
-            showForm.visible = false
+           showForm.visible = false
            viewForm.viewFormSignal()
         }
 
@@ -83,8 +83,6 @@ ApplicationWindow {
         anchors.fill: parent
         objectName: "showForm"
         visible: false
-
-        property string path: "file:///" + "C:\\21391.jpg"
 
         function showShowForm(string) {
            viewForm.visible = false
