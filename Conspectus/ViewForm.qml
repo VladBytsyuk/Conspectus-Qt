@@ -335,7 +335,7 @@ Item {
                                 anchors.bottomMargin: 20
                                 anchors.leftMargin: 10
                                 anchors.rightMargin: 10
-                                source: "image://sourceDir/" + src;
+                                source: "image://sourceDir/Preview/" + src;
                                 fillMode: Image.PreserveAspectFit
                                 opacity: parent.opacity
                             }
@@ -360,9 +360,7 @@ Item {
                         }
 
                         onClicked: {
-                            if (mouse.button & Qt.RightButton) {
-                                root.currentIndex = index;
-                            } else if (mouse.button & Qt.LeftButton) {
+                            if (mouse.button & Qt.RightButton || mouse.button & Qt.LeftButton) {
                                 root.currentIndex = index;
                             }
                         }
