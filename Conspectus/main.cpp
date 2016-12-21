@@ -109,6 +109,9 @@ int main(int argc, char *argv[])
                      ->findChild<QObject*>("buttonOk"), SIGNAL(okClicked(QString)),
                      &add_form, SLOT(onOkClicked(QString)));
 
+    QVariant model = (QVariant) *ConspectModel::getConspectModel();
+    engine.rootObjects().at(0)->findChild<QObject*>("treeView")->setProperty("model", model);
+
     app.exec();
 
     qDebug(logDebug()) << "Stoped";

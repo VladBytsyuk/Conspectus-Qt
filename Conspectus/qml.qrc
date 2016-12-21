@@ -9,5 +9,6 @@
         <file>assets/printer.png</file>
         <file>assets/zoom.png</file>
         <file>assets/zoom-out.png</file>
+        <file>model.qml</file>
     </qresource>
 </RCC>
