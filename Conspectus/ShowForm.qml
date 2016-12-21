@@ -104,24 +104,80 @@ Item {
         Flow {
             id: flowTopBar
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: 5
-            width: 600
-            height: 30
-            spacing: 5
+            anchors.verticalCenter: parent.verticalCenter
+            spacing: 20
 
-            Image {
-                source: "/assets/garbage.png"
-                width: 30
-                fillMode: Image.PreserveAspectFit
+            ToolButton{
+                id: toolButtonPrinter
+                //width: parent.width/7-parent.spacing*6
+                height: parent.height
+
+                Image {
+                    source: "/assets/printer.png"
+                    anchors.fill: parent
+                    fillMode: Image.PreserveAspectFit
+                }
             }
-            Image {
-                source: "/assets/printer.png"
-                width: 30
-                fillMode: Image.PreserveAspectFit
+            ToolButton{
+                id: toolButtonRefresh
+                //width: parent.width/7-parent.spacing*6
+                height: 30
+                Image {
+                    source: "/assets/refresh.png"
+                    anchors.fill: parent
+                    fillMode: Image.PreserveAspectFit
+                }
             }
-
-
+            ToolButton{
+                id: toolButtonRefr
+                //width: parent.width/7-parent.spacing*6
+                height: 30
+                Image {
+                    source: "/assets/refresh.png"
+                    anchors.fill: parent
+                    fillMode: Image.PreserveAspectFit
+                }
+            }
+            ToolButton{
+                id: toolButtonZoom
+                //width: parent.width/7-parent.spacing*6
+                height: 30
+                Image {
+                    source: "/assets/zoom.png"
+                    anchors.fill: parent
+                    fillMode: Image.PreserveAspectFit
+                }
+            }
+            ToolButton{
+                id: toolButtonZoomOut
+                //width: parent.width/7-parent.spacing*6
+                height: 30
+                Image {
+                    source: "/assets/zoom-out.png"
+                    anchors.fill: parent
+                    fillMode: Image.PreserveAspectFit
+                }
+            }
+            ToolButton{
+                id: toolButtonMoon
+                //width: parent.width/7-parent.spacing*6
+                height: 30
+                Image {
+                    source: "/assets/moon.png"
+                    anchors.fill: parent
+                    fillMode: Image.PreserveAspectFit
+                }
+            }
+            ToolButton{
+                id: toolButtonGarbage
+                //width: parent.width/7-parent.spacing*6
+                height: 30
+                Image {
+                    source: "/assets/garbage.png"
+                    anchors.fill: parent
+                    fillMode: Image.PreserveAspectFit
+                }
+            }
        } //End Top bar
     }
 
@@ -135,7 +191,7 @@ Item {
 
     Rectangle {
         anchors.top: topBar.bottom
-        anchors.bottom: buttonCancel.top
+        anchors.bottom: flowEditCancel.top
         anchors.bottomMargin: 10
         anchors.topMargin: 5
         anchors.left: parent.left
@@ -149,6 +205,16 @@ Item {
             anchors.fill: parent
             fillMode: Image.PreserveAspectFit
         }
+    }
+
+    Flow {
+        id: flowEditCancel
+        width: parent.width
+        height: buttonHeight + 15
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 2
+        anchors.horizontalCenter: parent.horizontalCenter
+
     }
 
     function setSource(path) {
