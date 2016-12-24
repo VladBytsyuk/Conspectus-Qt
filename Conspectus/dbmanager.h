@@ -64,6 +64,11 @@ public:
                                 QString file_name,
                                 QString tags = QString(),
                                 QString comments = QString());
+    void updateRowInTableConspect(int id,
+                                  int term,
+                                  QString subject,
+                                  int theme_no, QString theme,
+                                  int list_id_no, int list_id);
     //ConspectModel* getModel();
     //int generateListId();
     int findFileIdByName(QString file_name);
@@ -79,6 +84,11 @@ public slots:
                       QString subject,
                       int theme_no, QString theme,
                       int list_id_no, int list_id);
+    void onUpdateRowInConspectTable(int id,
+                               int term,
+                               QString subject,
+                               int theme_no, QString theme,
+                               int list_id_no, int list_id);
 };
 
 

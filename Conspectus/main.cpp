@@ -59,11 +59,13 @@ int main(int argc, char *argv[])
     QObject::connect(conspectModel, &ConspectModel::insertFileDBSignal, dbManager, &DBManager::onInsertFileIntoListTable);
     QObject::connect(conspectModel, &ConspectModel::removeFileDBSignal, dbManager, &DBManager::onRemoveFile);
     QObject::connect(conspectModel, &ConspectModel::insertListDBSignal, dbManager, &DBManager::onInsertListIntoConspectTable);
+    QObject::connect(conspectModel, &ConspectModel::updateRowInConspectTable, dbManager, &DBManager::onUpdateRowInConspectTable);
     QObject::connect(&add_form, &AddFormHandler::tryToAddFileToFileSystem, fm, &FileManager::onTryAddFileToFileSystem);
     QObject::connect(fm, &FileManager::invalidFilePath, &add_form, &AddFormHandler::onInvalidFilePath);
     QObject::connect(fm, &FileManager::validFilePath, &add_form, &AddFormHandler::onValidFilePath);
     QObject::connect(fm, &FileManager::removeFileSignal, conspectModel, &ConspectModel::onRemoveFile);
     QObject::connect(&add_form, &AddFormHandler::addFileToModel, conspectModel, &ConspectModel::onAddFile);
+    QObject::connect(&view_form, &ViewFormHandler::changeOrder, conspectModel, &ConspectModel::onChangeOrdering);
 
     //ViewForm connections
     QObject::connect(engine.rootObjects().at(0)
@@ -81,6 +83,10 @@ int main(int argc, char *argv[])
                      ->findChild<QObject*>("viewForm")
                      ->findChild<QObject*>("boxTheme"), SIGNAL(themeSelect(QString)),
                      &view_form, SLOT(onSetTheme(QString)));
+    QObject::connect(engine.rootObjects().at(0)
+                     ->findChild<QObject*>("viewForm")
+                     ->findChild<QObject*>("gridView"), SIGNAL(orderChanged(int, int)),
+                     &view_form, SLOT(onOrderChanged(int,int)));
 
     //AddForm connections
     QObject::connect(engine.rootObjects().at(0)

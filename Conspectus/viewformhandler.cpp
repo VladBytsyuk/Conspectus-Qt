@@ -10,12 +10,12 @@ void ViewFormHandler::onOkClicked(QString file_path) {
 
 }
 
-QStringList ViewFormHandler::getImageSources(int term, QString subject, QString theme) {
-    QList<int> listIds = getListIds(term, subject, theme);
+QStringList ViewFormHandler::getImageSources(int term, QString subject, QString theme, QList<int> *list_nos) {
+    QList<int> listIds = getListIds(term, subject, theme, list_nos);
     return getFileNames(listIds);
 }
 
-QList<int> ViewFormHandler::getListIds(int term, QString subject, QString theme) {
+QList<int> ViewFormHandler::getListIds(int term, QString subject, QString theme, QList<int> *list_nos) {
     QStandardItemModel* conspectModel = ConspectModel::getConspectModel();
     QList<int> ids;
 
@@ -39,6 +39,9 @@ QList<int> ViewFormHandler::getListIds(int term, QString subject, QString theme)
                                 QModelIndex listIndex = conspectModel->index(listIterator, 0, themeIndex);
                                 int current_list_id = listIndex.data().toInt();
                                 ids.push_back(current_list_id);
+                                QModelIndex listNoIndex = conspectModel->index(listIterator, 1, themeIndex);
+                                int list_no = listNoIndex.data().toInt();
+                                list_nos->push_back(list_no);
                             }
                             return ids;
                         }
@@ -64,25 +67,31 @@ QStringList ViewFormHandler::getFileNames(const QList<int> &listIds) {
     return fileSources;
 }
 
-void ViewFormHandler::setImageToQml(QString file_name) {
-    QObject *listModel = mView->findChild<QObject*>("photoBar")->findChild<QObject*>("listModel");
+void ViewFormHandler::setImageToQml(QString file_name, int list_no) {
+    QObject *listModel = mView->findChild<QObject*>("photoBar");//->findChild<QObject*>("listModel");
     QVariant empty;
     QMetaObject::invokeMethod(listModel, "onSetImageToQml", Q_RETURN_ARG(QVariant, empty),
-                              Q_ARG(QVariant, file_name));
+                              Q_ARG(QVariant, file_name), Q_ARG(QVariant, list_no));
 }
 
 void ViewFormHandler::clearViewsFromView() {
-    QObject *listModel = mView->findChild<QObject*>("photoBar")->findChild<QObject*>("listModel");
+    QObject *listModel = mView->findChild<QObject*>("photoBar");//->findChild<QObject*>("listModel");
     QVariant empty;
     QMetaObject::invokeMethod(listModel, "clearView", Q_RETURN_ARG(QVariant, empty),
                               Q_ARG(QVariant, empty));
 }
 
 bool ViewFormHandler::invokeSetImages() {
-    QStringList list = getImageSources(mCurrentTerm, mCurrentSubject, mCurrentTheme);
+    QList<int> list_nos;
+    QStringList list = getImageSources(mCurrentTerm, mCurrentSubject, mCurrentTheme, &list_nos);
     clearViewsFromView();
+    QMap<int, QString> images;
     for (int i = 0; i < list.size(); ++i) {
-        setImageToQml(list.at(i));
+        images[list_nos[i]] = list.at(i);
+    }
+    qSort(list_nos);
+    for (auto it = list_nos.begin(); it != list_nos.end(); ++it) {
+        setImageToQml(images[*it], *it);
     }
     return true;
 }
@@ -90,4 +99,17 @@ bool ViewFormHandler::invokeSetImages() {
 void ViewFormHandler::onSetTheme(QString theme) {
     FormHandler::onSetTheme(theme);
     this->invokeSetImages();
+}
+
+void ViewFormHandler::changeModelOrdering(int previous_index, int current_index) {
+    emit changeOrder(mCurrentTerm, mCurrentSubject, mCurrentTheme, previous_index, current_index);
+}
+
+void ViewFormHandler::reloadGridView() {
+    this->invokeSetImages();
+}
+
+void ViewFormHandler::onOrderChanged(int previous_index, int current_index) {
+    changeModelOrdering(previous_index, current_index);
+    reloadGridView();
 }

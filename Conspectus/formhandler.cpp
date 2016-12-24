@@ -4,6 +4,9 @@ bool FormHandler::setTerms() {
     QStandardItemModel* conspectModel = ConspectModel::getConspectModel();
     int terms_count = conspectModel->rowCount();
     if (terms_count == 0) {
+        mCurrentTerm = -1;
+        mCurrentSubject = "";
+        mCurrentTheme = "";
         qDebug(logDebug()) << "Terms count = 0";
         return false;
     }
@@ -33,6 +36,7 @@ bool FormHandler::setSubjects(int term) {
         QObject *boxSubject = mView->findChild<QObject*>("boxSubject");
         if (boxSubject) {
             mCurrentSubject = "";
+            mCurrentTheme = "";
             boxSubject->setProperty("model", subjects);
             boxSubject->setProperty("currentIndex", -1);
         } else {
@@ -178,7 +182,11 @@ void FormHandler::onForm() {
         this->setTerms();
     } else if (mCurrentSubject == "") {
         this->setSubjects(mCurrentTerm);
+    } else if (mCurrentTheme == ""){
+        setThemes(mCurrentTerm, mCurrentSubject);
     } else {
+        setTerms();
+        setSubjects(mCurrentTerm);
         setThemes(mCurrentTerm, mCurrentSubject);
     }
 }

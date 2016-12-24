@@ -3,9 +3,9 @@
 DBManager::DBManager()
 {
     tryToCreateDB();
-    if (isTableEmpty(TABLE_CONSPECT) && isTableEmpty(TABLE_LIST)) {
-        fillAssets();
-    }
+//    if (isTableEmpty(TABLE_CONSPECT) && isTableEmpty(TABLE_LIST)) {
+//        fillAssets();
+//    }
 }
 
 /*======================= Private Methods ====================================*/
@@ -427,6 +427,13 @@ void DBManager::onInsertListIntoConspectTable(int id, int term,
                                               QString subject,
                                               int theme_no, QString theme,
                                               int list_id_no, int list_id) {
+    insertRowIntoTableConspect(id, term, subject, theme_no, theme, list_id_no, list_id);
+}
+
+void DBManager::onUpdateRowInConspectTable(int id, int term,
+                                           QString subject,
+                                           int theme_no, QString theme,
+                                           int list_id_no, int list_id) {
     insertRowIntoTableConspect(id, term, subject, theme_no, theme, list_id_no, list_id);
 }
 
