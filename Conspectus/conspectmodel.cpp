@@ -32,6 +32,46 @@ QStandardItemModel* ConspectModel::getListModel() {
     return mListsModel;
 }
 
+void ConspectModel::logConspectModel()
+{
+    qDebug() << "ConspectModel:";
+    int terms_count = mConspectHierarchyModel->rowCount();
+    for (int termIterator = 0; termIterator < terms_count; ++termIterator) {
+        QModelIndex termIndex = mConspectHierarchyModel->index(termIterator, 0);
+        int current_term = termIndex.data().toInt();
+        qDebug() << QString::number(current_term);
+        int subjects_count = mConspectHierarchyModel->rowCount(termIndex);
+        for (int subjectIterator = 0; subjectIterator < subjects_count; ++subjectIterator) {
+            QModelIndex subjectIndex = mConspectHierarchyModel->index(subjectIterator, 0, termIndex);
+            QString current_subject = subjectIndex.data().toString();
+            qDebug() << "   " << current_subject;
+            int themes_count = mConspectHierarchyModel->rowCount(subjectIndex);
+            for (int themeIterator = 0; themeIterator < themes_count; ++themeIterator) {
+                QModelIndex themeIndex = mConspectHierarchyModel->index(themeIterator, 0, subjectIndex);
+                QString current_theme = themeIndex.data().toString();
+                QModelIndex themeNoIndex = mConspectHierarchyModel->index(themeIterator, 1, subjectIndex);
+                QString current_theme_no = themeNoIndex.data().toString();
+                qDebug() << "       " << current_theme << " (" << current_theme_no << ")";
+                int lists_count = mConspectHierarchyModel->rowCount(themeIndex);
+                for (int listIterator = 0; listIterator < lists_count; ++listIterator) {
+                    QModelIndex listIndex = mConspectHierarchyModel->index(listIterator, 0, themeIndex);
+                    QString current_list = listIndex.data().toString();
+                    QModelIndex listNoIndex = mConspectHierarchyModel->index(listIterator, 1, themeIndex);
+                    QString current_list_no = listNoIndex.data().toString();
+                    QModelIndex idIndex = mConspectHierarchyModel->index(listIterator, 2, themeIndex);
+                    QString id = idIndex.data().toString();
+                    qDebug() << "           " << current_list << " (" << current_list_no << ") : id = " << id;
+                }
+            }
+        }
+    }
+}
+
+void ConspectModel::logListModel()
+{
+
+}
+
 int ConspectModel::generateListId() {
     int max_id = -1;
     for (int row = 0; row < mListsModel->rowCount(); ++row) {
@@ -66,6 +106,9 @@ bool ConspectModel::insertIntoConspectModel(int id, int term, QString subject,
                                    list_no, id);
     if (!isInserted) return isInserted;
 
+    qDebug() << "Inserted row into ConspectModel: (" << row_id << ", " << term << ", " << subject << ", "
+             << theme_no << ", " << theme << ", " << list_no << ", " << id << ")";
+    logConspectModel();
     emit insertListDBSignal(row_id, term, subject, theme_no, theme,
                             list_no, id);
     return true;
@@ -337,6 +380,7 @@ void ConspectModel::onChangeOrdering(int term, QString subject, QString theme, i
             }
         }
     }
+    logConspectModel();
 }
 
 /* ================= Fields initialization ================= */
