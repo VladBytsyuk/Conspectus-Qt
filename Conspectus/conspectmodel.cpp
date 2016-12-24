@@ -148,13 +148,13 @@ bool ConspectModel::insertList(QModelIndex* index, int id, int list_no, int list
     int rows = mConspectHierarchyModel->rowCount(*index);
     qDebug() << "Insert list " << list_id << ": " << rows << " lists.";
     mConspectHierarchyModel->insertRow(rows, *index);
+    mConspectHierarchyModel->insertColumns(0, 3, *index);
     QModelIndex listIdIndex = mConspectHierarchyModel->index(rows, 0, *index);
     QModelIndex listNoIndex = mConspectHierarchyModel->index(rows, 1, *index);
     QModelIndex idIndex = mConspectHierarchyModel->index(rows, 2, *index);
     mConspectHierarchyModel->setData(listIdIndex, list_id);
     mConspectHierarchyModel->setData(listNoIndex, list_no);
     mConspectHierarchyModel->setData(idIndex, id);
-
     return true;
 }
 
@@ -163,6 +163,7 @@ bool ConspectModel::insertTheme(QModelIndex* index, int theme_no, QString theme,
     int rows = mConspectHierarchyModel->rowCount(*index);
     qDebug() << "Insert theme " << theme << ": " << rows << " themes.";
     mConspectHierarchyModel->insertRow(rows, *index);
+    mConspectHierarchyModel->insertColumns(0, 2, *index);
     QModelIndex themeIndex = mConspectHierarchyModel->index(rows, 0, *index);
     QModelIndex themeNoIndex = mConspectHierarchyModel->index(rows, 1, *index);
     mConspectHierarchyModel->setData(themeIndex, theme);
@@ -176,6 +177,7 @@ bool ConspectModel::insertSubject(QModelIndex* index, QString subject, int theme
     int rows = mConspectHierarchyModel->rowCount(*index);
     qDebug() << "Insert subject " << subject << ": " << rows << " subjects.";
     mConspectHierarchyModel->insertRow(rows, *index);
+    mConspectHierarchyModel->insertColumn(0, *index);
     QModelIndex subjectIndex = mConspectHierarchyModel->index(rows, 0, *index);
     mConspectHierarchyModel->setData(subjectIndex, subject);
     insertTheme(&subjectIndex, theme_no, theme, id, list_no, list_id);
