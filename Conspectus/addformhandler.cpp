@@ -10,6 +10,7 @@ AddFormHandler::~AddFormHandler() {}
 void AddFormHandler::onOkClicked(QString file_path) {
     mCurrentFilePath = file_path;
     emit tryToAddFileToFileSystem(mCurrentFilePath);
+    onForm();
 }
 
 void AddFormHandler::onInvalidFilePath() {

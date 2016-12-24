@@ -184,11 +184,11 @@ Item {
 
             function onClick() {
                 var isEditTextEmpty = textField1.text == "";
-                //console.log(boxTerm.currentIndex);
-                //console.log(boxTerm.model[boxTerm.currentIndex]);
-                var isTermEmpty = boxTerm.model[boxTerm.currentIndex] === undefined;
-                var isSubjectEmpty = boxSubject.model[boxSubject.currentIndex] === undefined;
-                var isThemeEmpty = boxTheme.model[boxTheme.currentIndex] === undefined;
+                console.log(boxSubject.currentIndex);
+                console.log(boxSubject.model[boxSubject.currentIndex]);
+                var isTermEmpty = boxTerm.editText === "";
+                var isSubjectEmpty = boxSubject.editText === "";
+                var isThemeEmpty = boxTheme.editText === "";
                 if (isEditTextEmpty) {
                     rectTextField.state = "highlight"
                 } else {
@@ -258,7 +258,7 @@ Item {
         }
 
         editable: true
-        onCurrentTextChanged: boxTerm.termSelect(model[currentIndex])
+        //onCurrentTextChanged: boxTerm.termSelect(model[currentIndex])
         onEditTextChanged: boxTerm.termSelect(boxTerm.editText.toString())
 
         inputMethodHints: Qt.ImhNoAutoUppercase
@@ -300,7 +300,7 @@ Item {
         }
 
         editable: true
-        onCurrentTextChanged: boxSubject.subjectSelect(model[currentIndex])
+        //onCurrentTextChanged: boxSubject.subjectSelect(model[currentIndex])
         onEditTextChanged: boxSubject.subjectSelect(boxSubject.editText.toString())
 
         anchors.horizontalCenter: parent.horizontalCenter
@@ -340,7 +340,7 @@ Item {
         }
 
         editable: true
-        onCurrentTextChanged: boxTheme.themeSelect(model[currentIndex])
+        //onCurrentTextChanged: boxTheme.themeSelect(model[currentIndex])
         onEditTextChanged: boxTheme.themeSelect(boxTheme.editText.toString())
 
         anchors.horizontalCenter: parent.horizontalCenter

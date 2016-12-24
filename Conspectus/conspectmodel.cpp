@@ -1,4 +1,5 @@
 #include "conspectmodel.h"
+#include <QTreeView>
 
 ConspectModel::ConspectModel()
 {
@@ -29,6 +30,46 @@ void ConspectModel::setListModel(QStandardItemModel* listModel) {
 
 QStandardItemModel* ConspectModel::getListModel() {
     return mListsModel;
+}
+
+void ConspectModel::logConspectModel()
+{
+    qDebug() << "ConspectModel:";
+    int terms_count = mConspectHierarchyModel->rowCount();
+    for (int termIterator = 0; termIterator < terms_count; ++termIterator) {
+        QModelIndex termIndex = mConspectHierarchyModel->index(termIterator, 0);
+        int current_term = termIndex.data().toInt();
+        qDebug() << QString::number(current_term);
+        int subjects_count = mConspectHierarchyModel->rowCount(termIndex);
+        for (int subjectIterator = 0; subjectIterator < subjects_count; ++subjectIterator) {
+            QModelIndex subjectIndex = mConspectHierarchyModel->index(subjectIterator, 0, termIndex);
+            QString current_subject = subjectIndex.data().toString();
+            qDebug() << "   " << current_subject;
+            int themes_count = mConspectHierarchyModel->rowCount(subjectIndex);
+            for (int themeIterator = 0; themeIterator < themes_count; ++themeIterator) {
+                QModelIndex themeIndex = mConspectHierarchyModel->index(themeIterator, 0, subjectIndex);
+                QString current_theme = themeIndex.data().toString();
+                QModelIndex themeNoIndex = mConspectHierarchyModel->index(themeIterator, 1, subjectIndex);
+                QString current_theme_no = themeNoIndex.data().toString();
+                qDebug() << "       " << current_theme << " (" << current_theme_no << ")";
+                int lists_count = mConspectHierarchyModel->rowCount(themeIndex);
+                for (int listIterator = 0; listIterator < lists_count; ++listIterator) {
+                    QModelIndex listIndex = mConspectHierarchyModel->index(listIterator, 0, themeIndex);
+                    QString current_list = listIndex.data().toString();
+                    QModelIndex listNoIndex = mConspectHierarchyModel->index(listIterator, 1, themeIndex);
+                    QString current_list_no = listNoIndex.data().toString();
+                    QModelIndex idIndex = mConspectHierarchyModel->index(listIterator, 2, themeIndex);
+                    QString id = idIndex.data().toString();
+                    qDebug() << "           " << current_list << " (" << current_list_no << ") : id = " << id;
+                }
+            }
+        }
+    }
+}
+
+void ConspectModel::logListModel()
+{
+
 }
 
 int ConspectModel::generateListId() {
@@ -65,6 +106,9 @@ bool ConspectModel::insertIntoConspectModel(int id, int term, QString subject,
                                    list_no, id);
     if (!isInserted) return isInserted;
 
+    qDebug() << "Inserted row into ConspectModel: (" << row_id << ", " << term << ", " << subject << ", "
+             << theme_no << ", " << theme << ", " << list_no << ", " << id << ")";
+    logConspectModel();
     emit insertListDBSignal(row_id, term, subject, theme_no, theme,
                             list_no, id);
     return true;
@@ -102,7 +146,9 @@ bool ConspectModel::insertIntoConspectModel(int id, int term, QString subject,
 
 bool ConspectModel::insertList(QModelIndex* index, int id, int list_no, int list_id) {
     int rows = mConspectHierarchyModel->rowCount(*index);
+    qDebug() << "Insert list " << list_id << ": " << rows << " lists.";
     mConspectHierarchyModel->insertRow(rows, *index);
+    if (rows == 0) mConspectHierarchyModel->insertColumns(0, 3, *index);
     QModelIndex listIdIndex = mConspectHierarchyModel->index(rows, 0, *index);
     QModelIndex listNoIndex = mConspectHierarchyModel->index(rows, 1, *index);
     QModelIndex idIndex = mConspectHierarchyModel->index(rows, 2, *index);
@@ -115,7 +161,9 @@ bool ConspectModel::insertList(QModelIndex* index, int id, int list_no, int list
 bool ConspectModel::insertTheme(QModelIndex* index, int theme_no, QString theme,
                                 int id, int list_no, int list_id) {
     int rows = mConspectHierarchyModel->rowCount(*index);
+    qDebug() << "Insert theme " << theme << ": " << rows << " themes.";
     mConspectHierarchyModel->insertRow(rows, *index);
+    if (rows == 0) mConspectHierarchyModel->insertColumns(0, 2, *index);
     QModelIndex themeIndex = mConspectHierarchyModel->index(rows, 0, *index);
     QModelIndex themeNoIndex = mConspectHierarchyModel->index(rows, 1, *index);
     mConspectHierarchyModel->setData(themeIndex, theme);
@@ -127,7 +175,9 @@ bool ConspectModel::insertTheme(QModelIndex* index, int theme_no, QString theme,
 bool ConspectModel::insertSubject(QModelIndex* index, QString subject, int theme_no, QString theme,
                                   int id, int list_no, int list_id) {
     int rows = mConspectHierarchyModel->rowCount(*index);
+    qDebug() << "Insert subject " << subject << ": " << rows << " subjects.";
     mConspectHierarchyModel->insertRow(rows, *index);
+    if (rows == 0) mConspectHierarchyModel->insertColumn(0, *index);
     QModelIndex subjectIndex = mConspectHierarchyModel->index(rows, 0, *index);
     mConspectHierarchyModel->setData(subjectIndex, subject);
     insertTheme(&subjectIndex, theme_no, theme, id, list_no, list_id);
@@ -137,6 +187,7 @@ bool ConspectModel::insertSubject(QModelIndex* index, QString subject, int theme
 bool ConspectModel::insertTerm(int term, QString subject, int theme_no,
                                QString theme, int id, int list_no, int list_id) {
     int rows = mConspectHierarchyModel->rowCount();
+    qDebug() << "Insert term " << term << ": " << rows << " terms in conspect.";
     mConspectHierarchyModel->insertRow(rows);
     QModelIndex termIndex = mConspectHierarchyModel->index(rows, 0);
     mConspectHierarchyModel->setData(termIndex, term);
@@ -165,8 +216,7 @@ int ConspectModel::generateConspectId() {
         }
     }
     if (max_id == -1) {
-        qCritical(logCritical()) << "Can't generate index for Conspect Model";
-        return max_id;
+        qCritical(logCritical()) << "Empty Conspect Model";
     }
     return max_id + 1;
 }
@@ -332,6 +382,7 @@ void ConspectModel::onChangeOrdering(int term, QString subject, QString theme, i
             }
         }
     }
+    logConspectModel();
 }
 
 /* ================= Fields initialization ================= */

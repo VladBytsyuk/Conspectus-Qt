@@ -3,9 +3,9 @@
 DBManager::DBManager()
 {
     tryToCreateDB();
-    if (isTableEmpty(TABLE_CONSPECT) && isTableEmpty(TABLE_LIST)) {
-        fillAssets();
-    }
+//    if (isTableEmpty(TABLE_CONSPECT) && isTableEmpty(TABLE_LIST)) {
+//        fillAssets();
+//    }
 }
 
 /*======================= Private Methods ====================================*/
