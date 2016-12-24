@@ -1,10 +1,22 @@
 TEMPLATE = app
 
 QT += qml quick widgets
+QT += sql
 
 CONFIG += c++11
 
-SOURCES += main.cpp
+SOURCES += \
+    conspectmodel.cpp \
+    main.cpp \
+    dbmanager.cpp \
+    filemanager.cpp \
+    advancedimage.cpp \
+    loggingcategories.cpp \
+    addformhandler.cpp \
+    formhandler.cpp \
+    viewformhandler.cpp \
+    utils.cpp \
+    resourceimageprovider.cpp
 
 RESOURCES += qml.qrc
 
@@ -15,3 +27,15 @@ QML_IMPORT_PATH =
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+HEADERS += \
+    dbmanager.h \
+    conspectmodel.h \
+    filemanager.h \
+    advancedimage.h \
+    loggingcategories.h \
+    addformhandler.h \
+    formhandler.h \
+    viewformhandler.h \
+    utils.h \
+    resourceimageprovider.h

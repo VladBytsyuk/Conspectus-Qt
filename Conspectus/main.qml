@@ -3,10 +3,13 @@ import QtQuick.Controls 1.4
 import QtQuick.Dialogs 1.2
 
 ApplicationWindow {
+    id: appWindow
     visible: true
-    width: 640
-    height: 480
-    title: qsTr("Hello World")
+    width: 690
+    height: 610
+    title: qsTr("Conspectus")
+    minimumWidth: 690
+    minimumHeight: 610
 
     menuBar: MenuBar {
         Menu {
@@ -22,19 +25,72 @@ ApplicationWindow {
         }
     }
 
-    MainForm {
-        anchors.fill: parent
-        button1.onClicked: messageDialog.show(qsTr("Button 1 pressed"))
-        button2.onClicked: messageDialog.show(qsTr("Button 2 pressed"))
+    ViewForm {
+        id : viewForm
+        objectName: "viewForm"
+        anchors.fill: parent;
+
+        signal viewFormSignal()
+
+        function showViewForm() {
+           viewForm.visible = true
+            addForm.visible = false
+           mainForm.visible = false
+           showForm.visible = false
+           viewForm.viewFormSignal()
+        }
+
+        buttonCancel.onClicked: mainForm.showMainForm()
     }
 
-    MessageDialog {
-        id: messageDialog
-        title: qsTr("May I have your attention, please?")
+    AddForm {
+        id : addForm
+        objectName: "addForm"
+        anchors.fill: parent
 
-        function show(caption) {
-            messageDialog.text = caption;
-            messageDialog.open();
+        signal addFormSignal()
+
+        function showAddForm(){
+            viewForm.visible = false
+             addForm.visible = true
+            mainForm.visible = false
+            showForm.visible = false
+             addForm.addFormSignal()
+        }
+
+        buttonCancel.onClicked: {
+            addForm.unHighLight();
+            mainForm.showMainForm();
         }
     }
+
+    MainForm {
+        id: mainForm
+        anchors.fill: parent
+        buttonView.onClicked: viewForm.showViewForm()
+        buttonAdd.onClicked: addForm.showAddForm()
+
+        function showMainForm() {
+           viewForm.visible = false
+            addForm.visible = false
+           mainForm.visible = true
+            showForm.visible = false
+        }
+    }
+
+    ShowForm {
+        id: showForm
+        anchors.fill: parent
+        objectName: "showForm"
+        visible: false
+
+        function showShowForm(string) {
+           viewForm.visible = false
+            addForm.visible = false
+           mainForm.visible = false
+            showForm.visible = true
+        }
+        buttonCancel.onClicked: viewForm.showViewForm()
+    }
+
 }

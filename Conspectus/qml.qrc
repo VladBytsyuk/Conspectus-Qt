@@ -1,6 +1,16 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>MainForm.ui.qml</file>
+        <file>MainForm.qml</file>
+        <file>AddForm.qml</file>
+        <file>ViewForm.qml</file>
+        <file>ShowForm.qml</file>
+        <file>assets/garbage.png</file>
+        <file>assets/printer.png</file>
+        <file>assets/zoom.png</file>
+        <file>assets/zoom-out.png</file>
+        <file>assets/refresh.png</file>
+        <file>assets/moon.png</file>
+        <file>model.qml</file>
     </qresource>
 </RCC>
