@@ -11,6 +11,5 @@
         <file>assets/zoom-out.png</file>
         <file>assets/refresh.png</file>
         <file>assets/moon.png</file>
-        <file>model.qml</file>
     </qresource>
 </RCC>

@@ -17,6 +17,12 @@ Item {
     property int rOffShadowNotPressed: 8
     property int addPressed: 2
 
+    property string current_image_name: ""
+    signal turnedLeft(string name)
+    signal turnedRight(string name)
+    signal printed(string name)
+    signal greyscaled(string name)
+
     Component {
         id: buttonStyle
         ButtonStyle {
@@ -109,7 +115,6 @@ Item {
 
             ToolButton{
                 id: toolButtonPrinter
-                //width: parent.width/7-parent.spacing*6
                 height: parent.height
 
                 Image {
@@ -117,30 +122,30 @@ Item {
                     anchors.fill: parent
                     fillMode: Image.PreserveAspectFit
                 }
+                onClicked: showForm.printed(current_image_name)
             }
             ToolButton{
-                id: toolButtonRefresh
-                //width: parent.width/7-parent.spacing*6
+                id: toolButtonTurnLeft
                 height: 30
                 Image {
                     source: "/assets/refresh.png"
                     anchors.fill: parent
                     fillMode: Image.PreserveAspectFit
                 }
+                onClicked: showForm.turnedLeft(current_image_name)
             }
             ToolButton{
-                id: toolButtonRefr
-                //width: parent.width/7-parent.spacing*6
+                id: toolButtonTurnRight
                 height: 30
                 Image {
                     source: "/assets/refresh.png"
                     anchors.fill: parent
                     fillMode: Image.PreserveAspectFit
                 }
+                onClicked: showForm.turnedRight(current_image_name)
             }
             ToolButton{
                 id: toolButtonZoom
-                //width: parent.width/7-parent.spacing*6
                 height: 30
                 Image {
                     source: "/assets/zoom.png"
@@ -150,7 +155,6 @@ Item {
             }
             ToolButton{
                 id: toolButtonZoomOut
-                //width: parent.width/7-parent.spacing*6
                 height: 30
                 Image {
                     source: "/assets/zoom-out.png"
@@ -160,17 +164,16 @@ Item {
             }
             ToolButton{
                 id: toolButtonMoon
-                //width: parent.width/7-parent.spacing*6
                 height: 30
                 Image {
                     source: "/assets/moon.png"
                     anchors.fill: parent
                     fillMode: Image.PreserveAspectFit
                 }
+                onClicked: showForm.greyscaled(current_image_name)
             }
             ToolButton{
                 id: toolButtonGarbage
-                //width: parent.width/7-parent.spacing*6
                 height: 30
                 Image {
                     source: "/assets/garbage.png"
@@ -182,13 +185,9 @@ Item {
     }
 
 
-
-    function showImage(path){
-        mainImage.source = path;
-    }
-
-
-
+    /**
+    * Main image
+    */
     Rectangle {
         anchors.top: topBar.bottom
         anchors.bottom: flowEditCancel.top
@@ -219,6 +218,11 @@ Item {
 
     function setSource(path) {
         mainImage.source = "image://sourceDir/" + path;
+        current_image_name = path;
     }
 
+    function reloadImage() {
+        mainImage.source = "";
+        mainImage.source = "image://sourceDir/" + current_image_name;
+    }
 }

@@ -185,8 +185,8 @@ void FormHandler::onForm() {
     } else if (mCurrentTheme == ""){
         setThemes(mCurrentTerm, mCurrentSubject);
     } else {
-        setTerms();
-        setSubjects(mCurrentTerm);
-        setThemes(mCurrentTerm, mCurrentSubject);
+        //setTerms();
+        //setSubjects(mCurrentTerm);
+        //setThemes(mCurrentTerm, mCurrentSubject);
     }
 }

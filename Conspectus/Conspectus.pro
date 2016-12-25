@@ -10,13 +10,13 @@ SOURCES += \
     main.cpp \
     dbmanager.cpp \
     filemanager.cpp \
-    advancedimage.cpp \
     loggingcategories.cpp \
     addformhandler.cpp \
     formhandler.cpp \
     viewformhandler.cpp \
     utils.cpp \
-    resourceimageprovider.cpp
+    resourceimageprovider.cpp \
+    imagehandler.cpp
 
 RESOURCES += qml.qrc
 
@@ -32,10 +32,10 @@ HEADERS += \
     dbmanager.h \
     conspectmodel.h \
     filemanager.h \
-    advancedimage.h \
     loggingcategories.h \
     addformhandler.h \
     formhandler.h \
     viewformhandler.h \
     utils.h \
-    resourceimageprovider.h
+    resourceimageprovider.h \
+    imagehandler.h
