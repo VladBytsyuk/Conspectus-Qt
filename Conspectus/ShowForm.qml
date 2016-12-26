@@ -96,12 +96,6 @@ Item {
         objectName: "buttonLeft"
         anchors.left: parent.left
         anchors.leftMargin: 5
-//        anchors.horizontalCenter: parent.horizontalCenter
-//        anchors.horizontalCenterOffset: buttonEdit.pressed ? -horizontalNotPressed+addPressed : -horizontalNotPressed
-//        anchors.bottom: parent.bottom
-//        anchors.bottomMargin: buttonEdit.pressed ? verticalNotPressed-addPressed : verticalNotPressed
-//        text:"SAVE"
-
         visible: true
         style: buttonStyle
     }
@@ -122,12 +116,6 @@ Item {
         objectName: "buttonRight"
         anchors.right: parent.right
         anchors.rightMargin: 5
-//        anchors.horizontalCenter: parent.horizontalCenter
-//        anchors.horizontalCenterOffset: buttonEdit.pressed ? -horizontalNotPressed+addPressed : -horizontalNotPressed
-//        anchors.bottom: parent.bottom
-//        anchors.bottomMargin: buttonEdit.pressed ? verticalNotPressed-addPressed : verticalNotPressed
-//        text:"SAVE"
-
         visible: true
         style: buttonStyle
     }
@@ -166,10 +154,10 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             spacing: 20
 
-//            ToolButton{
-//                id: toolButtonPrinter
-//                //width: parent.width/7-parent.spacing*6
-//                height: parent.height
+            ToolButton{
+                id: toolButtonPrinter
+                //width: parent.width/7-parent.spacing*6
+                height: parent.height
 
 //                MouseArea {
 //                            id: mouseAreaPrinter
@@ -192,14 +180,14 @@ Item {
 //            }
 
 
-//                    Rectangle{
-//                        anchors.fill: parent
-//                        color: grey //mouseAreaPrinter ? "grey" : "00000000"
-//                        Image {
-//                            source: "/assets/printer.png"
-//                            anchors.fill: parent
-//                            fillMode: Image.PreserveAspectFit
-//                        }
+                    Rectangle{
+                        anchors.fill: parent
+                        color: "#00000000"
+                        Image {
+                            source: "/assets/printer.png"
+                            anchors.fill: parent
+                            fillMode: Image.PreserveAspectFit
+                        }
 //                        MouseArea {
 //                                    id: mouseAreaPrinter
 //                                    anchors.fill: parent
@@ -208,11 +196,11 @@ Item {
 //                                    onExited: parent.border.color = "green"
 //                                    //onClicked: rect_color_change.color = "lightgreen"
 //                                    }
-//                    }
+                    }
 
 
 
-//        }
+        }
             ToolButton{
                 id: toolButtonRefresh
                 //width: parent.width/7-parent.spacing*6
