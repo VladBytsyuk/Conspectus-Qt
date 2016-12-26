@@ -95,6 +95,48 @@ Item {
     }
 
 
+    Button {
+        id: buttonLeft
+        width: 25
+        height: parent.height
+        objectName: "buttonLeft"
+        anchors.left: parent.left
+        anchors.leftMargin: 5
+        visible: true
+        style: buttonStyle
+    }
+    Flow {
+        id: flowButtonLeft
+        width: 25
+        height: parent.height
+        anchors.left: parent.left
+        anchors.leftMargin: 5
+
+    }
+
+
+    Button {
+        id: buttonRight
+        width: 25
+        height: parent.height
+        objectName: "buttonRight"
+        anchors.right: parent.right
+        anchors.rightMargin: 5
+        visible: true
+        style: buttonStyle
+    }
+    Flow {
+        id: flowButtonRight
+        width: 25
+        height: parent.height
+        anchors.right: parent.right
+        anchors.rightMargin: 5
+    }
+
+
+
+
+
     /**
     * Top bar
     */
@@ -102,10 +144,15 @@ Item {
         id: topBar
         width: parent.width - 16
         height: 60
+        anchors.left: flowButtonLeft.right
+        anchors.right: flowButtonRight.left
+        anchors.leftMargin: 5
+        anchors.rightMargin: 5
         anchors.horizontalCenter: parent.horizontalCenter
         border.color: "#6988bd"
         color: "#006988bd"
         radius: 3
+
 
         Flow {
             id: flowTopBar
@@ -193,10 +240,10 @@ Item {
         anchors.bottom: flowEditCancel.top
         anchors.bottomMargin: 10
         anchors.topMargin: 5
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.leftMargin: 10
-        anchors.rightMargin: 10
+        anchors.left: flowButtonLeft.right
+        anchors.right: flowButtonRight.left
+        anchors.leftMargin: 5
+        anchors.rightMargin: 5
         color: "#00000000"
 
         Image {

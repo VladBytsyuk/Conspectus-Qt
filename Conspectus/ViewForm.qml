@@ -219,7 +219,7 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: topBar.bottom
         anchors.topMargin: 10
-        anchors.bottom: flowCancel.top
+        anchors.bottom: flowEditCancel.top
         anchors.bottomMargin: 10
         border.color: "#6988bd"
         color: "#006988bd"
@@ -399,7 +399,7 @@ Item {
     * Bottom bar
     */
    Flow {
-       id: flowCancel
+       id: flowEditCancel
        width: parent.width
        height: buttonHeight + 15
        anchors.bottom: parent.bottom
