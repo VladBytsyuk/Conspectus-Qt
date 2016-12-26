@@ -51,6 +51,9 @@ public:
     static void setListModel(QStandardItemModel* listModel);
     static QStandardItemModel* getListModel();
 
+    static void logConspectModel();
+    static void logListModel();
+
 public slots:
     void onRemoveFile(QString file_name);
     void onAddFile(QString file_name, int term, QString subject, QString theme);
