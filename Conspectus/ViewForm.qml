@@ -287,7 +287,7 @@ Item {
 
                         property bool held: false
                         property int  lastDraggedIndex: -1
-                        property int visualIndex: DelegateModel.itemsIndex
+                        property int  visualIndex: DelegateModel.itemsIndex
 
                         width: root.cellWidth; height: root.cellHeight
                         drag.target:  held ? icon : undefined
@@ -367,8 +367,16 @@ Item {
 
                         onDoubleClicked: {
                             if (mouse.button & Qt.LeftButton) {
+                                if (root.currentIndex - 1 != -1 && root.currentIndex + 1 != root.count) {
+                                    showForm.setSource(src, true, true);
+                                } else if (root.currentIndex - 1 === -1 && root.currentIndex + 1 != root.count) {
+                                    showForm.setSource(src, false, true);
+                                } else if (root.currentIndex - 1 != -1 && root.currentIndex + 1 === root.count) {
+                                    showForm.setSource(src, true, false);
+                                } else {
+                                    showForm.setSource(src, false, false);
+                                }
                                 showForm.showShowForm();
-                                showForm.setSource(src);
                             }
                         }
 
@@ -406,4 +414,38 @@ Item {
        anchors.bottomMargin: 2
        anchors.horizontalCenter: parent.horizontalCenter
    } //End bottom bar
+
+   function setNextImage() {
+       if (root.currentIndex + 1 != root.count) {
+           console.log(root.currentIndex + 1);
+           var nextImg = listModel.get(root.currentIndex + 1).src;
+           root.currentIndex = root.currentIndex + 1;
+           if (root.currentIndex - 1 != -1 && root.currentIndex + 1 != root.count) {
+               showForm.setSource(nextImg, true, true);
+           } else if (root.currentIndex - 1 === -1 && root.currentIndex + 1 != root.count) {
+               showForm.setSource(nextImg, false, true);
+           } else if (root.currentIndex - 1 != -1 && root.currentIndex + 1 === root.count) {
+               showForm.setSource(nextImg, true, false);
+           } else {
+               showForm.setSource(nextImg, false, false);
+           }
+       }
+   }
+
+   function setPreviousImage() {
+       if (root.currentIndex - 1 != -1) {
+           console.log(root.currentIndex - 1);
+           var prevImg = listModel.get(root.currentIndex - 1).src;
+           root.currentIndex = root.currentIndex - 1;
+           if (root.currentIndex - 1 != -1 && root.currentIndex + 1 != root.count) {
+               showForm.setSource(prevImg, true, true);
+           } else if (root.currentIndex - 1 === -1 && root.currentIndex + 1 != root.count) {
+               showForm.setSource(prevImg, false, true);
+           } else if (root.currentIndex - 1 != -1 && root.currentIndex + 1 === root.count) {
+               showForm.setSource(prevImg, true, false);
+           } else {
+               showForm.setSource(prevImg, false, false);
+           }
+       }
+   }
 }

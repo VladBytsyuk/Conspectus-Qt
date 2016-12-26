@@ -95,16 +95,6 @@ Item {
     }
 
 
-    Button {
-        id: buttonLeft
-        width: 25
-        height: parent.height
-        objectName: "buttonLeft"
-        anchors.left: parent.left
-        anchors.leftMargin: 5
-        visible: true
-        style: buttonStyle
-    }
     Flow {
         id: flowButtonLeft
         width: 25
@@ -113,18 +103,40 @@ Item {
         anchors.leftMargin: 5
 
     }
+    Rectangle {
+        id: buttonLeft
+        objectName: "buttonLeft"
+        width: flowButtonLeft.width
+        height: flowButtonLeft.height
+        anchors.horizontalCenter: flowButtonLeft.horizontalCenter
+        anchors.verticalCenter: flowButtonLeft.verticalCenter
+        radius: 3
+        color: buttonLeftMA.containsMouse ? (buttonLeftMA.pressed ? "#40000000" : "#20000000") : "#00000000"
+        visible: buttonLeft.isExistsLeft ? true : false
 
+        property bool isExistsLeft: true
 
-    Button {
-        id: buttonRight
-        width: 25
-        height: parent.height
-        objectName: "buttonRight"
-        anchors.right: parent.right
-        anchors.rightMargin: 5
-        visible: true
-        style: buttonStyle
+        Image {
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: parent.width
+            height: parent.width
+            source: "/assets/arrow_left.png"
+            visible: parent.visible
+        }
+
+        MouseArea {
+            id: buttonLeftMA
+            anchors.fill: parent
+            hoverEnabled: true
+            onClicked: {
+                viewForm.setPreviousImage()
+            }
+        }
+
     }
+
+
     Flow {
         id: flowButtonRight
         width: 25
@@ -132,9 +144,38 @@ Item {
         anchors.right: parent.right
         anchors.rightMargin: 5
     }
+    Rectangle {
+        id: buttonRight
+        objectName: "buttonRight"
+        width: flowButtonRight.width
+        height: flowButtonRight.height
+        anchors.horizontalCenter: flowButtonRight.horizontalCenter
+        anchors.verticalCenter: flowButtonRight.verticalCenter
+        radius: 3
+        color: buttonRightMA.containsMouse ? (buttonRightMA.pressed ? "#40000000" : "#20000000") : "#00000000"
+        visible: buttonRight.isExistsRight ? true : false
 
+        property bool isExistsRight: true
 
+        Image {
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: parent.width
+            height: parent.width
+            source: "/assets/arrow_right.png"
+            visible: parent.visible
+        }
 
+        MouseArea {
+            id: buttonRightMA
+            anchors.fill: parent
+            hoverEnabled: true
+            onClicked: {
+                viewForm.setNextImage()
+            }
+        }
+
+    }
 
 
     /**
@@ -148,7 +189,7 @@ Item {
         anchors.right: flowButtonRight.left
         anchors.leftMargin: 5
         anchors.rightMargin: 5
-        anchors.horizontalCenter: parent.horizontalCenter
+        //anchors.horizontalCenter: parent.horizontalCenter
         border.color: "#6988bd"
         color: "#006988bd"
         radius: 3
@@ -263,7 +304,10 @@ Item {
 
     }
 
-    function setSource(path) {
+    function setSource(path, isExistsLeft, isExistsRight) {
+        buttonLeft.isExistsLeft = isExistsLeft;
+        buttonRight.isExistsRight = isExistsRight;
+
         mainImage.source = "image://sourceDir/" + path;
         current_image_name = path;
     }
