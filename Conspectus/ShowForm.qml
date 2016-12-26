@@ -89,6 +89,60 @@ Item {
     }
 
 
+    Button {
+        id: buttonLeft
+        width: 25
+        height: parent.height
+        objectName: "buttonLeft"
+        anchors.left: parent.left
+        anchors.leftMargin: 5
+//        anchors.horizontalCenter: parent.horizontalCenter
+//        anchors.horizontalCenterOffset: buttonEdit.pressed ? -horizontalNotPressed+addPressed : -horizontalNotPressed
+//        anchors.bottom: parent.bottom
+//        anchors.bottomMargin: buttonEdit.pressed ? verticalNotPressed-addPressed : verticalNotPressed
+//        text:"SAVE"
+
+        visible: true
+        style: buttonStyle
+    }
+    Flow {
+        id: flowButtonLeft
+        width: 25
+        height: parent.height
+        anchors.left: parent.left
+        anchors.leftMargin: 5
+
+    }
+
+
+    Button {
+        id: buttonRight
+        width: 25
+        height: parent.height
+        objectName: "buttonRight"
+        anchors.right: parent.right
+        anchors.rightMargin: 5
+//        anchors.horizontalCenter: parent.horizontalCenter
+//        anchors.horizontalCenterOffset: buttonEdit.pressed ? -horizontalNotPressed+addPressed : -horizontalNotPressed
+//        anchors.bottom: parent.bottom
+//        anchors.bottomMargin: buttonEdit.pressed ? verticalNotPressed-addPressed : verticalNotPressed
+//        text:"SAVE"
+
+        visible: true
+        style: buttonStyle
+    }
+    Flow {
+        id: flowButtonRight
+        width: 25
+        height: parent.height
+        anchors.right: parent.right
+        anchors.rightMargin: 5
+    }
+
+
+
+
+
     /**
     * Top bar
     */
@@ -96,10 +150,15 @@ Item {
         id: topBar
         width: parent.width - 16
         height: 60
+        anchors.left: flowButtonLeft.right
+        anchors.right: flowButtonRight.left
+        anchors.leftMargin: 5
+        anchors.rightMargin: 5
         anchors.horizontalCenter: parent.horizontalCenter
         border.color: "#6988bd"
         color: "#006988bd"
         radius: 3
+
 
         Flow {
             id: flowTopBar
@@ -107,21 +166,57 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             spacing: 20
 
-            ToolButton{
-                id: toolButtonPrinter
-                //width: parent.width/7-parent.spacing*6
-                height: parent.height
+//            ToolButton{
+//                id: toolButtonPrinter
+//                //width: parent.width/7-parent.spacing*6
+//                height: parent.height
 
-                Image {
-                    source: "/assets/printer.png"
-                    anchors.fill: parent
-                    fillMode: Image.PreserveAspectFit
-                }
-            }
+//                MouseArea {
+//                            id: mouseAreaPrinter
+//                            anchors.fill: parent
+//                            hoverEnabled: true
+//                            onEntered: parent.border.color = "gray"
+//                            onExited: parent.border.color = "green"
+//                            //onClicked: rect_color_change.color = "lightgreen"
+////                        }
+
+//                        Rectangle{
+//                            anchors.fill: parent
+//                            color: grey //mouseAreaPrinter ? "grey" : "00000000"
+//                            Image {
+//                                source: "/assets/printer.png"
+//                                anchors.fill: parent
+//                                fillMode: Image.PreserveAspectFit
+//                            }
+//                        }
+//            }
+
+
+//                    Rectangle{
+//                        anchors.fill: parent
+//                        color: grey //mouseAreaPrinter ? "grey" : "00000000"
+//                        Image {
+//                            source: "/assets/printer.png"
+//                            anchors.fill: parent
+//                            fillMode: Image.PreserveAspectFit
+//                        }
+//                        MouseArea {
+//                                    id: mouseAreaPrinter
+//                                    anchors.fill: parent
+//                                    hoverEnabled: true
+//                                    onEntered: parent.border.color = "gray"
+//                                    onExited: parent.border.color = "green"
+//                                    //onClicked: rect_color_change.color = "lightgreen"
+//                                    }
+//                    }
+
+
+
+//        }
             ToolButton{
                 id: toolButtonRefresh
                 //width: parent.width/7-parent.spacing*6
-                height: 30
+                height: parent.height
                 Image {
                     source: "/assets/refresh.png"
                     anchors.fill: parent
@@ -131,7 +226,7 @@ Item {
             ToolButton{
                 id: toolButtonRefr
                 //width: parent.width/7-parent.spacing*6
-                height: 30
+                height: parent.height
                 Image {
                     source: "/assets/refresh.png"
                     anchors.fill: parent
@@ -141,7 +236,7 @@ Item {
             ToolButton{
                 id: toolButtonZoom
                 //width: parent.width/7-parent.spacing*6
-                height: 30
+                height: parent.height
                 Image {
                     source: "/assets/zoom.png"
                     anchors.fill: parent
@@ -151,7 +246,7 @@ Item {
             ToolButton{
                 id: toolButtonZoomOut
                 //width: parent.width/7-parent.spacing*6
-                height: 30
+                height: parent.height
                 Image {
                     source: "/assets/zoom-out.png"
                     anchors.fill: parent
@@ -161,7 +256,7 @@ Item {
             ToolButton{
                 id: toolButtonMoon
                 //width: parent.width/7-parent.spacing*6
-                height: 30
+                height: parent.height
                 Image {
                     source: "/assets/moon.png"
                     anchors.fill: parent
@@ -171,7 +266,8 @@ Item {
             ToolButton{
                 id: toolButtonGarbage
                 //width: parent.width/7-parent.spacing*6
-                height: 30
+                height: 40
+
                 Image {
                     source: "/assets/garbage.png"
                     anchors.fill: parent
@@ -194,10 +290,10 @@ Item {
         anchors.bottom: flowEditCancel.top
         anchors.bottomMargin: 10
         anchors.topMargin: 5
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.leftMargin: 10
-        anchors.rightMargin: 10
+        anchors.left: flowButtonLeft.right
+        anchors.right: flowButtonRight.left
+        anchors.leftMargin: 5
+        anchors.rightMargin: 5
         color: "#00000000"
 
         Image {
