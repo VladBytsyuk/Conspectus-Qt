@@ -1,10 +1,10 @@
-import QtQuick 2.0
 import QtQuick 2.5
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Dialogs 1.1
 import QtGraphicalEffects 1.0
 import QtQuick.Layouts 1.1
+import QtQml.Models 2.2
 
 Item {
     property int buttonWidth: 200
@@ -240,6 +240,10 @@ Item {
                     anchors.fill: parent
                     fillMode: Image.PreserveAspectFit
                 }
+                onClicked: {
+                    mainImage.width = mainImage.width + 40;
+                    mainImage.height = mainImage.height + 40;
+                }
             }
             ToolButton{
                 id: toolButtonZoomOut
@@ -248,6 +252,10 @@ Item {
                     source: "/assets/zoom-out.png"
                     anchors.fill: parent
                     fillMode: Image.PreserveAspectFit
+                }
+                onClicked: {
+                    mainImage.width = mainImage.width - 40;
+                    mainImage.height = mainImage.height - 40;
                 }
             }
             ToolButton{
@@ -277,6 +285,7 @@ Item {
     * Main image
     */
     Rectangle {
+        id: mainImageContainer
         anchors.top: topBar.bottom
         anchors.bottom: flowEditCancel.top
         anchors.bottomMargin: 10
@@ -287,10 +296,20 @@ Item {
         anchors.rightMargin: 5
         color: "#00000000"
 
-        Image {
-            id: mainImage
+        ScrollView {
+            id: scroll
             anchors.fill: parent
-            fillMode: Image.PreserveAspectFit
+            verticalScrollBarPolicy : Qt.ScrollBarAsNeeded
+            horizontalScrollBarPolicy: Qt.ScrollBarAsNeeded
+            //frameVisible: true
+
+            Image {
+                width: mainImageContainer.width
+                height: mainImageContainer.height
+                id: mainImage
+                fillMode: Image.PreserveAspectFit
+                source: ""
+            }
         }
     }
 
