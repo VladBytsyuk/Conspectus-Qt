@@ -29,6 +29,7 @@ public slots:
     void onSetTheme(QString theme);
     void onOkClicked(QString file_path);
     void onOrderChanged(int previous_index, int current_index);
+    void onUpdateImage(QString name);
 };
 
 #endif // VIEWFORMHANDLER_H

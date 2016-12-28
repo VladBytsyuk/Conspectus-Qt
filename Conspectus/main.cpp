@@ -9,7 +9,7 @@
 #include "dbmanager.h"
 #include "conspectmodel.h"
 #include "filemanager.h"
-#include "advancedimage.h"
+#include "imagehandler.h"
 #include "addformhandler.h"
 #include "viewformhandler.h"
 #include "resourceimageprovider.h"
@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
     Util util;
     QUrl qmlUrl = QUrl(QStringLiteral("qrc:/main.qml"));
     QQmlApplicationEngine engine;
-    engine.addImageProvider(QLatin1String("sourceDir"), new ResourceImageProvider(QQuickImageProvider::Image));
+    engine.addImageProvider(QLatin1String("sourceDir"), new ResourceImageProvider(QQuickImageProvider::Pixmap));
     engine.rootContext()->setContextProperty("utils", &util);
     engine.load(qmlUrl);
 
@@ -38,6 +38,7 @@ int main(int argc, char *argv[])
     ConspectModel* conspectModel = ConspectModel::getInstance();
     AddFormHandler add_form(engine.rootObjects().at(0)->findChild<QObject*>("addForm"));
     ViewFormHandler view_form(engine.rootObjects().at(0)->findChild<QObject*>("viewForm"));
+    ImageHandler * image_handler = new ImageHandler(engine.rootObjects().at(0)->findChild<QObject*>("showForm"));
 
     //Open log file. Start logging
     logFile = new QFile(fm->getMainDirPath() + "/logFile.log");
@@ -50,9 +51,6 @@ int main(int argc, char *argv[])
     ConspectModel::setConspectModel(dbManager->getConspectModel());
     ConspectModel::setListModel(dbManager->getListModel());
 
-    //TODO: Implement this method.
-    //(Maybe FileManager should be singleton? Because we need same object inside this method77)
-    //No. Just need to pass a reference to an object
     setSignalSlotConnections();
 
     //BackEnd connections
@@ -66,6 +64,7 @@ int main(int argc, char *argv[])
     QObject::connect(fm, &FileManager::removeFileSignal, conspectModel, &ConspectModel::onRemoveFile);
     QObject::connect(&add_form, &AddFormHandler::addFileToModel, conspectModel, &ConspectModel::onAddFile);
     QObject::connect(&view_form, &ViewFormHandler::changeOrder, conspectModel, &ConspectModel::onChangeOrdering);
+    QObject::connect(image_handler, &ImageHandler::imageUpdated, &view_form, &ViewFormHandler::onUpdateImage);
 
     //ViewForm connections
     QObject::connect(engine.rootObjects().at(0)
@@ -109,9 +108,27 @@ int main(int argc, char *argv[])
                      ->findChild<QObject*>("buttonOk"), SIGNAL(okClicked(QString)),
                      &add_form, SLOT(onOkClicked(QString)));
 
+    //ShowForm connections
+    //Turn left
+    QObject::connect(engine.rootObjects().at(0)
+                     ->findChild<QObject*>("showForm"), SIGNAL(turnedLeft(QString)),
+                     image_handler, SLOT(onTurnLeft(QString)));
+    //Turn right
+    QObject::connect(engine.rootObjects().at(0)
+                     ->findChild<QObject*>("showForm"), SIGNAL(turnedRight(QString)),
+                     image_handler, SLOT(onTurnRight(QString)));
+    //Print
+    QObject::connect(engine.rootObjects().at(0)
+                     ->findChild<QObject*>("showForm"), SIGNAL(printed(QString)),
+                     image_handler, SLOT(onPrint(QString)));
+    //Greyscaled
+    QObject::connect(engine.rootObjects().at(0)
+                     ->findChild<QObject*>("showForm"), SIGNAL(greyscaled(QString)),
+                     image_handler, SLOT(onGreyscale(QString)));
     app.exec();
 
     qDebug(logDebug()) << "Stoped";
+    delete image_handler;
 	delete fm;
 	delete dbManager;
 	delete logFile;

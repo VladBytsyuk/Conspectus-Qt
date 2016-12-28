@@ -17,6 +17,12 @@ Item {
     property int rOffShadowNotPressed: 8
     property int addPressed: 2
 
+    property string current_image_name: ""
+    signal turnedLeft(string name)
+    signal turnedRight(string name)
+    signal printed(string name)
+    signal greyscaled(string name)
+
     Component {
         id: buttonStyle
         ButtonStyle {
@@ -89,6 +95,89 @@ Item {
     }
 
 
+    Flow {
+        id: flowButtonLeft
+        width: 25
+        height: parent.height
+        anchors.left: parent.left
+        anchors.leftMargin: 5
+
+    }
+    Rectangle {
+        id: buttonLeft
+        objectName: "buttonLeft"
+        width: flowButtonLeft.width
+        height: flowButtonLeft.height
+        anchors.horizontalCenter: flowButtonLeft.horizontalCenter
+        anchors.verticalCenter: flowButtonLeft.verticalCenter
+        radius: 3
+        color: buttonLeftMA.containsMouse ? (buttonLeftMA.pressed ? "#40000000" : "#20000000") : "#00000000"
+        visible: buttonLeft.isExistsLeft ? true : false
+
+        property bool isExistsLeft: true
+
+        Image {
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: parent.width
+            height: parent.width
+            source: "/assets/arrow_left.png"
+            visible: parent.visible
+        }
+
+        MouseArea {
+            id: buttonLeftMA
+            anchors.fill: parent
+            hoverEnabled: true
+            onClicked: {
+                viewForm.setPreviousImage()
+            }
+        }
+
+    }
+
+
+    Flow {
+        id: flowButtonRight
+        width: 25
+        height: parent.height
+        anchors.right: parent.right
+        anchors.rightMargin: 5
+    }
+    Rectangle {
+        id: buttonRight
+        objectName: "buttonRight"
+        width: flowButtonRight.width
+        height: flowButtonRight.height
+        anchors.horizontalCenter: flowButtonRight.horizontalCenter
+        anchors.verticalCenter: flowButtonRight.verticalCenter
+        radius: 3
+        color: buttonRightMA.containsMouse ? (buttonRightMA.pressed ? "#40000000" : "#20000000") : "#00000000"
+        visible: buttonRight.isExistsRight ? true : false
+
+        property bool isExistsRight: true
+
+        Image {
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: parent.width
+            height: parent.width
+            source: "/assets/arrow_right.png"
+            visible: parent.visible
+        }
+
+        MouseArea {
+            id: buttonRightMA
+            anchors.fill: parent
+            hoverEnabled: true
+            onClicked: {
+                viewForm.setNextImage()
+            }
+        }
+
+    }
+
+
     /**
     * Top bar
     */
@@ -96,10 +185,15 @@ Item {
         id: topBar
         width: parent.width - 16
         height: 60
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.left: flowButtonLeft.right
+        anchors.right: flowButtonRight.left
+        anchors.leftMargin: 5
+        anchors.rightMargin: 5
+        //anchors.horizontalCenter: parent.horizontalCenter
         border.color: "#6988bd"
         color: "#006988bd"
         radius: 3
+
 
         Flow {
             id: flowTopBar
@@ -109,7 +203,6 @@ Item {
 
             ToolButton{
                 id: toolButtonPrinter
-                //width: parent.width/7-parent.spacing*6
                 height: parent.height
 
                 Image {
@@ -117,30 +210,30 @@ Item {
                     anchors.fill: parent
                     fillMode: Image.PreserveAspectFit
                 }
+                onClicked: showForm.printed(current_image_name)
             }
             ToolButton{
-                id: toolButtonRefresh
-                //width: parent.width/7-parent.spacing*6
+                id: toolButtonTurnLeft
                 height: 30
                 Image {
                     source: "/assets/refresh.png"
                     anchors.fill: parent
                     fillMode: Image.PreserveAspectFit
                 }
+                onClicked: showForm.turnedLeft(current_image_name)
             }
             ToolButton{
-                id: toolButtonRefr
-                //width: parent.width/7-parent.spacing*6
+                id: toolButtonTurnRight
                 height: 30
                 Image {
                     source: "/assets/refresh.png"
                     anchors.fill: parent
                     fillMode: Image.PreserveAspectFit
                 }
+                onClicked: showForm.turnedRight(current_image_name)
             }
             ToolButton{
                 id: toolButtonZoom
-                //width: parent.width/7-parent.spacing*6
                 height: 30
                 Image {
                     source: "/assets/zoom.png"
@@ -150,7 +243,6 @@ Item {
             }
             ToolButton{
                 id: toolButtonZoomOut
-                //width: parent.width/7-parent.spacing*6
                 height: 30
                 Image {
                     source: "/assets/zoom-out.png"
@@ -160,17 +252,16 @@ Item {
             }
             ToolButton{
                 id: toolButtonMoon
-                //width: parent.width/7-parent.spacing*6
                 height: 30
                 Image {
                     source: "/assets/moon.png"
                     anchors.fill: parent
                     fillMode: Image.PreserveAspectFit
                 }
+                onClicked: showForm.greyscaled(current_image_name)
             }
             ToolButton{
                 id: toolButtonGarbage
-                //width: parent.width/7-parent.spacing*6
                 height: 30
                 Image {
                     source: "/assets/garbage.png"
@@ -182,22 +273,18 @@ Item {
     }
 
 
-
-    function showImage(path){
-        mainImage.source = path;
-    }
-
-
-
+    /**
+    * Main image
+    */
     Rectangle {
         anchors.top: topBar.bottom
         anchors.bottom: flowEditCancel.top
         anchors.bottomMargin: 10
         anchors.topMargin: 5
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.leftMargin: 10
-        anchors.rightMargin: 10
+        anchors.left: flowButtonLeft.right
+        anchors.right: flowButtonRight.left
+        anchors.leftMargin: 5
+        anchors.rightMargin: 5
         color: "#00000000"
 
         Image {
@@ -217,8 +304,16 @@ Item {
 
     }
 
-    function setSource(path) {
+    function setSource(path, isExistsLeft, isExistsRight) {
+        buttonLeft.isExistsLeft = isExistsLeft;
+        buttonRight.isExistsRight = isExistsRight;
+
         mainImage.source = "image://sourceDir/" + path;
+        current_image_name = path;
     }
 
+    function reloadImage() {
+        mainImage.source = "";
+        mainImage.source = "image://sourceDir/" + current_image_name;
+    }
 }

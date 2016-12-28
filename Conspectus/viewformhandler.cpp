@@ -68,14 +68,14 @@ QStringList ViewFormHandler::getFileNames(const QList<int> &listIds) {
 }
 
 void ViewFormHandler::setImageToQml(QString file_name, int list_no) {
-    QObject *listModel = mView->findChild<QObject*>("photoBar");//->findChild<QObject*>("listModel");
+    QObject *listModel = mView->findChild<QObject*>("photoBar");
     QVariant empty;
     QMetaObject::invokeMethod(listModel, "onSetImageToQml", Q_RETURN_ARG(QVariant, empty),
                               Q_ARG(QVariant, file_name), Q_ARG(QVariant, list_no));
 }
 
 void ViewFormHandler::clearViewsFromView() {
-    QObject *listModel = mView->findChild<QObject*>("photoBar");//->findChild<QObject*>("listModel");
+    QObject *listModel = mView->findChild<QObject*>("photoBar");
     QVariant empty;
     QMetaObject::invokeMethod(listModel, "clearView", Q_RETURN_ARG(QVariant, empty),
                               Q_ARG(QVariant, empty));
@@ -112,4 +112,10 @@ void ViewFormHandler::reloadGridView() {
 void ViewFormHandler::onOrderChanged(int previous_index, int current_index) {
     changeModelOrdering(previous_index, current_index);
     reloadGridView();
+    qDebug(logDebug()) << "Model has been updated";
+}
+
+void ViewFormHandler::onUpdateImage(QString name) {
+    reloadGridView();
+    qDebug(logDebug()) << "Model has been updated";
 }
