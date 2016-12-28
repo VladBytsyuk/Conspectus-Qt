@@ -8,8 +8,8 @@ class ViewFormHandler : public FormHandler
     Q_OBJECT
 
 private:
-    QList<int> getListIds(int term, QString subject, QString theme, QList<int> *list_nos);
-    QStringList getFileNames(const QList<int> &listIds);
+    QMap<int, QString> getListIds(int term, QString subject, QString theme);
+    QMap<int, QString> getFileNames(QMap<int, QString> &images);
     bool invokeSetImages();
     void changeModelOrdering(int previous_index, int current_index);
     void reloadGridView();
@@ -18,7 +18,7 @@ public:
     ViewFormHandler(QObject* view);
     ~ViewFormHandler();
 
-    QStringList getImageSources(int term, QString subject, QString theme, QList<int> *list_nos);
+    QMap<int, QString> getImageSources(int term, QString subject, QString theme);
     void setImageToQml(QString file_name, int list_no);
     void clearViewsFromView();
 

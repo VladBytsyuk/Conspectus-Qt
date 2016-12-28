@@ -10,15 +10,14 @@ void ViewFormHandler::onOkClicked(QString file_path) {
 
 }
 
-QStringList ViewFormHandler::getImageSources(int term, QString subject, QString theme, QList<int> *list_nos) {
-    QList<int> listIds = getListIds(term, subject, theme, list_nos);
-    return getFileNames(listIds);
+QMap<int, QString> ViewFormHandler::getImageSources(int term, QString subject, QString theme) {
+    QMap<int, QString> images = getListIds(term, subject, theme);
+    return getFileNames(images);
 }
 
-QList<int> ViewFormHandler::getListIds(int term, QString subject, QString theme, QList<int> *list_nos) {
+QMap<int, QString> ViewFormHandler::getListIds(int term, QString subject, QString theme) {
     QStandardItemModel* conspectModel = ConspectModel::getConspectModel();
-    QList<int> ids;
-
+    QMap<int, QString> images;
     int terms_count = conspectModel->rowCount();
     for (int termIterator = 0; termIterator < terms_count; ++termIterator) {
         QModelIndex termIndex = conspectModel->index(termIterator, 0);
@@ -38,12 +37,11 @@ QList<int> ViewFormHandler::getListIds(int term, QString subject, QString theme,
                             for (int listIterator = 0; listIterator < lists_count; ++ listIterator) {
                                 QModelIndex listIndex = conspectModel->index(listIterator, 0, themeIndex);
                                 int current_list_id = listIndex.data().toInt();
-                                ids.push_back(current_list_id);
                                 QModelIndex listNoIndex = conspectModel->index(listIterator, 1, themeIndex);
                                 int list_no = listNoIndex.data().toInt();
-                                list_nos->push_back(list_no);
+                                images[list_no] = QString::number(current_list_id);
                             }
-                            return ids;
+                            return images;
                         }
                     }
                 }
@@ -52,19 +50,27 @@ QList<int> ViewFormHandler::getListIds(int term, QString subject, QString theme,
     }
 }
 
-QStringList ViewFormHandler::getFileNames(const QList<int> &listIds) {
+QMap<int, QString> ViewFormHandler::getFileNames(QMap<int, QString> &images) {
     QStandardItemModel* listModel = ConspectModel::getListModel();
-    QStringList fileSources;
     int row_count = listModel->rowCount();
+    QList<int> listNos;
+    QStringList fileIds;
+    for (auto it = images.begin(); it != images.end(); ++it) {
+        listNos.push_back(it.key());
+        fileIds.push_back(it.value());
+    }
     for (int i = 0; i < row_count; ++i) {
         QModelIndex index = listModel->index(i, 0);
         int id = index.data().toInt();
-        if (listIds.contains(id)) {
+        if (fileIds.contains(QString::number(id))) {
+            int id_index = fileIds.indexOf(QString::number(id));
             QModelIndex fileSourceIndex = listModel->index(i, 1);
-            fileSources.push_back(fileSourceIndex.data().toString());
+            QString file_name = fileSourceIndex.data().toString();
+            int list_no = listNos[id_index];
+            images[list_no] = file_name;
         }
     }
-    return fileSources;
+    return images;
 }
 
 void ViewFormHandler::setImageToQml(QString file_name, int list_no) {
@@ -82,15 +88,14 @@ void ViewFormHandler::clearViewsFromView() {
 }
 
 bool ViewFormHandler::invokeSetImages() {
-    QList<int> list_nos;
-    QStringList list = getImageSources(mCurrentTerm, mCurrentSubject, mCurrentTheme, &list_nos);
+    QMap<int, QString> images = getImageSources(mCurrentTerm, mCurrentSubject, mCurrentTheme);
     clearViewsFromView();
-    QMap<int, QString> images;
-    for (int i = 0; i < list.size(); ++i) {
-        images[list_nos[i]] = list.at(i);
+    QList<int> listNos;
+    for (auto it = images.begin(); it != images.end(); ++it) {
+        listNos.push_back(it.key());
     }
-    qSort(list_nos);
-    for (auto it = list_nos.begin(); it != list_nos.end(); ++it) {
+    qSort(listNos);
+    for (auto it = listNos.begin(); it != listNos.end(); ++it) {
         setImageToQml(images[*it], *it);
     }
     return true;
