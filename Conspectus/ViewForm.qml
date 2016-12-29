@@ -266,6 +266,7 @@ Item {
                 focus: true
 
                 signal orderChanged(int prevIndex, int currIndex);
+                signal setPath();
 
                 displaced: Transition {
                     NumberAnimation { properties: "x,y"; easing.type: Easing.OutQuad }
@@ -374,6 +375,7 @@ Item {
                                     showForm.setSource(src, false, false);
                                 }
                                 showForm.showShowForm();
+                                root.setPath();
                             }
                         }
 

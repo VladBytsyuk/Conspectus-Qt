@@ -68,6 +68,10 @@ bool ImageHandler::onGreyscale(QString name) {
     return true;
 }
 
+bool ImageHandler::onDelete(QString name) {
+    emit deleteList(mTerm, mSubject, mTheme, name);
+    return true;
+}
 
 QPixmap ImageHandler::rotate(const QPixmap & img, int degree) {
     QPoint center = img.rect().center();
@@ -91,4 +95,10 @@ QPixmap ImageHandler::greyscale(const QPixmap & img) {
 
 void ImageHandler::updateQmlImage() {
     QMetaObject::invokeMethod(mView, "reloadImage");
+}
+
+void ImageHandler::onSetPathToList(int term, QString subject, QString theme) {
+    mTerm = term;
+    mSubject = subject;
+    mTheme = theme;
 }

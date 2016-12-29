@@ -124,3 +124,7 @@ void ViewFormHandler::onUpdateImage(QString name) {
     reloadGridView();
     qDebug(logDebug()) << "Model has been updated";
 }
+
+void ViewFormHandler::onSetPath() {
+    emit setPathToList(mCurrentTerm, mCurrentSubject, mCurrentTheme);
+}

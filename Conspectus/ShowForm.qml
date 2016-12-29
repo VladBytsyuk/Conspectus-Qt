@@ -22,6 +22,7 @@ Item {
     signal turnedRight(string name)
     signal printed(string name)
     signal greyscaled(string name)
+    signal deleted(string name)
 
     Component {
         id: buttonStyle
@@ -268,6 +269,7 @@ Item {
                     anchors.fill: parent
                     fillMode: Image.PreserveAspectFit
                 }
+                onClicked: showForm.deleted(current_image_name)
             }
        } //End Top bar
     }

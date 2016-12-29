@@ -75,20 +75,25 @@ QString FileManager::copyFile(QString file_name){
 
 //Remove file with given name from project directory
 bool FileManager::removeFile(QString file_name){
-    if (!QFile(file_name).exists()){
+    QString absolute_file_name = getImagePath(file_name);
+    if (!QFile(absolute_file_name).exists()){
 		qCritical(logCritical()) << "Can`t delete file. File doesn't exist: " << file_name;
 		return false;
 	} 
-	else if (QFileInfo(file_name).absoluteDir() != source_dir){
+    else if (QFileInfo(absolute_file_name).absoluteDir() != source_dir){
 		qCritical(logCritical()) << "Wrong directory. Access denied";
 		return false;
 	}
-	else if (!QFile::remove(file_name)){
+    else if (!QFile::remove(absolute_file_name)){
 		qCritical(logCritical()) << "Can`t delete file";
 		return false;
 	} 
+    else if (!QFile::remove(getImagePreviewPath(file_name))) {
+        qCritical(logCritical()) << "Can't delete preview";
+        return false;
+    }
 	else{
-		qDebug(logDebug()) << "File " + QFileInfo(file_name).fileName() + " has been removed from project`s directory";
+        qDebug(logDebug()) << "File " + QFileInfo(absolute_file_name).fileName() + " has been removed from project`s directory";
 		emit removeFileSignal(QFileInfo(file_name).fileName());
 		return true;
 	}
@@ -149,4 +154,8 @@ void FileManager::onTryAddFileToFileSystem(QString file_path) {
     } else {
         emit validFilePath(QFileInfo(new_file_name).fileName());
     }
+}
+
+void FileManager::onTryToRemoveFile(QString file_name) {
+    removeFile(file_name);
 }
