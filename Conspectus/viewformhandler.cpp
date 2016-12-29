@@ -127,6 +127,11 @@ void ViewFormHandler::onUpdateImage(QString name) {
 }
 
 void ViewFormHandler::onUpdateView() {
+    if (ConspectModel::getConspectModel()->rowCount() == 0) {
+        mCurrentTerm = 0;
+        mCurrentSubject = "";
+        mCurrentTheme = "";
+    }
     this->invokeSetImages();
 }
 
