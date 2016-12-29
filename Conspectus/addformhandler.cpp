@@ -10,7 +10,7 @@ AddFormHandler::~AddFormHandler() {}
 void AddFormHandler::onOkClicked(QString file_path) {
     mCurrentFilePath = file_path;
     emit tryToAddFileToFileSystem(mCurrentFilePath);
-    onForm();
+    FormHandler::onForm();
 }
 
 void AddFormHandler::onInvalidFilePath() {
@@ -19,4 +19,11 @@ void AddFormHandler::onInvalidFilePath() {
 
 void AddFormHandler::onValidFilePath(QString file_name) {
     emit addFileToModel(file_name, mCurrentTerm, mCurrentSubject, mCurrentTheme);
+}
+
+void AddFormHandler::onForm() {
+    clearComboBoxes();
+    FormHandler::onForm();
+    QObject *editText = mView->findChild<QObject*>("editText");
+    editText->setProperty("text", "");
 }

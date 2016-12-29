@@ -89,7 +89,6 @@ void ViewFormHandler::clearViewsFromView() {
 
 bool ViewFormHandler::invokeSetImages() {
     QMap<int, QString> images = getImageSources(mCurrentTerm, mCurrentSubject, mCurrentTheme);
-    clearViewsFromView();
     QList<int> listNos;
     for (auto it = images.begin(); it != images.end(); ++it) {
         listNos.push_back(it.key());
@@ -104,7 +103,7 @@ bool ViewFormHandler::invokeSetImages() {
 
 void ViewFormHandler::onSetTheme(QString theme) {
     FormHandler::onSetTheme(theme);
-    this->invokeSetImages();
+    reloadGridView();
 }
 
 void ViewFormHandler::changeModelOrdering(int previous_index, int current_index) {
@@ -112,7 +111,8 @@ void ViewFormHandler::changeModelOrdering(int previous_index, int current_index)
 }
 
 void ViewFormHandler::reloadGridView() {
-    this->invokeSetImages();
+    clearViewsFromView();
+    invokeSetImages();
 }
 
 void ViewFormHandler::onOrderChanged(int previous_index, int current_index) {
@@ -131,10 +131,16 @@ void ViewFormHandler::onUpdateView() {
         mCurrentTerm = 0;
         mCurrentSubject = "";
         mCurrentTheme = "";
+        clearComboBoxes();
     }
-    this->invokeSetImages();
+    onForm();
 }
 
 void ViewFormHandler::onSetPath() {
     emit setPathToList(mCurrentTerm, mCurrentSubject, mCurrentTheme);
+}
+
+void ViewFormHandler::onForm() {
+    FormHandler::onForm();
+    reloadGridView();
 }

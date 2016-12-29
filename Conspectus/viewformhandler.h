@@ -27,6 +27,7 @@ signals:
     void setPathToList(int term, QString subject, QString theme);
 
 public slots:
+    void onForm();
     void onSetPath();
     void onSetTheme(QString theme);
     void onOkClicked(QString file_path);

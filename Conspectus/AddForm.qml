@@ -62,6 +62,7 @@ Item {
 
             TextField {
                 id: textField1
+                objectName: "editText"
                 width: boxWidth
                 height: boxHeight
                 placeholderText: qsTr("File Path")

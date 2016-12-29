@@ -33,11 +33,11 @@ ApplicationWindow {
         signal viewFormSignal()
 
         function showViewForm() {
-           viewForm.visible = true
+            viewForm.visible = true
             addForm.visible = false
-           mainForm.visible = false
-           showForm.visible = false
-           viewForm.viewFormSignal()
+            mainForm.visible = false
+            showForm.visible = false
+            viewForm.viewFormSignal()
         }
 
         buttonCancel.onClicked: mainForm.showMainForm()
@@ -52,10 +52,10 @@ ApplicationWindow {
 
         function showAddForm(){
             viewForm.visible = false
-             addForm.visible = true
+            addForm.visible = true
             mainForm.visible = false
             showForm.visible = false
-             addForm.addFormSignal()
+            addForm.addFormSignal()
         }
 
         buttonCancel.onClicked: {
@@ -71,9 +71,9 @@ ApplicationWindow {
         buttonAdd.onClicked: addForm.showAddForm()
 
         function showMainForm() {
-           viewForm.visible = false
+            viewForm.visible = false
             addForm.visible = false
-           mainForm.visible = true
+            mainForm.visible = true
             showForm.visible = false
         }
     }
@@ -85,9 +85,9 @@ ApplicationWindow {
         visible: false
 
         function showShowForm(string) {
-           viewForm.visible = false
+            viewForm.visible = false
             addForm.visible = false
-           mainForm.visible = false
+            mainForm.visible = false
             showForm.visible = true
         }
         buttonCancel.onClicked: viewForm.showViewForm()

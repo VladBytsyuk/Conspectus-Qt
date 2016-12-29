@@ -19,6 +19,7 @@ signals:
     void addFileToModel(QString file_name, int term, QString subject, QString theme);
 
 public slots:
+    void onForm();
     void onInvalidFilePath();
     void onValidFilePath(QString file_name);
 
