@@ -95,8 +95,9 @@ bool ViewFormHandler::invokeSetImages() {
         listNos.push_back(it.key());
     }
     qSort(listNos);
+    int number = 1;
     for (auto it = listNos.begin(); it != listNos.end(); ++it) {
-        setImageToQml(images[*it], *it);
+        setImageToQml(images[*it], number++);
     }
     return true;
 }
