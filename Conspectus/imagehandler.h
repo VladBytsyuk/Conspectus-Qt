@@ -14,6 +14,7 @@ private:
     QPixmap rotate(const QPixmap & img, int degree);
     QPixmap greyscale(const QPixmap & img);
     void updateQmlImage();
+    void returnToViewForm();
 
     QObject* mView;
 

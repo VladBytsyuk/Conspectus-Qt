@@ -95,6 +95,10 @@ Item {
         samples: 17
     }
 
+    function showViewForm() {
+        viewForm.showViewForm();
+    }
+
 
     Flow {
         id: flowButtonLeft

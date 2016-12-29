@@ -70,6 +70,7 @@ bool ImageHandler::onGreyscale(QString name) {
 
 bool ImageHandler::onDelete(QString name) {
     emit deleteList(mTerm, mSubject, mTheme, name);
+    returnToViewForm();
     return true;
 }
 
@@ -79,6 +80,10 @@ QPixmap ImageHandler::rotate(const QPixmap & img, int degree) {
     matrix.translate(center.x(), center.y());
     matrix.rotate(degree);
     return img.transformed(matrix);
+}
+
+void ImageHandler::returnToViewForm() {
+    QMetaObject::invokeMethod(mView, "showViewForm");
 }
 
 QPixmap ImageHandler::greyscale(const QPixmap & img) {
