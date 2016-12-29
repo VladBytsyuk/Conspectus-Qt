@@ -196,8 +196,6 @@ Item {
         anchors.right: flowButtonRight.left
         anchors.leftMargin: 5
         anchors.rightMargin: 5
-        //anchors.horizontalCenter: parent.horizontalCenter
-        border.color: "#6988bd"
         color: "#006988bd"
         radius: 3
 

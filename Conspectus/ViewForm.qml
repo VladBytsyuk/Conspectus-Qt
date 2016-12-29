@@ -70,7 +70,6 @@ Item {
         width: parent.width - 16
         height: 60
         anchors.horizontalCenter: parent.horizontalCenter
-        border.color: "#6988bd"
         color: "#006988bd"
         radius: 3
 
@@ -218,7 +217,6 @@ Item {
         anchors.topMargin: 10
         anchors.bottom: flowEditCancel.top
         anchors.bottomMargin: 10
-        border.color: "#6988bd"
         color: "#006988bd"
         radius: 3
 
