@@ -154,6 +154,11 @@ int main(int argc, char *argv[])
     QObject::connect(engine.rootObjects().at(0)
                      ->findChild<QObject*>("showForm"), SIGNAL(deleted(QString)),
                      image_handler, SLOT(onDelete(QString)));
+    //Update ViewForm
+    QObject::connect(engine.rootObjects().at(0)
+                     ->findChild<QObject*>("showForm"), SIGNAL(updateViewForm()),
+                     &view_form, SLOT(onUpdateView()));
+
     app.exec();
 
     qDebug(logDebug()) << "Stoped";

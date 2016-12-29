@@ -23,6 +23,7 @@ Item {
     signal printed(string name)
     signal greyscaled(string name)
     signal deleted(string name)
+    signal updateViewForm()
 
     Component {
         id: buttonStyle
@@ -96,6 +97,7 @@ Item {
     }
 
     function showViewForm() {
+        updateViewForm();
         viewForm.showViewForm();
     }
 

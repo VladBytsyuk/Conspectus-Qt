@@ -32,6 +32,7 @@ public slots:
     void onOkClicked(QString file_path);
     void onOrderChanged(int previous_index, int current_index);
     void onUpdateImage(QString name);
+    void onUpdateView();
 };
 
 #endif // VIEWFORMHANDLER_H

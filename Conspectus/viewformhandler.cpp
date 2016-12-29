@@ -126,6 +126,10 @@ void ViewFormHandler::onUpdateImage(QString name) {
     qDebug(logDebug()) << "Model has been updated";
 }
 
+void ViewFormHandler::onUpdateView() {
+    this->invokeSetImages();
+}
+
 void ViewFormHandler::onSetPath() {
     emit setPathToList(mCurrentTerm, mCurrentSubject, mCurrentTheme);
 }
