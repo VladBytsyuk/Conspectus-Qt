@@ -14,7 +14,8 @@ void AddFormHandler::onOkClicked(QString file_path) {
 }
 
 void AddFormHandler::onInvalidFilePath() {
-    //TODO: send signal to QML / invoke JS method
+    QObject *editText = mView->findChild<QObject*>("rectEditText");
+    editText->setProperty("state", "highlight");
 }
 
 void AddFormHandler::onValidFilePath(QString file_name) {

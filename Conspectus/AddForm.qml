@@ -52,6 +52,7 @@ Item {
 
         Rectangle{
             id: rectTextField
+            objectName: "rectEditText"
             color:"#00000000"
             width: boxWidth + 1
             height: boxHeight + 1
