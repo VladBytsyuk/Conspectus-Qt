@@ -186,9 +186,7 @@ Item {
 
             function onClick() {
                 var isEditTextEmpty = textField1.text == "";
-                console.log(boxSubject.currentIndex);
-                console.log(boxSubject.model[boxSubject.currentIndex]);
-                var isTermEmpty = boxTerm.editText === "";
+                var isTermEmpty = boxTerm.editText === "" || boxTerm.editText < 1;
                 var isSubjectEmpty = boxSubject.editText === "";
                 var isThemeEmpty = boxTheme.editText === "";
                 if (isEditTextEmpty) {

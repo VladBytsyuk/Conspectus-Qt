@@ -182,7 +182,7 @@ bool FormHandler::clearComboBoxes() {
 }
 
 void FormHandler::onForm() {
-    if (mCurrentTerm == -1) {
+    if (mCurrentTerm < 1) {
         this->setTerms();
     } else if (mCurrentSubject == "") {
         this->setSubjects(mCurrentTerm);

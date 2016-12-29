@@ -128,7 +128,7 @@ void ViewFormHandler::onUpdateImage(QString name) {
 
 void ViewFormHandler::onUpdateView() {
     if (ConspectModel::getConspectModel()->rowCount() == 0) {
-        mCurrentTerm = 0;
+        mCurrentTerm = -1;
         mCurrentSubject = "";
         mCurrentTheme = "";
         clearComboBoxes();
