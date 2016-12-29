@@ -47,32 +47,32 @@ Item {
     property alias buttonEdit: buttonEdit
     property alias buttonCancel: buttonCancel
 
-        Button {
-            id: buttonCancel
-            width: buttonWidth
-            height: buttonHeight
-            text: "CANCEL"
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.horizontalCenterOffset: buttonCancel.pressed ? horizontalNotPressed+addPressed : horizontalNotPressed
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: buttonCancel.pressed ? verticalNotPressed-addPressed : verticalNotPressed
-            visible: true
-            style: buttonStyle
-        }
+    Button {
+        id: buttonCancel
+        width: buttonWidth
+        height: buttonHeight
+        text: "CANCEL"
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.horizontalCenterOffset: buttonCancel.pressed ? horizontalNotPressed+addPressed : horizontalNotPressed
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: buttonCancel.pressed ? verticalNotPressed-addPressed : verticalNotPressed
+        visible: true
+        style: buttonStyle
+    }
 
-        Button {
-            id: buttonEdit
-            width: buttonWidth
-            height: buttonHeight
-            objectName: "buttonEdit"
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.horizontalCenterOffset: buttonEdit.pressed ? -horizontalNotPressed+addPressed : -horizontalNotPressed
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: buttonEdit.pressed ? verticalNotPressed-addPressed : verticalNotPressed
-            text:"SAVE"
-            visible: true
-            style: buttonStyle
-        }
+    Button {
+        id: buttonEdit
+        width: buttonWidth
+        height: buttonHeight
+        objectName: "buttonEdit"
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.horizontalCenterOffset: buttonEdit.pressed ? -horizontalNotPressed+addPressed : -horizontalNotPressed
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: buttonEdit.pressed ? verticalNotPressed-addPressed : verticalNotPressed
+        text:"SAVE"
+        visible: true
+        style: buttonStyle
+    }
 
     DropShadow {
         anchors.fill: buttonCancel
@@ -183,102 +183,126 @@ Item {
     */
     Rectangle {
         id: topBar
-        width: parent.width - 16
         height: 60
         anchors.left: flowButtonLeft.right
         anchors.right: flowButtonRight.left
         anchors.leftMargin: 5
         anchors.rightMargin: 5
-        //anchors.horizontalCenter: parent.horizontalCenter
         border.color: "#6988bd"
         color: "#006988bd"
         radius: 3
 
 
-        Flow {
+        Item {
             id: flowTopBar
+            width: 200
+            height: 25
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: parent.verticalCenter
-            spacing: 20
+            anchors.top: parent.top
+            anchors.topMargin: 5
+            Row {
+                spacing: 5
 
-            ToolButton{
-                id: toolButtonPrinter
-                height: parent.height
+                ToolButton{
+                    id: toolButtonPrinter
+                    height: 25
+                    Image {
+                        source: "/assets/printer.png"
+                        anchors.fill: parent
+                        fillMode: Image.PreserveAspectFit
 
-                Image {
-                    source: "/assets/printer.png"
-                    anchors.fill: parent
-                    fillMode: Image.PreserveAspectFit
+                    }
+                    onClicked: showForm.printed(current_image_name)
                 }
-                onClicked: showForm.printed(current_image_name)
-            }
-            ToolButton{
-                id: toolButtonTurnLeft
-                height: 30
-                Image {
-                    source: "/assets/refresh.png"
-                    anchors.fill: parent
-                    fillMode: Image.PreserveAspectFit
+                ToolButton{
+                    id: toolButtonTurnLeft
+                    height: 25
+                    Image {
+                        source: "/assets/left.png"
+                        anchors.fill: parent
+                        fillMode: Image.PreserveAspectFit
+                        smooth: true
+                        antialiasing: true
+                    }
+                    onClicked: showForm.turnedLeft(current_image_name)
                 }
-                onClicked: showForm.turnedLeft(current_image_name)
-            }
-            ToolButton{
-                id: toolButtonTurnRight
-                height: 30
-                Image {
-                    source: "/assets/refresh.png"
-                    anchors.fill: parent
-                    fillMode: Image.PreserveAspectFit
+                ToolButton{
+                    id: toolButtonTurnRight
+                    height: 25
+                    Image {
+                        source: "/assets/right.png"
+                        anchors.fill: parent
+                        fillMode: Image.PreserveAspectFit
+                    }
+                    onClicked: showForm.turnedRight(current_image_name)
                 }
-                onClicked: showForm.turnedRight(current_image_name)
-            }
-            ToolButton{
-                id: toolButtonZoom
-                height: 30
-                Image {
-                    source: "/assets/zoom.png"
-                    anchors.fill: parent
-                    fillMode: Image.PreserveAspectFit
+                ToolButton{
+                    id: toolButtonMoon
+                    height: 25
+                    Image {
+                        source: "/assets/moon.png"
+                        anchors.fill: parent
+                        fillMode: Image.PreserveAspectFit
+                    }
+                    onClicked: showForm.greyscaled(current_image_name)
                 }
-                onClicked: {
-                    mainImage.width = mainImage.width + 40;
-                    mainImage.height = mainImage.height + 40;
+                ToolButton{
+                    id: toolButtonGarbage
+                    height: 25
+                    Image {
+                        source: "/assets/garbage.png"
+                        anchors.fill: parent
+                        fillMode: Image.PreserveAspectFit
+                    }
                 }
-            }
-            ToolButton{
-                id: toolButtonZoomOut
-                height: 30
+           } //End top flow
+       }
+
+       Item {
+            id: flowTopBarBot
+            width: 104
+            height: 20
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 3
+
+            Row {
+                spacing: 5
                 Image {
                     source: "/assets/zoom-out.png"
-                    anchors.fill: parent
+                    height: 17
+                    width: 17
                     fillMode: Image.PreserveAspectFit
                 }
-                onClicked: {
-                    mainImage.width = mainImage.width - 40;
-                    mainImage.height = mainImage.height - 40;
-                }
-            }
-            ToolButton{
-                id: toolButtonMoon
-                height: 30
-                Image {
-                    source: "/assets/moon.png"
-                    anchors.fill: parent
+
+                Slider {
+                    id: zoomInSlider
+                    orientation: Qt.Horizontal
+                    visible: true
+                    minimumValue: 0
+                    maximumValue: 100
+                    value: 0
+
+                    onValueChanged: {
+                        mainImage.height = mainImageContainer.height + 50 * zoomInSlider.value;
+                        mainImage.width = mainImageContainer.width + 50 * zoomInSlider.value;
+
+                        scroll.flickableItem.contentY = scroll.flickableItem.contentHeight / 2 - scroll.height / 2;
+                        scroll.flickableItem.contentX = scroll.flickableItem.contentWidth / 2 - scroll.width / 2;
+                        //scroll.flickableItem.contentX = mouse.X - scroll.width / 2;
+                        //scroll.flickableItem.contentY = mouse.Y - scroll.height / 2;
+                    }
+               }
+               Image {
+                    source: "/assets/zoom.png"
+                    height: 17
+                    width: 17
                     fillMode: Image.PreserveAspectFit
-                }
-                onClicked: showForm.greyscaled(current_image_name)
+               }
             }
-            ToolButton{
-                id: toolButtonGarbage
-                height: 30
-                Image {
-                    source: "/assets/garbage.png"
-                    anchors.fill: parent
-                    fillMode: Image.PreserveAspectFit
-                }
-            }
-       } //End Top bar
-    }
+       }
+
+    }//End Top bar
 
 
     /**
@@ -295,23 +319,86 @@ Item {
         anchors.leftMargin: 5
         anchors.rightMargin: 5
         color: "#00000000"
+        onHeightChanged: setNaturalSize()
 
         ScrollView {
             id: scroll
-            anchors.fill: parent
-            verticalScrollBarPolicy : Qt.ScrollBarAsNeeded
-            horizontalScrollBarPolicy: Qt.ScrollBarAsNeeded
-            //frameVisible: true
+            width: mainImageContainer.width
+            height: mainImageContainer.height
+            verticalScrollBarPolicy : Qt.ScrollBarAlwaysOff
+            horizontalScrollBarPolicy: Qt.ScrollBarAlwaysOff
+            flickableItem.interactive: true
+            focus: true
 
             Image {
+                id: mainImage
                 width: mainImageContainer.width
                 height: mainImageContainer.height
-                id: mainImage
                 fillMode: Image.PreserveAspectFit
+                asynchronous: true
                 source: ""
             }
         }
-    }
+
+        /**
+        * Image loading indicator
+        */
+        Item {
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
+            implicitWidth: 64
+            implicitHeight: 64
+
+            Item {
+                id: item
+                x: parent.width / 2 - 32
+                y: parent.height / 2 - 32
+                width: 64
+                height: 64
+                opacity: (mainImage.status === Image.Loading) ? 1 : 0
+
+                Behavior on opacity {
+                    OpacityAnimator {
+                        duration: 250
+                    }
+                }
+
+                RotationAnimator {
+                    target: item
+                    running: mainImage.status === Image.Loading
+                    from: 0
+                    to: 360
+                    loops: Animation.Infinite
+                    duration: 1250
+                }
+
+                Repeater {
+                    id: repeater
+                    model: 6
+
+                    Rectangle {
+                        x: item.width / 2 - width / 2
+                        y: item.height / 2 - height / 2
+                        implicitWidth: 10
+                        implicitHeight: 10
+                        radius: 5
+                        color: "#6988bd"
+                        transform: [
+                            Translate {
+                                y: -Math.min(item.width, item.height) * 0.5 + 5
+                            },
+                            Rotation {
+                                angle: index / repeater.count * 360
+                                origin.x: 5
+                                origin.y: 5
+                            }
+                        ]
+                    }
+                }
+            }
+        }   //End image loading indicator
+
+    }   // End Main Image
 
     Flow {
         id: flowEditCancel
@@ -329,10 +416,18 @@ Item {
 
         mainImage.source = "image://sourceDir/" + path;
         current_image_name = path;
+        setNaturalSize();
     }
 
     function reloadImage() {
         mainImage.source = "";
         mainImage.source = "image://sourceDir/" + current_image_name;
+        setNaturalSize();
+    }
+
+    function setNaturalSize() {
+        zoomInSlider.value = 0;
+        mainImage.height = mainImageContainer.height;
+        mainImage.width = mainImageContainer.width;
     }
 }
