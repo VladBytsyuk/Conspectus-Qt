@@ -243,7 +243,6 @@ Item {
         objectName: "boxTerm"
         width: boxWidth
         height: boxHeight
-        model: [1,2,3,4,5,6,7,8]
 
         signal termSelect(string term)
 
@@ -285,7 +284,6 @@ Item {
         width: boxWidth
         height: boxHeight
         objectName: "boxSubject"
-        model: ["Maths","Economics","Physics","English"]
 
         signal subjectSelect(string subject)
 
@@ -325,7 +323,6 @@ Item {
         width: boxWidth
         height: boxHeight
         objectName: "boxTheme"
-        model: ["Limits","Summs"]
 
         signal themeSelect(string theme)
 

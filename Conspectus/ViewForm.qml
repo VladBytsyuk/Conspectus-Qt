@@ -128,7 +128,6 @@ Item {
                 width: boxWidth
                 height: boxHeight
                 objectName: "boxTerm"
-                model: [1,2,3,4,5,6,7,8]
                 Component.onCompleted: {
                     currentIndex = -1
                 }
@@ -156,7 +155,6 @@ Item {
                 width: boxWidth
                 height: boxHeight
                 objectName: "boxSubject"
-                model: ["Maths","Economics","Physics","English"]
                 Component.onCompleted: {
                     currentIndex = -1
                 }
@@ -183,7 +181,6 @@ Item {
                 width: boxWidth
                 height: boxHeight
                 objectName: "boxTheme"
-                model: ["Limits","Summs"]
                 Component.onCompleted: {
                     currentIndex = -1
                 }
