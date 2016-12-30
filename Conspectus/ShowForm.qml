@@ -255,12 +255,13 @@ Item {
                 }
                 ToolButton{
                     id: toolButtonGarbage
-                    height: 25
+                    height: 30
                     Image {
                         source: "/assets/garbage.png"
                         anchors.fill: parent
                         fillMode: Image.PreserveAspectFit
                     }
+                    onClicked: showForm.deleted(current_image_name)
                 }
            } //End top flow
        }
@@ -307,21 +308,8 @@ Item {
                     fillMode: Image.PreserveAspectFit
                }
             }
-            ToolButton{
-                id: toolButtonGarbage
-                height: 30
-                Image {
-                    source: "/assets/garbage.png"
-                    anchors.fill: parent
-                    fillMode: Image.PreserveAspectFit
-                }
-                onClicked: showForm.deleted(current_image_name)
-            }
        } //End Top bar
     }
-
-    }//End Top bar
-
 
     /**
     * Main image

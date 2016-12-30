@@ -208,7 +208,7 @@ Item {
                      boxTheme.state = "highlight"
                 } else {
                     boxTheme.state = ""
-                }
+                 }
                 if (!isEditTextEmpty && !isTermEmpty && !isSubjectEmpty && !isThemeEmpty) {
                     buttonOk.okClicked(textField1.text);
                 }

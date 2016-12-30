@@ -187,6 +187,6 @@ void FormHandler::onForm() {
     } else if (mCurrentSubject == "") {
         this->setSubjects(mCurrentTerm);
     } else if (mCurrentTheme == ""){
-        setThemes(mCurrentTerm, mCurrentSubject);
+        this->setThemes(mCurrentTerm, mCurrentSubject);
     }
 }
