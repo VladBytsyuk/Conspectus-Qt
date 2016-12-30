@@ -217,6 +217,7 @@ Item {
         anchors.topMargin: 10
         anchors.bottom: flowEditCancel.top
         anchors.bottomMargin: 10
+        //border.color: "#6988bd"
         color: "#006988bd"
         radius: 3
 
@@ -250,7 +251,7 @@ Item {
             width: parent.width
             height: parent.height
             verticalScrollBarPolicy : Qt.ScrollBarAsNeeded
-
+            flickableItem.interactive: true
             focus: true
 
             GridView {
@@ -363,6 +364,7 @@ Item {
 
                         onDoubleClicked: {
                             if (mouse.button & Qt.LeftButton) {
+                                root.currentIndex = index;
                                 if (root.currentIndex - 1 != -1 && root.currentIndex + 1 != root.count) {
                                     showForm.setSource(src, true, true);
                                 } else if (root.currentIndex - 1 === -1 && root.currentIndex + 1 != root.count) {
@@ -414,7 +416,7 @@ Item {
 
    function setNextImage() {
        if (root.currentIndex + 1 != root.count) {
-           console.log(root.currentIndex + 1);
+           //console.log(root.currentIndex + 1);
            var nextImg = listModel.get(root.currentIndex + 1).src;
            root.currentIndex = root.currentIndex + 1;
            if (root.currentIndex - 1 != -1 && root.currentIndex + 1 != root.count) {
@@ -431,7 +433,7 @@ Item {
 
    function setPreviousImage() {
        if (root.currentIndex - 1 != -1) {
-           console.log(root.currentIndex - 1);
+           //console.log(root.currentIndex - 1);
            var prevImg = listModel.get(root.currentIndex - 1).src;
            root.currentIndex = root.currentIndex - 1;
            if (root.currentIndex - 1 != -1 && root.currentIndex + 1 != root.count) {
