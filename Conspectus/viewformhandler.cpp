@@ -89,21 +89,21 @@ void ViewFormHandler::clearViewsFromView() {
 
 bool ViewFormHandler::invokeSetImages() {
     QMap<int, QString> images = getImageSources(mCurrentTerm, mCurrentSubject, mCurrentTheme);
-    clearViewsFromView();
     QList<int> listNos;
     for (auto it = images.begin(); it != images.end(); ++it) {
         listNos.push_back(it.key());
     }
     qSort(listNos);
+    int number = 1;
     for (auto it = listNos.begin(); it != listNos.end(); ++it) {
-        setImageToQml(images[*it], *it);
+        setImageToQml(images[*it], number++);
     }
     return true;
 }
 
 void ViewFormHandler::onSetTheme(QString theme) {
     FormHandler::onSetTheme(theme);
-    this->invokeSetImages();
+    reloadGridView();
 }
 
 void ViewFormHandler::changeModelOrdering(int previous_index, int current_index) {
@@ -111,7 +111,8 @@ void ViewFormHandler::changeModelOrdering(int previous_index, int current_index)
 }
 
 void ViewFormHandler::reloadGridView() {
-    this->invokeSetImages();
+    clearViewsFromView();
+    invokeSetImages();
 }
 
 void ViewFormHandler::onOrderChanged(int previous_index, int current_index) {
@@ -123,4 +124,23 @@ void ViewFormHandler::onOrderChanged(int previous_index, int current_index) {
 void ViewFormHandler::onUpdateImage(QString name) {
     reloadGridView();
     qDebug(logDebug()) << "Model has been updated";
+}
+
+void ViewFormHandler::onUpdateView() {
+    if (ConspectModel::getConspectModel()->rowCount() == 0) {
+        mCurrentTerm = -1;
+        mCurrentSubject = "";
+        mCurrentTheme = "";
+        clearComboBoxes();
+    }
+    onForm();
+}
+
+void ViewFormHandler::onSetPath() {
+    emit setPathToList(mCurrentTerm, mCurrentSubject, mCurrentTheme);
+}
+
+void ViewFormHandler::onForm() {
+    FormHandler::onForm();
+    reloadGridView();
 }

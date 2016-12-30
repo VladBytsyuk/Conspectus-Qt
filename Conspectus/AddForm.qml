@@ -52,6 +52,7 @@ Item {
 
         Rectangle{
             id: rectTextField
+            objectName: "rectEditText"
             color:"#00000000"
             width: boxWidth + 1
             height: boxHeight + 1
@@ -62,6 +63,7 @@ Item {
 
             TextField {
                 id: textField1
+                objectName: "editText"
                 width: boxWidth
                 height: boxHeight
                 placeholderText: qsTr("File Path")
@@ -184,9 +186,7 @@ Item {
 
             function onClick() {
                 var isEditTextEmpty = textField1.text == "";
-                console.log(boxSubject.currentIndex);
-                console.log(boxSubject.model[boxSubject.currentIndex]);
-                var isTermEmpty = boxTerm.editText === "";
+                var isTermEmpty = boxTerm.editText === "" || boxTerm.editText < 1;
                 var isSubjectEmpty = boxSubject.editText === "";
                 var isThemeEmpty = boxTheme.editText === "";
                 if (isEditTextEmpty) {
@@ -243,7 +243,6 @@ Item {
         objectName: "boxTerm"
         width: boxWidth
         height: boxHeight
-        model: [1,2,3,4,5,6,7,8]
 
         signal termSelect(string term)
 
@@ -285,7 +284,6 @@ Item {
         width: boxWidth
         height: boxHeight
         objectName: "boxSubject"
-        model: ["Maths","Economics","Physics","English"]
 
         signal subjectSelect(string subject)
 
@@ -325,7 +323,6 @@ Item {
         width: boxWidth
         height: boxHeight
         objectName: "boxTheme"
-        model: ["Limits","Summs"]
 
         signal themeSelect(string theme)
 

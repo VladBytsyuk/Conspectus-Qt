@@ -50,6 +50,7 @@ signals:
 
 public slots:
     void onTryAddFileToFileSystem(QString file_path);
+    void onTryToRemoveFile(QString file_name);
 };
 
 #endif // FILEMANAGER_H

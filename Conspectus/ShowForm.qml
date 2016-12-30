@@ -22,6 +22,8 @@ Item {
     signal turnedRight(string name)
     signal printed(string name)
     signal greyscaled(string name)
+    signal deleted(string name)
+    signal updateViewForm()
 
     Component {
         id: buttonStyle
@@ -92,6 +94,11 @@ Item {
         verticalOffset: buttonEdit.pressed ? shadowOffset-addPressed : shadowOffset
         radius: buttonEdit.hovered ? rOffShadowNotPressed+8 : rOffShadowNotPressed
         samples: 17
+    }
+
+    function showViewForm() {
+        updateViewForm();
+        viewForm.showViewForm();
     }
 
 
@@ -189,8 +196,6 @@ Item {
         anchors.right: flowButtonRight.left
         anchors.leftMargin: 5
         anchors.rightMargin: 5
-        //anchors.horizontalCenter: parent.horizontalCenter
-        border.color: "#6988bd"
         color: "#006988bd"
         radius: 3
 
@@ -268,6 +273,7 @@ Item {
                     anchors.fill: parent
                     fillMode: Image.PreserveAspectFit
                 }
+                onClicked: showForm.deleted(current_image_name)
             }
        } //End Top bar
     }

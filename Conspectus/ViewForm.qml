@@ -70,7 +70,6 @@ Item {
         width: parent.width - 16
         height: 60
         anchors.horizontalCenter: parent.horizontalCenter
-        border.color: "#6988bd"
         color: "#006988bd"
         radius: 3
 
@@ -128,7 +127,6 @@ Item {
                 width: boxWidth
                 height: boxHeight
                 objectName: "boxTerm"
-                model: [1,2,3,4,5,6,7,8]
                 Component.onCompleted: {
                     currentIndex = -1
                 }
@@ -156,7 +154,6 @@ Item {
                 width: boxWidth
                 height: boxHeight
                 objectName: "boxSubject"
-                model: ["Maths","Economics","Physics","English"]
                 Component.onCompleted: {
                     currentIndex = -1
                 }
@@ -183,7 +180,6 @@ Item {
                 width: boxWidth
                 height: boxHeight
                 objectName: "boxTheme"
-                model: ["Limits","Summs"]
                 Component.onCompleted: {
                     currentIndex = -1
                 }
@@ -221,7 +217,6 @@ Item {
         anchors.topMargin: 10
         anchors.bottom: flowEditCancel.top
         anchors.bottomMargin: 10
-        border.color: "#6988bd"
         color: "#006988bd"
         radius: 3
 
@@ -269,6 +264,7 @@ Item {
                 focus: true
 
                 signal orderChanged(int prevIndex, int currIndex);
+                signal setPath();
 
                 displaced: Transition {
                     NumberAnimation { properties: "x,y"; easing.type: Easing.OutQuad }
@@ -377,6 +373,7 @@ Item {
                                     showForm.setSource(src, false, false);
                                 }
                                 showForm.showShowForm();
+                                root.setPath();
                             }
                         }
 

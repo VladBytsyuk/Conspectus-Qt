@@ -170,7 +170,11 @@ bool FormHandler::clearComboBoxes() {
     QObject *boxSubject = mView->findChild<QObject*>("boxSubject");
     QObject *boxTheme = mView->findChild<QObject*>("boxTheme");
 
-    boxTerm->setProperty("editText", -1);
+    boxTerm->setProperty("editText", "");
+    boxSubject->setProperty("editText", "");
+    boxTheme->setProperty("editText", "");
+
+    boxTerm->setProperty("currentIndex", -1);
     boxSubject->setProperty("currentIndex", -1);
     boxTheme->setProperty("currentIndex", -1);
 
@@ -178,15 +182,11 @@ bool FormHandler::clearComboBoxes() {
 }
 
 void FormHandler::onForm() {
-    if (mCurrentTerm == -1) {
+    if (mCurrentTerm < 1) {
         this->setTerms();
     } else if (mCurrentSubject == "") {
         this->setSubjects(mCurrentTerm);
     } else if (mCurrentTheme == ""){
         setThemes(mCurrentTerm, mCurrentSubject);
-    } else {
-        //setTerms();
-        //setSubjects(mCurrentTerm);
-        //setThemes(mCurrentTerm, mCurrentSubject);
     }
 }

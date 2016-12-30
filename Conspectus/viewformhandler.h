@@ -24,12 +24,16 @@ public:
 
 signals:
     void changeOrder(int term, QString subject, QString theme, int previous_index, int current_index);
+    void setPathToList(int term, QString subject, QString theme);
 
 public slots:
+    void onForm();
+    void onSetPath();
     void onSetTheme(QString theme);
     void onOkClicked(QString file_path);
     void onOrderChanged(int previous_index, int current_index);
     void onUpdateImage(QString name);
+    void onUpdateView();
 };
 
 #endif // VIEWFORMHANDLER_H

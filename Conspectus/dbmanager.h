@@ -89,6 +89,7 @@ public slots:
                                QString subject,
                                int theme_no, QString theme,
                                int list_id_no, int list_id);
+    void onDeleteRowFromConspectDB(int row_id);
 };
 
 
