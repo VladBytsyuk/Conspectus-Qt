@@ -1,6 +1,7 @@
 #include "utils.h"
 #include <QDir>
 #include <QUrl>
+#include "filemanager.h"
 
 Util::Util(QObject *parent) : QObject(parent) {}
 

@@ -3,6 +3,7 @@
 #include <QLoggingCategory>
 #include <QQmlApplicationEngine>
 #include <QQuickView>
+#include <QtWidgets>
 #include <QTreeView>
 #include <QDateTime>
 #include <QQmlContext>
@@ -23,7 +24,7 @@ void setSignalSlotConnections();
 
 int main(int argc, char *argv[])
 {
-    QGuiApplication app(argc, argv);
+    QApplication app(argc, argv);
 	qsrand(QTime(0, 0, 0).secsTo(QTime::currentTime()));
 
     Util util;

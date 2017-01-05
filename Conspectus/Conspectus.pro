@@ -2,6 +2,8 @@ TEMPLATE = app
 
 QT += qml quick widgets
 QT += sql
+QT += printsupport
+QT += widgets
 
 CONFIG += c++11
 

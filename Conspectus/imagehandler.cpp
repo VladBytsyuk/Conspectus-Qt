@@ -3,6 +3,7 @@
 #include "filemanager.h"
 
 #include <QPainter>
+#include <QtPrintSupport>
 #include <QColor>
 
 ImageHandler::ImageHandler(QObject * view) : mView(view) {}
@@ -47,6 +48,16 @@ bool ImageHandler::onTurnRight(QString name) {
 
 bool ImageHandler::onPrint(QString name) {
     qDebug(logDebug()) << "Start printing image" << name;
+    QPixmap pix;
+    FileManager fm;
+    pix.load(fm.getImagePath(name));
+    QPrinter printer;
+    QPrintDialog dlg(&printer,0);
+    if (dlg.exec() == QDialog::Accepted) {
+        QPainter painter(&printer);
+        painter.drawPixmap(QPoint(0, 0), pix);
+        painter.end();
+    }
     return true;
 }
 
