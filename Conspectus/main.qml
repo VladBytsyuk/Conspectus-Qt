@@ -11,19 +11,19 @@ ApplicationWindow {
     minimumWidth: 690
     minimumHeight: 610
 
-    menuBar: MenuBar {
-        Menu {
-            title: qsTr("File")
-            MenuItem {
-                text: qsTr("&Open")
-                onTriggered: console.log("Open action triggered");
-            }
-            MenuItem {
-                text: qsTr("Exit")
-                onTriggered: Qt.quit();
-            }
-        }
-    }
+//    menuBar: MenuBar {
+//        Menu {
+//            title: qsTr("File")
+//            MenuItem {
+//                text: qsTr("&Open")
+//                onTriggered: console.log("Open action triggered");
+//            }
+//            MenuItem {
+//                text: qsTr("Exit")
+//                onTriggered: Qt.quit();
+//            }
+//        }
+//    }
 
     ViewForm {
         id : viewForm
