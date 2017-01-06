@@ -315,8 +315,112 @@ bool ConspectModel::removeFile(QString file_name) {
     return true;
 }
 
-void ConspectModel::onRemoveFile(QString file_name) {
+
+
+
+
+int ConspectModel::getListId(QString name) {
+    int list_count = mListsModel->rowCount();
+    for (int i = 0; i < list_count; ++i) {
+        QModelIndex file_name_index = mListsModel->index(i, 1);
+        if (file_name_index.data().toString() == name) {
+            QModelIndex list_id_index = mListsModel->index(i, 0);
+            int list_id = list_id_index.data().toInt();
+            return list_id;
+        }
+    }
+}
+
+void ConspectModel::deleteList(int term, QString subject, QString theme, QString file_name) {
+    int list_id = getListId(file_name);
+    deleteList(term, subject, theme, list_id);
+}
+
+void ConspectModel::deleteList(int term, QString subject, QString theme, int list_id) {
+    int terms_count = mConspectHierarchyModel->rowCount();
+    for (int termIterator = 0; termIterator < terms_count; ++termIterator) {
+        QModelIndex termIndex = mConspectHierarchyModel->index(termIterator, 0);
+        int current_term = termIndex.data().toInt();
+        if (current_term == term) {
+            int subjects_count = mConspectHierarchyModel->rowCount(termIndex);
+            for (int subjectIterator = 0; subjectIterator < subjects_count; ++subjectIterator) {
+                QModelIndex subjectIndex = mConspectHierarchyModel->index(subjectIterator, 0, termIndex);
+                QString current_subject = subjectIndex.data().toString();
+                if (current_subject == subject) {
+                    int themes_count = mConspectHierarchyModel->rowCount(subjectIndex);
+                    for (int themeIterator = 0; themeIterator < themes_count; ++themeIterator) {
+                        QModelIndex themeIndex = mConspectHierarchyModel->index(themeIterator, 0, subjectIndex);
+                        QString current_theme = themeIndex.data().toString();
+                        if (current_theme == theme) {
+                            int lists_count = mConspectHierarchyModel->rowCount(themeIndex);
+                            for (int listIterator = 0; listIterator < lists_count; ++listIterator) {
+                                QModelIndex listIndex = mConspectHierarchyModel->index(listIterator, 0, themeIndex);
+                                int current_list = listIndex.data().toInt();
+                                QModelIndex idIndex = mConspectHierarchyModel->index(listIterator, 2, themeIndex);
+                                int row_id = idIndex.data().toInt();
+                                if (current_list == list_id) {
+                                    mConspectHierarchyModel->removeRow(listIterator, themeIndex);
+                                    emit removeRowFromConspectDB(row_id);
+                                    if (mConspectHierarchyModel->rowCount(themeIndex) == 0) {
+                                        mConspectHierarchyModel->removeRow(themeIterator, subjectIndex);
+                                        if (mConspectHierarchyModel->rowCount(subjectIndex) == 0) {
+                                            mConspectHierarchyModel->removeRow(subjectIterator, termIndex);
+                                            if (mConspectHierarchyModel->rowCount(termIndex) == 0) {
+                                                mConspectHierarchyModel->removeRow(termIterator);
+                                            }
+                                        }
+                                    }
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+bool ConspectModel::isImageUsed(QString name) {
+    int list_id = getListId(name);
+    return isImageUsed(list_id);
+}
+
+bool ConspectModel::isImageUsed(int list_id) {
+    int terms_count = mConspectHierarchyModel->rowCount();
+    for (int termIterator = 0; termIterator < terms_count; ++termIterator) {
+        QModelIndex termIndex = mConspectHierarchyModel->index(termIterator, 0);
+        int subjects_count = mConspectHierarchyModel->rowCount(termIndex);
+        for (int subjectIterator = 0; subjectIterator < subjects_count; ++subjectIterator) {
+            QModelIndex subjectIndex = mConspectHierarchyModel->index(subjectIterator, 0, termIndex);
+            int themes_count = mConspectHierarchyModel->rowCount(subjectIndex);
+            for (int themeIterator = 0; themeIterator < themes_count; ++themeIterator) {
+                QModelIndex themeIndex = mConspectHierarchyModel->index(themeIterator, 0, subjectIndex);
+                int lists_count = mConspectHierarchyModel->rowCount(themeIndex);
+                for (int listIterator = 0; listIterator < lists_count; ++listIterator) {
+                    QModelIndex idIndex = mConspectHierarchyModel->index(listIterator, 0, themeIndex);
+                    int id = idIndex.data().toInt();
+                    if (id == list_id) {
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+    return false;
+}
+
+void ConspectModel::onRemoveList(int term, QString subject, QString theme, QString file_name) {
+    deleteList(term, subject, theme, file_name);
+    logConspectModel();
+    if (!isImageUsed(file_name)) {
+        emit tryToRemoveFile(file_name);
+    }
+}
+
+void ConspectModel::onRemoveFile(QString file_name) {   
     this->removeFile(file_name);
+    logConspectModel();
     emit removeFileDBSignal(file_name);
 }
 

@@ -13,8 +13,7 @@ ResourceImageProvider::~ResourceImageProvider() {}
 QImage ResourceImageProvider::requestImage(const QString& id, QSize* size, const QSize& requestedSize)
 {
     FileManager fm;
-    QString absolute_path = fm.getSourceDirPath() + "/" + id;
-    QImage image = fm.getImage(absolute_path);
+    QImage image;// = fm.getImage(id);
     QImage result;
 
     if (requestedSize.isValid()) {
@@ -29,8 +28,8 @@ QImage ResourceImageProvider::requestImage(const QString& id, QSize* size, const
 
 QPixmap ResourceImageProvider::requestPixmap(const QString& id, QSize* size, const QSize& requestedSize)
 {
-    QString rsrcid = ":/" + id;
-    QPixmap image(rsrcid);
+    FileManager fm;
+    QPixmap image = fm.getImage(id);
     QPixmap result;
 
     if (requestedSize.isValid()) {

@@ -437,5 +437,9 @@ void DBManager::onUpdateRowInConspectTable(int id, int term,
     insertRowIntoTableConspect(id, term, subject, theme_no, theme, list_id_no, list_id);
 }
 
+void DBManager::onDeleteRowFromConspectDB(int row_id) {
+    deleteRowFromTable(row_id, TABLE_CONSPECT);
+}
+
 /* ================= Fields initialization ================= */
 DBManager* DBManager::mInstance = nullptr;
