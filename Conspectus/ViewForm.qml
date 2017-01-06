@@ -70,7 +70,6 @@ Item {
         width: parent.width - 16
         height: 60
         anchors.horizontalCenter: parent.horizontalCenter
-        border.color: "#6988bd"
         color: "#006988bd"
         radius: 3
 
@@ -128,7 +127,6 @@ Item {
                 width: boxWidth
                 height: boxHeight
                 objectName: "boxTerm"
-                model: [1,2,3,4,5,6,7,8]
                 Component.onCompleted: {
                     currentIndex = -1
                 }
@@ -156,7 +154,6 @@ Item {
                 width: boxWidth
                 height: boxHeight
                 objectName: "boxSubject"
-                model: ["Maths","Economics","Physics","English"]
                 Component.onCompleted: {
                     currentIndex = -1
                 }
@@ -183,7 +180,6 @@ Item {
                 width: boxWidth
                 height: boxHeight
                 objectName: "boxTheme"
-                model: ["Limits","Summs"]
                 Component.onCompleted: {
                     currentIndex = -1
                 }
@@ -219,9 +215,9 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: topBar.bottom
         anchors.topMargin: 10
-        anchors.bottom: flowCancel.top
+        anchors.bottom: flowEditCancel.top
         anchors.bottomMargin: 10
-        border.color: "#6988bd"
+        //border.color: "#6988bd"
         color: "#006988bd"
         radius: 3
 
@@ -255,7 +251,7 @@ Item {
             width: parent.width
             height: parent.height
             verticalScrollBarPolicy : Qt.ScrollBarAsNeeded
-
+            flickableItem.interactive: true
             focus: true
 
             GridView {
@@ -269,6 +265,7 @@ Item {
                 focus: true
 
                 signal orderChanged(int prevIndex, int currIndex);
+                signal setPath();
 
                 displaced: Transition {
                     NumberAnimation { properties: "x,y"; easing.type: Easing.OutQuad }
@@ -287,7 +284,7 @@ Item {
 
                         property bool held: false
                         property int  lastDraggedIndex: -1
-                        property int visualIndex: DelegateModel.itemsIndex
+                        property int  visualIndex: DelegateModel.itemsIndex
 
                         width: root.cellWidth; height: root.cellHeight
                         drag.target:  held ? icon : undefined
@@ -367,8 +364,18 @@ Item {
 
                         onDoubleClicked: {
                             if (mouse.button & Qt.LeftButton) {
+                                root.currentIndex = index;
+                                if (root.currentIndex - 1 != -1 && root.currentIndex + 1 != root.count) {
+                                    showForm.setSource(src, true, true);
+                                } else if (root.currentIndex - 1 === -1 && root.currentIndex + 1 != root.count) {
+                                    showForm.setSource(src, false, true);
+                                } else if (root.currentIndex - 1 != -1 && root.currentIndex + 1 === root.count) {
+                                    showForm.setSource(src, true, false);
+                                } else {
+                                    showForm.setSource(src, false, false);
+                                }
                                 showForm.showShowForm();
-                                showForm.setSource(src);
+                                root.setPath();
                             }
                         }
 
@@ -399,11 +406,45 @@ Item {
     * Bottom bar
     */
    Flow {
-       id: flowCancel
+       id: flowEditCancel
        width: parent.width
        height: buttonHeight + 15
        anchors.bottom: parent.bottom
        anchors.bottomMargin: 2
        anchors.horizontalCenter: parent.horizontalCenter
    } //End bottom bar
+
+   function setNextImage() {
+       if (root.currentIndex + 1 != root.count) {
+           //console.log(root.currentIndex + 1);
+           var nextImg = listModel.get(root.currentIndex + 1).src;
+           root.currentIndex = root.currentIndex + 1;
+           if (root.currentIndex - 1 != -1 && root.currentIndex + 1 != root.count) {
+               showForm.setSource(nextImg, true, true);
+           } else if (root.currentIndex - 1 === -1 && root.currentIndex + 1 != root.count) {
+               showForm.setSource(nextImg, false, true);
+           } else if (root.currentIndex - 1 != -1 && root.currentIndex + 1 === root.count) {
+               showForm.setSource(nextImg, true, false);
+           } else {
+               showForm.setSource(nextImg, false, false);
+           }
+       }
+   }
+
+   function setPreviousImage() {
+       if (root.currentIndex - 1 != -1) {
+           //console.log(root.currentIndex - 1);
+           var prevImg = listModel.get(root.currentIndex - 1).src;
+           root.currentIndex = root.currentIndex - 1;
+           if (root.currentIndex - 1 != -1 && root.currentIndex + 1 != root.count) {
+               showForm.setSource(prevImg, true, true);
+           } else if (root.currentIndex - 1 === -1 && root.currentIndex + 1 != root.count) {
+               showForm.setSource(prevImg, false, true);
+           } else if (root.currentIndex - 1 != -1 && root.currentIndex + 1 === root.count) {
+               showForm.setSource(prevImg, true, false);
+           } else {
+               showForm.setSource(prevImg, false, false);
+           }
+       }
+   }
 }

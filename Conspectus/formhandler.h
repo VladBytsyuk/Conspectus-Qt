@@ -29,7 +29,7 @@ public:
 
 
 public slots:
-    void onForm();
+    virtual void onForm();
     void onSetTerm(QString term);
     void onSetSubject(QString subject);
     virtual void onSetTheme(QString theme);

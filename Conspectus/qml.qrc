@@ -9,8 +9,10 @@
         <file>assets/printer.png</file>
         <file>assets/zoom.png</file>
         <file>assets/zoom-out.png</file>
-        <file>assets/refresh.png</file>
         <file>assets/moon.png</file>
-        <file>model.qml</file>
+        <file>assets/arrow_right.png</file>
+        <file>assets/arrow_left.png</file>
+        <file>assets/left.png</file>
+        <file>assets/right.png</file>
     </qresource>
 </RCC>

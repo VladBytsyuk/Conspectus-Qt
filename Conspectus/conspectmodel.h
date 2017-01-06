@@ -36,6 +36,12 @@ private:
                                    QString theme, int id, int list_no, int list_id);
     bool removeFile(QString file_name);
 
+    void deleteList(int term, QString subject, QString theme, QString file_name);
+    void deleteList(int term, QString subject, QString theme, int list_id);
+    int getListId(QString name);
+    bool isImageUsed(QString name);
+    bool isImageUsed(int list_id);
+
 public:
     /* ==================== Constructor ==================== */
 
@@ -55,6 +61,7 @@ public:
     static void logListModel();
 
 public slots:
+    void onRemoveList(int term, QString subject, QString theme, QString file_name);
     void onRemoveFile(QString file_name);
     void onAddFile(QString file_name, int term, QString subject, QString theme);
     void onChangeOrdering(int term, QString subject, QString theme, int previous_index, int current_index);
@@ -73,6 +80,8 @@ signals:
                    QString subject,
                    int theme_no, QString theme,
                    int list_id_no, int list_id);
+    void removeRowFromConspectDB(int row_id);
+    void tryToRemoveFile(QString file_name);
 
 };
 
