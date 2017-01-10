@@ -16,6 +16,7 @@ Item {
     property int horizontalNotPressed: 135
     property int rOffShadowNotPressed: 8
     property int addPressed: 2
+    property int iconSize: 30
 
     property string current_image_name: ""
     signal turnedLeft(string name)
@@ -115,9 +116,7 @@ Item {
                 viewForm.setPreviousImage()
             }
         }
-
     }
-
 
     Flow {
         id: flowButtonRight
@@ -170,26 +169,24 @@ Item {
         anchors.right: flowButtonRight.left
         anchors.leftMargin: 5
         anchors.rightMargin: 5
-
         //anchors.horizontalCenter: parent.horizontalCenter
         border.color: "#6988bd"
         color: "#006988bd"
         radius: 3
 
-
         Item {
             id: flowTopBar
-            width: 200
-            height: 25
+            width: 7 * (iconSize + 15) + zoomInSlider.width
+            height: iconSize
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.top: parent.top
-            anchors.topMargin: 5
+            anchors.verticalCenter: parent.verticalCenter
             Row {
-                spacing: 5
+                spacing: 15
 
                 ToolButton{
                     id: toolButtonPrinter
-                    height: 25
+                    height: iconSize
+                    width: iconSize
                     Image {
                         source: "/assets/printer.png"
                         anchors.fill: parent
@@ -200,7 +197,8 @@ Item {
                 }
                 ToolButton{
                     id: toolButtonTurnLeft
-                    height: 25
+                    height: iconSize
+                    width: iconSize
                     Image {
                         source: "/assets/left.png"
                         anchors.fill: parent
@@ -210,58 +208,16 @@ Item {
                     }
                     onClicked: showForm.turnedLeft(current_image_name)
                 }
-                ToolButton{
-                    id: toolButtonTurnRight
-                    height: 25
-                    Image {
-                        source: "/assets/right.png"
-                        anchors.fill: parent
-                        fillMode: Image.PreserveAspectFit
-                    }
-                    onClicked: showForm.turnedRight(current_image_name)
-                }
-                ToolButton{
-                    id: toolButtonMoon
-                    height: 25
-                    Image {
-                        source: "/assets/moon.png"
-                        anchors.fill: parent
-                        fillMode: Image.PreserveAspectFit
-                    }
-                    onClicked: showForm.greyscaled(current_image_name)
-                }
-                ToolButton{
-                    id: toolButtonGarbage
-                    height: 30
-                    Image {
-                        source: "/assets/garbage.png"
-                        anchors.fill: parent
-                        fillMode: Image.PreserveAspectFit
-                    }
-                    onClicked: showForm.deleted(current_image_name)
-                }
-           } //End top flow
-       }
 
-       Item {
-            id: flowTopBarBot
-            width: 104
-            height: 20
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: 3
-
-            Row {
-                spacing: 5
                 Image {
                     source: "/assets/zoom-out.png"
-                    height: 17
-                    width: 17
+                    height: iconSize
+                    width: iconSize
                     fillMode: Image.PreserveAspectFit
                 }
-
                 Slider {
                     id: zoomInSlider
+                    height: iconSize
                     orientation: Qt.Horizontal
                     visible: true
                     minimumValue: 0
@@ -277,16 +233,49 @@ Item {
                         //scroll.flickableItem.contentX = mouse.X - scroll.width / 2;
                         //scroll.flickableItem.contentY = mouse.Y - scroll.height / 2;
                     }
-               }
-               Image {
+                }
+                Image {
                     source: "/assets/zoom.png"
-                    height: 17
-                    width: 17
+                    height: iconSize
+                    width: iconSize
                     fillMode: Image.PreserveAspectFit
-               }
-            }
-       } //End Top bar
+                }
 
+                ToolButton{
+                    id: toolButtonTurnRight
+                    height: iconSize
+                    width: iconSize
+                    Image {
+                        source: "/assets/right.png"
+                        anchors.fill: parent
+                        fillMode: Image.PreserveAspectFit
+                    }
+                    onClicked: showForm.turnedRight(current_image_name)
+                }
+                ToolButton{
+                    id: toolButtonMoon
+                    height: iconSize
+                    width: iconSize
+                    Image {
+                        source: "/assets/moon.png"
+                        anchors.fill: parent
+                        fillMode: Image.PreserveAspectFit
+                    }
+                    onClicked: showForm.greyscaled(current_image_name)
+                }
+                ToolButton{
+                    id: toolButtonGarbage
+                    height: iconSize
+                    width: iconSize
+                    Image {
+                        source: "/assets/garbage.png"
+                        anchors.fill: parent
+                        fillMode: Image.PreserveAspectFit
+                    }
+                    onClicked: showForm.deleted(current_image_name)
+                }
+           } //End top flow
+       }
     }
 
     /**
