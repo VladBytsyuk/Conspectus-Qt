@@ -46,7 +46,6 @@ Item {
         }
     }
 
-    property alias buttonEdit: buttonEdit
     property alias buttonCancel: buttonCancel
 
     Button {
@@ -55,23 +54,9 @@ Item {
         height: buttonHeight
         text: "CANCEL"
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.horizontalCenterOffset: buttonCancel.pressed ? horizontalNotPressed+addPressed : horizontalNotPressed
+        anchors.horizontalCenterOffset: buttonCancel.pressed ? addPressed : 0
         anchors.bottom: parent.bottom
         anchors.bottomMargin: buttonCancel.pressed ? verticalNotPressed-addPressed : verticalNotPressed
-        visible: true
-        style: buttonStyle
-    }
-
-    Button {
-        id: buttonEdit
-        width: buttonWidth
-        height: buttonHeight
-        objectName: "buttonEdit"
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.horizontalCenterOffset: buttonEdit.pressed ? -horizontalNotPressed+addPressed : -horizontalNotPressed
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: buttonEdit.pressed ? verticalNotPressed-addPressed : verticalNotPressed
-        text:"SAVE"
         visible: true
         style: buttonStyle
     }
@@ -83,16 +68,6 @@ Item {
         horizontalOffset: buttonCancel.pressed ? shadowOffset-addPressed : shadowOffset
         verticalOffset: buttonCancel.pressed ? shadowOffset-addPressed : shadowOffset
         radius: buttonCancel.hovered ? rOffShadowNotPressed+8 : rOffShadowNotPressed
-        samples: 17
-    }
-
-    DropShadow {
-        anchors.fill: buttonEdit
-        source: buttonEdit
-        color: "#50000000"
-        horizontalOffset: buttonEdit.pressed ? shadowOffset-addPressed : shadowOffset
-        verticalOffset: buttonEdit.pressed ? shadowOffset-addPressed : shadowOffset
-        radius: buttonEdit.hovered ? rOffShadowNotPressed+8 : rOffShadowNotPressed
         samples: 17
     }
 
@@ -195,6 +170,8 @@ Item {
         anchors.right: flowButtonRight.left
         anchors.leftMargin: 5
         anchors.rightMargin: 5
+
+        //anchors.horizontalCenter: parent.horizontalCenter
         border.color: "#6988bd"
         color: "#006988bd"
         radius: 3
@@ -309,6 +286,7 @@ Item {
                }
             }
        } //End Top bar
+
     }
 
     /**
