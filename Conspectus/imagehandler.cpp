@@ -99,8 +99,8 @@ void ImageHandler::returnToViewForm() {
 
 QPixmap ImageHandler::greyscale(const QPixmap & img) {
     QImage t_img = img.toImage();
-    for( int w = 0; w < t_img.rect().right(); w++ ) {
-        for( int h = 0; h < t_img.rect().bottom(); h++ ) {
+    for( int w = 0; w <= t_img.rect().right(); w++ ) {
+        for( int h = 0; h <= t_img.rect().bottom(); h++ ) {
             QColor col( t_img.pixel(w,h) );
             col.setHsv(col.hue(), 0, col.value() * 0.8, col.alpha());
             t_img.setPixel(w,h,col.rgb());
