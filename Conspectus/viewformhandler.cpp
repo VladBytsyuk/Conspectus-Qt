@@ -2,6 +2,8 @@
 
 ViewFormHandler::ViewFormHandler(QObject* view) {
     mView = view;
+    forcedUpdateSubject = false;
+    forcedUpdateTheme = false;
 }
 
 ViewFormHandler::~ViewFormHandler() {}

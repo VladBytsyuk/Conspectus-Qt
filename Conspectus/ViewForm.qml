@@ -18,6 +18,16 @@ Item {
 
     property alias buttonCancel: buttonCancel
 
+    //forced emit subjectSelect signal
+    function emitSubjectSelect(subject) {
+        boxSubject.subjectSelect(subject);
+    }
+
+    //forced emit themeSelect signal
+    function emitThemeSelect(theme) {
+        boxTheme.themeSelect(theme);
+    }
+
     Component {
         id: buttonStyle
         ButtonStyle {

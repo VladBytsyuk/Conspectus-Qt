@@ -23,6 +23,16 @@ Item {
         boxTheme.state = ""
     }
 
+    //forced emit subjectSelect signal
+    function emitSubjectSelect(subject) {
+        boxSubject.subjectSelect(subject);
+    }
+
+    //forced emit themeSelect signal
+    function emitThemeSelect(theme) {
+        boxTheme.themeSelect(theme);
+    }
+
     Component {
         id: buttonStyle
         ButtonStyle {
@@ -235,8 +245,6 @@ Item {
         radius: buttonOk.hovered ? rOffShadowNotPressed+8 : rOffShadowNotPressed
         samples: 17
     }
-
-
 
     ComboBox {
         id: boxTerm

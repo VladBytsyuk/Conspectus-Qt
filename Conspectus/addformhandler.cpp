@@ -2,6 +2,8 @@
 
 AddFormHandler::AddFormHandler(QObject* view) {
     mView = view;
+    forcedUpdateSubject = false;
+    forcedUpdateTheme = false;
 }
 
 AddFormHandler::~AddFormHandler() {}

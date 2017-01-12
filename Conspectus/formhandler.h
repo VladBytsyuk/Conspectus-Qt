@@ -17,6 +17,9 @@ protected:
 
     QObject* mView;
 
+    bool forcedUpdateSubject;
+    bool forcedUpdateTheme;
+
     int getTermRowInModel(int term);
     int getSubjectRowInModel(int term_row, QString subject);
 
