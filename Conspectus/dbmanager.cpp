@@ -322,7 +322,7 @@ QStandardItemModel* DBManager::getConspectModel() {
                 conspectModel->setData(themeNumberIndex, themeNumber);
 
                 QString getListId =
-                        "SELECT DISTINCT " LIST_ID ", " CONSPECT_ID " "
+                        "SELECT " LIST_ID ", " CONSPECT_ID " "
                             "FROM " TABLE_CONSPECT " "
                             "WHERE " TERM " = " + QString::number(term) + " "
                             "AND " SUBJECT " = '" + subject + "' "
@@ -330,7 +330,7 @@ QStandardItemModel* DBManager::getConspectModel() {
                             "ORDER BY " LIST_ID_NO;
                 QSqlQuery lists = makeQuery(getListId);
                 QString listsCount =
-                        "SELECT COUNT(DISTINCT " LIST_ID ") "
+                        "SELECT COUNT(" LIST_ID ") "
                             "FROM " TABLE_CONSPECT " "
                             "WHERE " TERM " = " + QString::number(term) + " "
                             "AND " SUBJECT " = '" + subject + "' "
@@ -350,12 +350,9 @@ QStandardItemModel* DBManager::getConspectModel() {
                     int id = lists.value(1).toInt();
 
                     QString getListIdNumber =
-                            "SELECT DISTINCT " LIST_ID_NO " "
+                            "SELECT " LIST_ID_NO " "
                                 "FROM " TABLE_CONSPECT " "
-                                "WHERE " TERM " = " + QString::number(term) + " "
-                                "AND " SUBJECT " = '" + subject + "' "
-                                "AND " THEME " = '" + theme + "' "
-                                "AND " LIST_ID " = " + QString::number(listId);
+                                "WHERE " CONSPECT_ID " = " + QString::number(id) + " ";
                     QSqlQuery listNumberQuery = makeQuery(getListIdNumber);
                     listNumberQuery.next();
                     QModelIndex listNumberIndex =

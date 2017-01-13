@@ -6,7 +6,11 @@
 #include <QtPrintSupport>
 #include <QColor>
 
-ImageHandler::ImageHandler(QObject * view) : mView(view) {}
+ImageHandler::ImageHandler(QObject* view) {
+    mView = view;
+    forcedUpdateSubject = false;
+    forcedUpdateTheme = false;
+}
 
 ImageHandler::~ImageHandler(){}
 
@@ -117,4 +121,12 @@ void ImageHandler::onSetPathToList(int term, QString subject, QString theme) {
     mTerm = term;
     mSubject = subject;
     mTheme = theme;
+}
+
+void ImageHandler::onForm() {
+    FormHandler::onForm();
+}
+
+void ImageHandler::onOkClicked(QString file_name) {
+    emit addConspectListToAnotherPath(mCurrentTerm, mCurrentSubject, mCurrentTheme, file_name);
 }

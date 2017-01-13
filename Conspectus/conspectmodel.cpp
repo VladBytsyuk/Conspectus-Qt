@@ -489,6 +489,11 @@ void ConspectModel::onChangeOrdering(int term, QString subject, QString theme, i
     logConspectModel();
 }
 
+void ConspectModel::onAddListToAnotherPath(int term, QString subject, QString theme, QString file_name) {
+    int list_id = getListId(file_name);
+    insertIntoConspectModel(list_id, term, subject, theme);
+}
+
 /* ================= Fields initialization ================= */
 ConspectModel* ConspectModel::mInstance = nullptr;
 QStandardItemModel* ConspectModel::mConspectHierarchyModel =

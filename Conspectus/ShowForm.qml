@@ -585,6 +585,10 @@ Item {
                     text: control.text
                 }
             }
+
+            signal addList(string file_name)
+            onClicked: saveList.addList(current_image_name)
+
 //                anchors.top: boxTheme.bottom
 //                anchors.topMargin: 25
             anchors.bottom: parent.bottom

@@ -1,11 +1,12 @@
 #ifndef IMAGEHANDLER_H
 #define IMAGEHANDLER_H
 
-#include <QObject>
+#include "formhandler.h"
 
-class ImageHandler : public QObject
+class ImageHandler : public FormHandler
 {
     Q_OBJECT
+
 private:
     int mTerm;
     QString mSubject;
@@ -16,11 +17,10 @@ private:
     void updateQmlImage();
     void returnToViewForm();
 
-    QObject* mView;
-
 public:
-    ImageHandler(QObject *view);
+    ImageHandler(QObject* view);
     ~ImageHandler();
+
 public slots:
     void onSetPathToList(int term, QString subject, QString theme);
     bool onTurnLeft(QString name);
@@ -28,9 +28,13 @@ public slots:
     bool onGreyscale(QString name);
     bool onPrint(QString name);
     bool onDelete(QString name);
+
+    void onForm();
+    void onOkClicked(QString file_path);
 signals:
     void imageUpdated(QString name);
     void deleteList(int term, QString subject, QString theme, QString file_name);
+    void addConspectListToAnotherPath(int term, QString subject, QString theme, QString file_name);
 };
 
 #endif // IMAGEHANDLER_H

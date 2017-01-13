@@ -53,26 +53,23 @@ QMap<int, QString> ViewFormHandler::getListIds(int term, QString subject, QStrin
 }
 
 QMap<int, QString> ViewFormHandler::getFileNames(QMap<int, QString> &images) {
-    QStandardItemModel* listModel = ConspectModel::getListModel();
-    int row_count = listModel->rowCount();
-    QList<int> listNos;
-    QStringList fileIds;
     for (auto it = images.begin(); it != images.end(); ++it) {
-        listNos.push_back(it.key());
-        fileIds.push_back(it.value());
-    }
-    for (int i = 0; i < row_count; ++i) {
-        QModelIndex index = listModel->index(i, 0);
-        int id = index.data().toInt();
-        if (fileIds.contains(QString::number(id))) {
-            int id_index = fileIds.indexOf(QString::number(id));
-            QModelIndex fileSourceIndex = listModel->index(i, 1);
-            QString file_name = fileSourceIndex.data().toString();
-            int list_no = listNos[id_index];
-            images[list_no] = file_name;
-        }
+        images[it.key()] = getNameById(it.value().toInt());
     }
     return images;
+}
+
+QString ViewFormHandler::getNameById(int list_id) {
+    QStandardItemModel* model = ConspectModel::getListModel();
+    int row_count = model->rowCount();
+    for (int i = 0; i < row_count; ++i) {
+        QModelIndex idIndex = model->index(i, 0);
+        if (idIndex.data().toInt() == list_id) {
+            QModelIndex nameIndex = model->index(i, 1);
+            return nameIndex.data().toString();
+        }
+    }
+    return "";
 }
 
 void ViewFormHandler::setImageToQml(QString file_name, int list_no) {

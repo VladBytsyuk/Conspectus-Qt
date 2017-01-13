@@ -84,11 +84,14 @@ ApplicationWindow {
         objectName: "showForm"
         visible: false
 
+        signal showFormSignal()
+
         function showShowForm(string) {
             viewForm.visible = false
             addForm.visible = false
             mainForm.visible = false
             showForm.visible = true
+            showFormSignal();
         }
         buttonCancel.onClicked: viewForm.showViewForm()
     }

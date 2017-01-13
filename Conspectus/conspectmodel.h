@@ -65,6 +65,7 @@ public slots:
     void onRemoveFile(QString file_name);
     void onAddFile(QString file_name, int term, QString subject, QString theme);
     void onChangeOrdering(int term, QString subject, QString theme, int previous_index, int current_index);
+    void onAddListToAnotherPath(int term, QString subject, QString theme, QString file_name);
 
 
 signals:
