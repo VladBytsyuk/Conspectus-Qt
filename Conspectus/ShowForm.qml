@@ -433,9 +433,13 @@ Item {
 
         TextField {
             id: tagField
+            objectName: "tagField"
             width: parent.width
             height: 100
             anchors.top: tagTitle.bottom
+
+            signal tagChanged(string file_name, string new_tag)
+            onTextChanged: tagField.tagChanged(current_image_name, tagField.text)
         }
 
         Text {
@@ -449,9 +453,13 @@ Item {
 
         TextField {
             id: commentField
+            objectName: "commentField"
             width: parent.width
             height: 250
             anchors.top: commentTitle.bottom
+
+            signal commentChanged(string file_name, string new_comment)
+            onTextChanged: commentField.commentChanged(current_image_name, commentField.text)
         }
 
 //        Column {

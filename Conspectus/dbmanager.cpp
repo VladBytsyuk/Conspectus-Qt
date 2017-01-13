@@ -415,6 +415,10 @@ void DBManager::onInsertFileIntoListTable(int id, QString file_name){
     insertRowIntoTableList(id, file_name);
 }
 
+void DBManager::onInsertFileIntoListTableWithInfo(int list_id, QString file_name, QString tags, QString comments) {
+    insertRowIntoTableList(list_id, file_name, tags, comments);
+}
+
 void DBManager::onRemoveFile(QString file_name){
     //TODO: Delete file from DB
     deleteRowFromTable(findFileIdByName(file_name), TABLE_LIST);

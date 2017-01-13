@@ -123,6 +123,16 @@ void ImageHandler::onSetPathToList(int term, QString subject, QString theme) {
     mTheme = theme;
 }
 
+bool ImageHandler::onTagChanged(QString file_name, QString tags) {
+    emit changeTag(file_name, tags);
+    return true;
+}
+
+bool ImageHandler::onCommentChanged(QString file_name, QString comments) {
+    emit changeComment(file_name, comments);
+    return true;
+}
+
 void ImageHandler::onForm() {
     FormHandler::onForm();
 }

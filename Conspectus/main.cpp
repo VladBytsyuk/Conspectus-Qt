@@ -67,6 +67,8 @@ int main(int argc, char *argv[])
                      dbManager, &DBManager::onUpdateRowInConspectTable);
     QObject::connect(conspectModel, &ConspectModel::removeRowFromConspectDB,
                      dbManager, &DBManager::onDeleteRowFromConspectDB);
+    QObject::connect(conspectModel, &ConspectModel::insertListTableDBSignal,
+                     dbManager, &DBManager::onInsertFileIntoListTableWithInfo);
 
     //BackEnd connections
     QObject::connect(&add_form, &AddFormHandler::tryToAddFileToFileSystem,
@@ -91,6 +93,10 @@ int main(int argc, char *argv[])
                      &image_handler, &ImageHandler::onSetPathToList);
     QObject::connect(&image_handler, &ImageHandler::addConspectListToAnotherPath,
                      conspectModel, &ConspectModel::onAddListToAnotherPath);
+    QObject::connect(&image_handler, &ImageHandler::changeTag,
+                     conspectModel, &ConspectModel::onChangeTag);
+    QObject::connect(&image_handler, &ImageHandler::changeComment,
+                     conspectModel, &ConspectModel::onChangeComment);
 
     //ViewForm connections
     QObject::connect(engine.rootObjects().at(0)
@@ -182,6 +188,14 @@ int main(int argc, char *argv[])
                      ->findChild<QObject*>("showForm")
                      ->findChild<QObject*>("buttonSave"), SIGNAL(addList(QString)),
                      &image_handler, SLOT(onOkClicked(QString)));
+    QObject::connect(engine.rootObjects().at(0)
+                     ->findChild<QObject*>("showForm")
+                     ->findChild<QObject*>("tagField"), SIGNAL(tagChanged(QString, QString)),
+                     &image_handler, SLOT(onTagChanged(QString, QString)));
+    QObject::connect(engine.rootObjects().at(0)
+                     ->findChild<QObject*>("showForm")
+                     ->findChild<QObject*>("commentField"), SIGNAL(commentChanged(QString, QString)),
+                     &image_handler, SLOT(onCommentChanged(QString, QString)));
 
     app.exec();
 

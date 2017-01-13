@@ -28,6 +28,8 @@ public slots:
     bool onGreyscale(QString name);
     bool onPrint(QString name);
     bool onDelete(QString name);
+    bool onTagChanged(QString file_name, QString tags);
+    bool onCommentChanged(QString file_name, QString comment);
 
     void onForm();
     void onOkClicked(QString file_path);
@@ -35,6 +37,8 @@ signals:
     void imageUpdated(QString name);
     void deleteList(int term, QString subject, QString theme, QString file_name);
     void addConspectListToAnotherPath(int term, QString subject, QString theme, QString file_name);
+    void changeTag(QString file_name, QString tag);
+    void changeComment(QString file_name, QString comment);
 };
 
 #endif // IMAGEHANDLER_H
