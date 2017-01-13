@@ -320,6 +320,7 @@ Item {
                 fillMode: Image.PreserveAspectFit
                 asynchronous: true
                 source: ""
+                cache: false
             }
         }
 

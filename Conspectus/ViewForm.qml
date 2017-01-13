@@ -350,6 +350,7 @@ Item {
                                 source: "image://sourceDir/Preview/" + src;
                                 fillMode: Image.PreserveAspectFit
                                 opacity: parent.opacity
+                                cache: false
                             }
 
                             /**
