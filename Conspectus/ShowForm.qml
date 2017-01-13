@@ -7,6 +7,7 @@ import QtQuick.Layouts 1.1
 import QtQml.Models 2.2
 
 Item {
+    id: rootShow
     property int buttonWidth: 200
     property int buttonHeight: 50
     property int shadowOffset: 5
@@ -17,6 +18,10 @@ Item {
     property int rOffShadowNotPressed: 8
     property int addPressed: 2
     property int iconSize: 30
+    property int topBarSpacing: 15
+    property int panelWidth: 160
+
+    property alias buttonCancel: buttonCancel
 
     property string current_image_name: ""
     signal turnedLeft(string name)
@@ -29,7 +34,6 @@ Item {
     Component {
         id: buttonStyle
         ButtonStyle {
-
             background: Rectangle{
                 color: control.pressed ? "#697BBD"  : "#6988bd"
                 radius: 3
@@ -46,8 +50,6 @@ Item {
             }
         }
     }
-
-    property alias buttonCancel: buttonCancel
 
     Button {
         id: buttonCancel
@@ -76,7 +78,6 @@ Item {
         updateViewForm();
         viewForm.showViewForm();
     }
-
 
     Flow {
         id: flowButtonLeft
@@ -112,9 +113,7 @@ Item {
             id: buttonLeftMA
             anchors.fill: parent
             hoverEnabled: true
-            onClicked: {
-                viewForm.setPreviousImage()
-            }
+            onClicked: viewForm.setPreviousImage()
         }
     }
 
@@ -151,17 +150,12 @@ Item {
             id: buttonRightMA
             anchors.fill: parent
             hoverEnabled: true
-            onClicked: {
-                viewForm.setNextImage()
-            }
+            onClicked: viewForm.setNextImage()
         }
-
     }
 
 
-    /**
-    * Top bar
-    */
+    /*      Top bar     */
     Rectangle {
         id: topBar
         height: 60
@@ -176,12 +170,12 @@ Item {
 
         Item {
             id: flowTopBar
-            width: 7 * (iconSize + 15) + zoomInSlider.width
+            width: 7 * (iconSize + topBarSpacing) + zoomInSlider.width
             height: iconSize
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
             Row {
-                spacing: 15
+                spacing: topBarSpacing
 
                 ToolButton{
                     id: toolButtonPrinter
@@ -274,13 +268,29 @@ Item {
                     }
                     onClicked: showForm.deleted(current_image_name)
                 }
+
+
+                ToolButton {
+                    id: showPanel
+                    property bool isOpen: false
+                    width: iconSize
+                    height: iconSize
+
+                    ColorOverlay {
+                        anchors.fill: parent
+                        color: "#f0c150"
+                    }
+
+                    onClicked: {
+                         panel.state = !isOpen ? "open" : "";
+                         isOpen = !isOpen;
+                    }
+                }
            } //End top flow
        }
     }
 
-    /**
-    * Main image
-    */
+    /*      Main image      */
     Rectangle {
         id: mainImageContainer
         anchors.top: topBar.bottom
@@ -313,9 +323,7 @@ Item {
             }
         }
 
-        /**
-        * Image loading indicator
-        */
+        /*      Image loading indicator     */
         Item {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
@@ -370,7 +378,6 @@ Item {
                 }
             }
         }   //End image loading indicator
-
     }   // End Main Image
 
     Flow {
@@ -380,7 +387,6 @@ Item {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 2
         anchors.horizontalCenter: parent.horizontalCenter
-
     }
 
     function setSource(path, isExistsLeft, isExistsRight) {
@@ -402,5 +408,245 @@ Item {
         zoomInSlider.value = 0;
         mainImage.height = mainImageContainer.height;
         mainImage.width = mainImageContainer.width;
+    }
+
+
+
+
+
+
+    Item {
+        id: panel
+        width: panelWidth - 25
+        height: rootShow.height
+        anchors.left: rootShow.right
+
+        Text {
+            id: tagTitle
+            height: 20
+            width: parent.width
+            anchors.top: parent.top
+            text: "Tags:"
+            font.pointSize: 12
+        }
+
+        TextField {
+            id: tagField
+            width: parent.width
+            height: 100
+            anchors.top: tagTitle.bottom
+        }
+
+        Text {
+            id: commentTitle
+            height: 20
+            width: parent.width
+            anchors.top: tagField.bottom
+            text: "Commentaries:"
+            font.pointSize: 12
+        }
+
+        TextField {
+            id: commentField
+            width: parent.width
+            height: 250
+            anchors.top: commentTitle.bottom
+        }
+
+//        Column {
+//            id: boxesColumn
+//            width: parent.width
+//            height: parent.height - tagTitle.height - tagField.height - commentTitle.height - commentField.height
+//            anchors.top: commentField.bottom
+//            anchors.topMargin: 30
+
+//            spacing: 20
+
+        ComboBox {
+            id: boxTerm
+            width: parent.width
+            height: boxHeight
+
+            anchors.top: commentField.bottom
+            anchors.topMargin: 30
+
+            anchors.horizontalCenter: parent.horizontalCenter
+            objectName: "boxTerm"
+            Component.onCompleted: {
+                currentIndex = -1
+            }
+//________________________________________________________________________________
+//                states: State {
+//                    name: "highlight"
+//                    PropertyChanges {target: dropShadowTerm; color: "#9f0000";
+//                                     horizontalOffset: 0; verticalOffset: 0;}
+//                }
+
+//                editable: true
+//                //onCurrentTextChanged: boxTerm.termSelect(model[currentIndex])
+//                onEditTextChanged: boxTerm.termSelect(boxTerm.editText.toString())
+
+//__________________________________________________________________________________
+            signal termSelect(string term)
+            onCurrentTextChanged: boxTerm.termSelect(model[currentIndex])
+
+            inputMethodHints: Qt.ImhNoAutoUppercase
+            style: ComboBoxStyle {
+                background: Rectangle {
+                    radius: 3
+                    color: "#f0c150"
+                }
+                label: Text {
+                    renderType: Text.NativeRendering
+                    font.bold: true
+                    color: "black"
+                    text: control.currentIndex===-1?"Term":control.currentText
+                }
+            }
+        }
+
+        ComboBox {
+            id: boxSubject
+            width: parent.width
+            height: boxHeight
+
+            anchors.top: boxTerm.bottom
+            anchors.topMargin: 25
+
+            anchors.horizontalCenter: parent.horizontalCenter
+            objectName: "boxSubject"
+            Component.onCompleted: currentIndex = -1
+
+            signal subjectSelect(string subject)
+            onCurrentTextChanged: boxSubject.subjectSelect(model[currentIndex])
+
+            style: ComboBoxStyle {
+                    background: Rectangle {
+                        radius: 3
+                        color: "#f0c150"
+                    }
+                    label: Text {
+                        renderType: Text.NativeRendering
+                        font.bold: true
+                        color: "black"
+                        text: control.currentIndex===-1?"Subject":control.currentText
+                    }
+            }
+        }
+
+        ComboBox {
+            id: boxTheme
+            width: parent.width
+            height: boxHeight
+
+            anchors.top: boxSubject.bottom
+            anchors.topMargin: 25
+
+            anchors.horizontalCenter: parent.horizontalCenter
+            objectName: "boxTheme"
+            Component.onCompleted: currentIndex = -1
+
+            signal themeSelect(string theme)
+            onCurrentTextChanged: boxTheme.themeSelect(model[currentIndex])
+
+            style: ComboBoxStyle {
+                background: Rectangle {
+                    radius: 3
+                    color: "#f0c150"
+                }
+                label: Text {
+                    renderType: Text.NativeRendering
+                    color: "black"
+                    font.bold: true
+                    text:
+                        control.currentIndex===-1?"Theme":control.currentText
+                }
+            }
+        }
+
+        Button {
+            id: saveList
+            width: parent.width * 3 / 4
+            height: 25
+            objectName: "buttonSave"
+            text:"ADD"
+            style:  ButtonStyle {
+                background: Rectangle{
+                    color: control.pressed ? "#f0b050"  : "#f0c150"
+                    radius: 3
+                }
+                label: Text {
+                    renderType: Text.NativeRendering
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignHCenter
+                    font.bold: true
+                    color: "black"
+                    text: control.text
+                }
+            }
+//                anchors.top: boxTheme.bottom
+//                anchors.topMargin: 25
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: saveList.pressed ? verticalNotPressed-addPressed : verticalNotPressed
+            anchors.horizontalCenter: parent.horizontalCenter
+        }
+//        }
+        DropShadow {
+            anchors.fill: saveList
+            source: saveList
+            color: "#50000000"
+            horizontalOffset: saveList.pressed ? shadowOffset-addPressed : shadowOffset
+            verticalOffset: saveList.pressed ? shadowOffset-addPressed : shadowOffset
+            radius: saveList.hovered ? rOffShadowNotPressed+8 : rOffShadowNotPressed
+            samples: 17
+        }
+
+        DropShadow {
+            id: dropShadowTerm
+            anchors.fill: boxTerm
+            source: boxTerm
+            color: "#50000000"
+            horizontalOffset: 3
+            verticalOffset: 3
+            radius: 8
+            samples: 17
+        }
+        DropShadow {
+            id: dropShadowSubject
+            anchors.fill: boxSubject
+            source: boxSubject
+            color: "#50000000"
+            horizontalOffset: 3
+            verticalOffset: 3
+            radius: 8
+            samples: 17
+        }
+        DropShadow {
+            id: dropShadowTheme
+            anchors.fill: boxTheme
+            source: boxTheme
+            color: "#50000000"
+            horizontalOffset: 3
+            verticalOffset: 3
+            radius: 8
+            samples: 17
+        }
+
+        states: [
+            State {
+                name: "open"
+                PropertyChanges { target: rootShow; anchors.rightMargin: panelWidth; topBarSpacing: 5;
+                    iconSize: rootShow.width > 766 ? iconSize : (5 * rootShow.width + 460) / 143 }
+            }
+        ]
+
+        transitions: [
+            Transition {
+                NumberAnimation {
+                    duration: 200;
+                    properties: "anchors.rightMargin,topBarSpacing,iconSize"
+                }
+            }
+        ]
     }
 }
