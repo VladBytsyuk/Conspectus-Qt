@@ -30,6 +30,12 @@ Item {
     signal greyscaled(string name)
     signal deleted(string name)
     signal updateViewForm()
+    signal imageSet(string name)
+
+    function clearTagsComments() {
+        tagField.text = "";
+        commentField.text = "";
+    }
 
     Component {
         id: buttonStyle
@@ -397,12 +403,16 @@ Item {
         mainImage.source = "image://sourceDir/" + path;
         current_image_name = path;
         setNaturalSize();
+
+        rootShow.imageSet(current_image_name);
     }
 
     function reloadImage() {
         mainImage.source = "";
         mainImage.source = "image://sourceDir/" + current_image_name;
         setNaturalSize();
+
+        rootShow.imageSet(current_image_name);
     }
 
     function setNaturalSize() {
@@ -439,7 +449,6 @@ Item {
             anchors.top: tagTitle.bottom
 
             signal tagChanged(string file_name, string new_tag)
-            onTextChanged: tagField.tagChanged(current_image_name, tagField.text)
         }
 
         Text {
@@ -455,11 +464,26 @@ Item {
             id: commentField
             objectName: "commentField"
             width: parent.width
-            height: 250
+            height: 210
             anchors.top: commentTitle.bottom
 
             signal commentChanged(string file_name, string new_comment)
-            onTextChanged: commentField.commentChanged(current_image_name, commentField.text)
+        }
+
+        Button {
+            id: saveTagsComments
+            objectName: "saveTagsComments"
+            width: parent.width
+            height: 25
+            anchors.top: commentField.bottom
+            anchors.topMargin: 15
+
+            text: "Save"
+
+            onClicked: {
+                tagField.tagChanged(current_image_name, tagField.text);
+                commentField.commentChanged(current_image_name, commentField.text);
+            }
         }
 
 //        Column {
@@ -476,7 +500,7 @@ Item {
             width: parent.width
             height: boxHeight
 
-            anchors.top: commentField.bottom
+            anchors.top: saveTagsComments.bottom
             anchors.topMargin: 30
 
             anchors.horizontalCenter: parent.horizontalCenter

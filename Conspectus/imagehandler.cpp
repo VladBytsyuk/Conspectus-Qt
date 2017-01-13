@@ -133,6 +133,26 @@ bool ImageHandler::onCommentChanged(QString file_name, QString comments) {
     return true;
 }
 
+bool ImageHandler::onSetImagePath(QString file_name) {
+    mPath = file_name;
+    QString tag = "";
+    QString comment = "";
+    QStandardItemModel* model = ConspectModel::getListModel();
+    int row = model->rowCount();
+    for (int i = 0; i < row; ++i) {
+        QModelIndex nameIndex = model->index(i, 1);
+        if (nameIndex.data().toString() == file_name) {
+            QModelIndex tagIndex = model->index(i, 2);
+            QModelIndex commentIndex = model->index(i, 3);
+            tag = tagIndex.data().toString();
+            comment = commentIndex.data().toString();
+        }
+    }
+    mView->findChild<QObject*>("tagField")->setProperty("text", tag);
+    mView->findChild<QObject*>("commentField")->setProperty("text", comment);
+    return true;
+}
+
 void ImageHandler::onForm() {
     FormHandler::onForm();
 }

@@ -11,6 +11,7 @@ private:
     int mTerm;
     QString mSubject;
     QString mTheme;
+    QString mPath;
 
     QPixmap rotate(const QPixmap & img, int degree);
     QPixmap greyscale(const QPixmap & img);
@@ -30,6 +31,7 @@ public slots:
     bool onDelete(QString name);
     bool onTagChanged(QString file_name, QString tags);
     bool onCommentChanged(QString file_name, QString comment);
+    bool onSetImagePath(QString file_name);
 
     void onForm();
     void onOkClicked(QString file_path);

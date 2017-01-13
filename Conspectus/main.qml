@@ -85,6 +85,7 @@ ApplicationWindow {
         visible: false
 
         signal showFormSignal()
+        signal closeImage()
 
         function showShowForm(string) {
             viewForm.visible = false
@@ -93,7 +94,10 @@ ApplicationWindow {
             showForm.visible = true
             showFormSignal();
         }
-        buttonCancel.onClicked: viewForm.showViewForm()
+        buttonCancel.onClicked: {
+            viewForm.showViewForm();
+            showForm.clearTagsComments();
+        }
     }
 
 }

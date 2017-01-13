@@ -196,6 +196,9 @@ int main(int argc, char *argv[])
                      ->findChild<QObject*>("showForm")
                      ->findChild<QObject*>("commentField"), SIGNAL(commentChanged(QString, QString)),
                      &image_handler, SLOT(onCommentChanged(QString, QString)));
+    QObject::connect(engine.rootObjects().at(0)
+                     ->findChild<QObject*>("showForm"), SIGNAL(imageSet(QString)),
+                     &image_handler, SLOT(onSetImagePath(QString)));
 
     app.exec();
 
