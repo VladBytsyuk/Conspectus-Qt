@@ -398,6 +398,53 @@ Item {
         font.bold: true
     }
 
+    Text {
+        width: boxWidth
+        height: boxHeight
+        anchors.right: boxTerm.left
+        anchors.rightMargin: 10
+        anchors.verticalCenterOffset: -30
+        anchors.verticalCenter: parent.verticalCenter
+
+        horizontalAlignment: TextInput.AlignRight
+        verticalAlignment: TextInput.AlignVCenter
+
+        text: "Term"
+        color: "#9f0000" //"#696EBD"
+        font.pixelSize: 12
+    }
+
+    Text {
+        width: boxWidth
+        height: boxHeight
+        anchors.right: boxSubject.left
+        anchors.rightMargin: 10
+        anchors.verticalCenterOffset: 10
+        anchors.verticalCenter: parent.verticalCenter
+
+        horizontalAlignment: TextInput.AlignRight
+        verticalAlignment: TextInput.AlignVCenter
+
+        text: "Subject"
+        color: "#af0000" //"#697BBD"
+        font.pixelSize: 12
+    }
+
+    Text {
+        width: boxWidth
+        height: boxHeight
+        anchors.right: boxTheme.left
+        anchors.rightMargin: 10
+        anchors.verticalCenterOffset: 50
+        anchors.verticalCenter: parent.verticalCenter
+
+        horizontalAlignment: TextInput.AlignRight
+        verticalAlignment: TextInput.AlignVCenter
+        text: "Theme"
+        color: "#bf0000" //"#6988BD"
+        font.pixelSize: 12
+    }
+
     Canvas{
         id: arrow
 //        imageLoaded: "assets/comboBox_arrow.png"
