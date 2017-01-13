@@ -199,6 +199,18 @@ bool FormHandler::clearComboBoxes() {
     return true;
 }
 
+bool FormHandler::fillComboBoxes(int term, QString subject, QString theme) {
+    QVariant empty;
+    QMetaObject::invokeMethod(mView, "emitTermSelect", Q_RETURN_ARG(QVariant, empty),
+                                      Q_ARG(QVariant, QString::number(term)));
+    QMetaObject::invokeMethod(mView, "emitSubjectSelect", Q_RETURN_ARG(QVariant, empty),
+                                      Q_ARG(QVariant, subject));
+    QMetaObject::invokeMethod(mView, "emitThemeSelect", Q_RETURN_ARG(QVariant, empty),
+                                      Q_ARG(QVariant, theme));
+
+    return true;
+}
+
 void FormHandler::onForm() {
     if (mCurrentTerm < 1) {
         this->setTerms();
@@ -206,5 +218,7 @@ void FormHandler::onForm() {
         this->setSubjects(mCurrentTerm);
     } else if (mCurrentTheme == ""){
         this->setThemes(mCurrentTerm, mCurrentSubject);
+    } else {
+        this->fillComboBoxes(mCurrentTerm, mCurrentSubject, mCurrentTheme);
     }
 }

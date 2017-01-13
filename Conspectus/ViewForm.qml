@@ -19,6 +19,11 @@ Item {
     property alias buttonCancel: buttonCancel
 
     //forced emit subjectSelect signal
+    function emitTermSelect(term) {
+        boxTerm.termSelect(term);
+    }
+
+    //forced emit subjectSelect signal
     function emitSubjectSelect(subject) {
         boxSubject.subjectSelect(subject);
     }
