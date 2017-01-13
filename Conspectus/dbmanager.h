@@ -77,6 +77,10 @@ public:
 
 public slots:
     void onInsertFileIntoListTable(int id, QString file_name);
+    void onInsertFileIntoListTableWithInfo(int list_id,
+                                           QString file_name,
+                                           QString tags,
+                                           QString comments);
 	void onRemoveFile(QString file_name);
 
     void onInsertListIntoConspectTable(int id,

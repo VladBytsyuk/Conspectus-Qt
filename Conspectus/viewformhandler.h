@@ -10,6 +10,7 @@ class ViewFormHandler : public FormHandler
 private:
     QMap<int, QString> getListIds(int term, QString subject, QString theme);
     QMap<int, QString> getFileNames(QMap<int, QString> &images);
+    QString getNameById(int list_id);
     bool invokeSetImages();
     void changeModelOrdering(int previous_index, int current_index);
     void reloadGridView();

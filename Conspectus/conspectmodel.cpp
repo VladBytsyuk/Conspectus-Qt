@@ -410,6 +410,36 @@ bool ConspectModel::isImageUsed(int list_id) {
     return false;
 }
 
+void ConspectModel::changeTag(int list_id, QString file_name, QString tag) {
+    int row_count = mListsModel->rowCount();
+    QString comment = "";
+    for (int i = 0; i < row_count; ++i) {
+        QModelIndex idIndex = mListsModel->index(i, 0);
+        if (idIndex.data().toInt() == list_id) {
+            QModelIndex tagIndex = mListsModel->index(i, 2);
+            mListsModel->setData(tagIndex, tag);
+            QModelIndex commentIndex = mListsModel->index(i, 3);
+            comment = commentIndex.data().toString();
+        }
+    }
+    emit insertListTableDBSignal(list_id, file_name, tag, comment);
+}
+
+void ConspectModel::changeComment(int list_id, QString file_name, QString comment) {
+    int row_count = mListsModel->rowCount();
+    QString tag = "";
+    for (int i = 0; i < row_count; ++i) {
+        QModelIndex idIndex = mListsModel->index(i, 0);
+        if (idIndex.data().toInt() == list_id) {
+            QModelIndex commentIndex = mListsModel->index(i, 3);
+            mListsModel->setData(commentIndex, comment);
+            QModelIndex tagIndex = mListsModel->index(i, 2);
+            tag = tagIndex.data().toString();
+        }
+    }
+    emit insertListTableDBSignal(list_id, file_name, tag, comment);
+}
+
 void ConspectModel::onRemoveList(int term, QString subject, QString theme, QString file_name) {
     deleteList(term, subject, theme, file_name);
     logConspectModel();
@@ -487,6 +517,21 @@ void ConspectModel::onChangeOrdering(int term, QString subject, QString theme, i
         }
     }
     logConspectModel();
+}
+
+void ConspectModel::onAddListToAnotherPath(int term, QString subject, QString theme, QString file_name) {
+    int list_id = getListId(file_name);
+    insertIntoConspectModel(list_id, term, subject, theme);
+}
+
+void ConspectModel::onChangeTag(QString file_name, QString tag) {
+    int list_id = getListId(file_name);
+    changeTag(list_id, file_name, tag);
+}
+
+void ConspectModel::onChangeComment(QString file_name, QString comment) {
+    int list_id = getListId(file_name);
+    changeComment(list_id, file_name, comment);
 }
 
 /* ================= Fields initialization ================= */
