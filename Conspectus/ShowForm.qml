@@ -24,13 +24,13 @@ Item {
     property alias buttonCancel: buttonCancel
 
     property string current_image_name: ""
-    signal turnedLeft(string name)
-    signal turnedRight(string name)
+    signal turnedLeft(int index, string name)
+    signal turnedRight(int index, string name)
     signal printed(string name)
-    signal greyscaled(string name)
+    signal greyscaled(int index, string name)
     signal deleted(string name)
     signal updateViewForm()
-    signal imageSet(string name)
+    signal imageSet(int index, string name)
 
     function clearTagsComments() {
         tagField.text = "";
@@ -206,7 +206,7 @@ Item {
                         smooth: true
                         antialiasing: true
                     }
-                    onClicked: showForm.turnedLeft(current_image_name)
+                    onClicked: showForm.turnedLeft(viewForm.getCurrentIndex(), current_image_name)
                 }
 
                 Image {
@@ -248,7 +248,7 @@ Item {
                         anchors.fill: parent
                         fillMode: Image.PreserveAspectFit
                     }
-                    onClicked: showForm.turnedRight(current_image_name)
+                    onClicked: showForm.turnedRight(viewForm.getCurrentIndex(), current_image_name)
                 }
                 ToolButton{
                     id: toolButtonMoon
@@ -259,7 +259,7 @@ Item {
                         anchors.fill: parent
                         fillMode: Image.PreserveAspectFit
                     }
-                    onClicked: showForm.greyscaled(current_image_name)
+                    onClicked: showForm.greyscaled(viewForm.getCurrentIndex(), current_image_name)
                 }
                 ToolButton{
                     id: toolButtonGarbage
@@ -402,7 +402,7 @@ Item {
         current_image_name = path;
         setNaturalSize();
 
-        rootShow.imageSet(current_image_name);
+        rootShow.imageSet(viewForm.getCurrentIndex(), current_image_name);
     }
 
     function reloadImage() {
@@ -410,7 +410,7 @@ Item {
         mainImage.source = "image://sourceDir/" + current_image_name;
         setNaturalSize();
 
-        rootShow.imageSet(current_image_name);
+        rootShow.imageSet(viewForm.getCurrentIndex(), current_image_name);
     }
 
     function setNaturalSize() {

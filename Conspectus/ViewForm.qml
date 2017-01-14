@@ -431,8 +431,9 @@ Item {
    } //End bottom bar
 
    function setNextImage() {
+       console.log(root.currentIndex + 1);
+
        if (root.currentIndex + 1 != root.count) {
-           //console.log(root.currentIndex + 1);
            var nextImg = listModel.get(root.currentIndex + 1).src;
            root.currentIndex = root.currentIndex + 1;
            if (root.currentIndex - 1 != -1 && root.currentIndex + 1 != root.count) {
@@ -448,8 +449,9 @@ Item {
    }
 
    function setPreviousImage() {
+       console.log(root.currentIndex - 1);
+
        if (root.currentIndex - 1 != -1) {
-           //console.log(root.currentIndex - 1);
            var prevImg = listModel.get(root.currentIndex - 1).src;
            root.currentIndex = root.currentIndex - 1;
            if (root.currentIndex - 1 != -1 && root.currentIndex + 1 != root.count) {
@@ -462,5 +464,9 @@ Item {
                showForm.setSource(prevImg, false, false);
            }
        }
+   }
+
+   function getCurrentIndex() {
+       return root.currentIndex;
    }
 }

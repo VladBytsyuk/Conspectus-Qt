@@ -112,6 +112,7 @@ void ViewFormHandler::changeModelOrdering(int previous_index, int current_index)
 void ViewFormHandler::reloadGridView() {
     clearViewsFromView();
     invokeSetImages();
+    mView->findChild<QObject*>("gridView")->setProperty("currentIndex", mIndex);
 }
 
 void ViewFormHandler::onOrderChanged(int previous_index, int current_index) {
@@ -120,7 +121,8 @@ void ViewFormHandler::onOrderChanged(int previous_index, int current_index) {
     qDebug(logDebug()) << "Model has been updated";
 }
 
-void ViewFormHandler::onUpdateImage(QString name) {
+void ViewFormHandler::onUpdateImage(int index, QString name) {
+    mIndex = index;
     reloadGridView();
     qDebug(logDebug()) << "Model has been updated";
 }
@@ -133,6 +135,10 @@ void ViewFormHandler::onUpdateView() {
         clearComboBoxes();
     }
     onForm();
+}
+
+void ViewFormHandler::onSetGridViewIndex(int index) {
+    mIndex = index;
 }
 
 void ViewFormHandler::onSetPath() {

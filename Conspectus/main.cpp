@@ -97,6 +97,8 @@ int main(int argc, char *argv[])
                      conspectModel, &ConspectModel::onChangeTag);
     QObject::connect(&image_handler, &ImageHandler::changeComment,
                      conspectModel, &ConspectModel::onChangeComment);
+    QObject::connect(&image_handler, &ImageHandler::setGridViewIndex,
+                     &view_form, &ViewFormHandler::onSetGridViewIndex);
 
     //ViewForm connections
     QObject::connect(engine.rootObjects().at(0)
@@ -147,20 +149,20 @@ int main(int argc, char *argv[])
     //ShowForm connections
     //Turn left
     QObject::connect(engine.rootObjects().at(0)
-                     ->findChild<QObject*>("showForm"), SIGNAL(turnedLeft(QString)),
-                     &image_handler, SLOT(onTurnLeft(QString)));
+                     ->findChild<QObject*>("showForm"), SIGNAL(turnedLeft(int, QString)),
+                     &image_handler, SLOT(onTurnLeft(int, QString)));
     //Turn right
     QObject::connect(engine.rootObjects().at(0)
-                     ->findChild<QObject*>("showForm"), SIGNAL(turnedRight(QString)),
-                     &image_handler, SLOT(onTurnRight(QString)));
+                     ->findChild<QObject*>("showForm"), SIGNAL(turnedRight(int, QString)),
+                     &image_handler, SLOT(onTurnRight(int, QString)));
     //Print
     QObject::connect(engine.rootObjects().at(0)
                      ->findChild<QObject*>("showForm"), SIGNAL(printed(QString)),
                      &image_handler, SLOT(onPrint(QString)));
     //Greyscaled
     QObject::connect(engine.rootObjects().at(0)
-                     ->findChild<QObject*>("showForm"), SIGNAL(greyscaled(QString)),
-                     &image_handler, SLOT(onGreyscale(QString)));
+                     ->findChild<QObject*>("showForm"), SIGNAL(greyscaled(int, QString)),
+                     &image_handler, SLOT(onGreyscale(int, QString)));
     //Deleted
     QObject::connect(engine.rootObjects().at(0)
                      ->findChild<QObject*>("showForm"), SIGNAL(deleted(QString)),
@@ -197,8 +199,8 @@ int main(int argc, char *argv[])
                      ->findChild<QObject*>("commentField"), SIGNAL(commentChanged(QString, QString)),
                      &image_handler, SLOT(onCommentChanged(QString, QString)));
     QObject::connect(engine.rootObjects().at(0)
-                     ->findChild<QObject*>("showForm"), SIGNAL(imageSet(QString)),
-                     &image_handler, SLOT(onSetImagePath(QString)));
+                     ->findChild<QObject*>("showForm"), SIGNAL(imageSet(int, QString)),
+                     &image_handler, SLOT(onSetImagePath(int, QString)));
 
     app.exec();
 

@@ -14,7 +14,7 @@ ImageHandler::ImageHandler(QObject* view) {
 
 ImageHandler::~ImageHandler(){}
 
-bool ImageHandler::onTurnLeft(QString name) {
+bool ImageHandler::onTurnLeft(int index, QString name) {
     FileManager fm;
     QPixmap img = fm.getImage(name);
     QPixmap img_preview = fm.getImagePreview(name);
@@ -28,11 +28,11 @@ bool ImageHandler::onTurnLeft(QString name) {
 
     qDebug(logDebug()) << "Image" << name << "has been rotated to the left";
     updateQmlImage();
-    emit imageUpdated(name);
+    emit imageUpdated(index, name);
     return true;
 }
 
-bool ImageHandler::onTurnRight(QString name) {
+bool ImageHandler::onTurnRight(int index, QString name) {
     FileManager fm;
     QPixmap img = fm.getImage(name);
     QPixmap img_preview = fm.getImagePreview(name);
@@ -46,7 +46,7 @@ bool ImageHandler::onTurnRight(QString name) {
 
     qDebug(logDebug()) << "Image" << name << "has been rotated to the right";
     updateQmlImage();
-    emit imageUpdated(name);
+    emit imageUpdated(index, name);
     return true;
 }
 
@@ -65,7 +65,7 @@ bool ImageHandler::onPrint(QString name) {
     return true;
 }
 
-bool ImageHandler::onGreyscale(QString name) {
+bool ImageHandler::onGreyscale(int index, QString name) {
     FileManager fm;
     QPixmap img = fm.getImage(name);
     QPixmap img_preview = fm.getImagePreview(name);
@@ -79,7 +79,7 @@ bool ImageHandler::onGreyscale(QString name) {
 
     qDebug(logDebug()) << "Image" << name << "has been grayscaled";
     updateQmlImage();
-    emit imageUpdated(name);
+    emit imageUpdated(index, name);
     return true;
 }
 
@@ -133,7 +133,7 @@ bool ImageHandler::onCommentChanged(QString file_name, QString comments) {
     return true;
 }
 
-bool ImageHandler::onSetImagePath(QString file_name) {
+bool ImageHandler::onSetImagePath(int index, QString file_name) {
     mPath = file_name;
     QString tag = "";
     QString comment = "";
@@ -150,6 +150,7 @@ bool ImageHandler::onSetImagePath(QString file_name) {
     }
     mView->findChild<QObject*>("tagField")->setProperty("text", tag);
     mView->findChild<QObject*>("commentField")->setProperty("text", comment);
+    emit setGridViewIndex(index);
     return true;
 }
 
