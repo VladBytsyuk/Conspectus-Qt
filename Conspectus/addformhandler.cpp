@@ -30,3 +30,7 @@ void AddFormHandler::onForm() {
     QObject *editText = mView->findChild<QObject*>("editText");
     editText->setProperty("text", "");
 }
+
+void AddFormHandler::onPathChange() {
+
+}

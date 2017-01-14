@@ -161,3 +161,7 @@ void ImageHandler::onForm() {
 void ImageHandler::onOkClicked(QString file_name) {
     emit addConspectListToAnotherPath(mCurrentTerm, mCurrentSubject, mCurrentTheme, file_name);
 }
+
+void ImageHandler::onPathChange() {
+
+}

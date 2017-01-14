@@ -7,6 +7,9 @@ class ImageHandler : public FormHandler
 {
     Q_OBJECT
 
+protected:
+    void onPathChange();
+
 private:
     int mTerm;
     QString mSubject;

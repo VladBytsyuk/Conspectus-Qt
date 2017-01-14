@@ -13,6 +13,7 @@ bool FormHandler::setTerms() {
         mCurrentTerm = -1;
         mCurrentSubject = "";
         mCurrentTheme = "";
+        onPathChange();
 
         clearComboBox(mView->findChild<QObject*>("boxTerm"));
         clearComboBox(mView->findChild<QObject*>("boxSubject"));
@@ -50,6 +51,7 @@ bool FormHandler::setSubjects(int term) {
             mCurrentTheme = "";
             clearComboBox(boxSubject);
             clearComboBox(mView->findChild<QObject*>("boxTheme"));
+            onPathChange();
         } else {
             qWarning(logWarning()) << "Can't find ComboBox boxSubject";
             return false;
@@ -105,6 +107,7 @@ bool FormHandler::setThemes(int term, QString subject) {
         if (boxTheme) {
             mCurrentTheme = "";
             clearComboBox(boxTheme);
+            onPathChange();
         } else {
             qWarning(logWarning()) << "Can't find ComboBox boxTheme";
             return false;
@@ -118,6 +121,7 @@ bool FormHandler::setThemes(int term, QString subject) {
         if (boxTheme) {
             mCurrentTheme = "";
             clearComboBox(boxTheme);
+            onPathChange();
         } else {
             qWarning(logWarning()) << "Can't find ComboBox boxTheme";
             return false;
@@ -166,6 +170,7 @@ int FormHandler::getSubjectRowInModel(int term_row, QString subject) {
 }
 
 void FormHandler::onSetTerm(QString term) {
+    if (term != QString::number(mCurrentTerm)) onPathChange();
     mCurrentTerm = term.toInt();
     this->setSubjects(mCurrentTerm);
     if (forcedUpdateSubject) {
@@ -177,6 +182,7 @@ void FormHandler::onSetTerm(QString term) {
 }
 
 void FormHandler::onSetSubject(QString subject) {
+    if (subject != mCurrentSubject) onPathChange();
     mCurrentSubject = subject;
     this->setThemes(mCurrentTerm, mCurrentSubject);
     if (forcedUpdateTheme) {
@@ -189,6 +195,7 @@ void FormHandler::onSetSubject(QString subject) {
 
 
 void FormHandler::onSetTheme(QString theme) {
+    if (theme != mCurrentTheme) onPathChange();
     mCurrentTheme = theme;
 }
 
@@ -209,13 +216,6 @@ bool FormHandler::clearComboBoxes() {
 }
 
 bool FormHandler::fillComboBoxes(int term, QString subject, QString theme) {
-//    QVariant empty;
-//    QMetaObject::invokeMethod(mView, "emitTermSelect", Q_RETURN_ARG(QVariant, empty),
-//                                      Q_ARG(QVariant, QString::number(term)));
-//    QMetaObject::invokeMethod(mView, "emitSubjectSelect", Q_RETURN_ARG(QVariant, empty),
-//                                      Q_ARG(QVariant, subject));
-//    QMetaObject::invokeMethod(mView, "emitThemeSelect", Q_RETURN_ARG(QVariant, empty),
-//                                      Q_ARG(QVariant, theme));
     setTerms();
     onSetTerm(QString::number(mCurrentTerm));
 

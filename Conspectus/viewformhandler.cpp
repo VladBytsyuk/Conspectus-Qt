@@ -132,6 +132,7 @@ void ViewFormHandler::onUpdateView() {
         mCurrentTerm = -1;
         mCurrentSubject = "";
         mCurrentTheme = "";
+        onPathChange();
         clearComboBoxes();
     }
     onForm();
@@ -145,7 +146,13 @@ void ViewFormHandler::onSetPath() {
     emit setPathToList(mCurrentTerm, mCurrentSubject, mCurrentTheme);
 }
 
+
+
 void ViewFormHandler::onForm() {
     FormHandler::onForm();
     reloadGridView();
+}
+
+void ViewFormHandler::onPathChange() {
+    mIndex = 0;
 }

@@ -7,6 +7,9 @@ class ViewFormHandler : public FormHandler
 {
     Q_OBJECT
 
+protected:
+    void onPathChange();
+
 private:
     int mIndex;
 

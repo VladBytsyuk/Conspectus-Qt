@@ -26,6 +26,7 @@ protected:
     void clearComboBox(QObject* view);
     bool clearComboBoxes();
     bool fillComboBoxes(int term, QString subject, QString theme);
+    virtual void onPathChange() = 0;
 
 public:
     bool setTerms();

@@ -446,6 +446,11 @@ Item {
             height: 100
             anchors.top: tagTitle.bottom
 
+            placeholderText: qsTr("Write your tags here")
+            inputMethodHints: Qt.ImhNoAutoUppercase
+
+
+
             signal tagChanged(string file_name, string new_tag)
         }
 
@@ -464,6 +469,9 @@ Item {
             width: parent.width
             height: 210
             anchors.top: commentTitle.bottom
+
+            placeholderText: qsTr("Write your comments here")
+            inputMethodHints: Qt.ImhNoAutoUppercase
 
             signal commentChanged(string file_name, string new_comment)
         }
