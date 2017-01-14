@@ -15,6 +15,7 @@ Item {
     property int horizontalNotPressed: 135
     property int rOffShadowNotPressed: 8
     property int addPressed: 2
+    property string textColor: "#263238"
 
     function unHighLight() {
         rectTextField.state = ""
@@ -280,7 +281,7 @@ Item {
                 label: Text {                    
                     renderType: Text.NativeRendering
                     font.bold: true
-                    color: "black"
+                    color: textColor
                     text: control.currentIndex===-1?"Term":
                           control.currentText
                 }
@@ -320,7 +321,7 @@ Item {
                 label: Text {
                     //renderType: Text.NativeRendering
                     font.bold: true
-                    color: "black"
+                    color: textColor
                     text: control.currentIndex===-1?"Subject":control.currentText
                 }
         }
@@ -398,12 +399,13 @@ Item {
     }
     Text {
         id: title
-        text: "CONSPECTUS"
+        text: "ADD LIST"
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenterOffset: -150
         anchors.verticalCenter: parent.verticalCenter
         font.pixelSize: 32
         font.bold: true
+        color: textColor
     }
 
     Text {
@@ -418,8 +420,10 @@ Item {
         verticalAlignment: TextInput.AlignVCenter
 
         text: "Term"
-        color: "#9f0000" //"#696EBD"
+        color: textColor
         font.pixelSize: 12
+        font.family: "Helvetica"
+
     }
 
     Text {
@@ -434,8 +438,9 @@ Item {
         verticalAlignment: TextInput.AlignVCenter
 
         text: "Subject"
-        color: "#af0000" //"#697BBD"
+        color: textColor
         font.pixelSize: 12
+        font.family: "Helvetica"
     }
 
     Text {
@@ -449,24 +454,8 @@ Item {
         horizontalAlignment: TextInput.AlignRight
         verticalAlignment: TextInput.AlignVCenter
         text: "Theme"
-        color: "#bf0000" //"#6988BD"
+        color: textColor
+        font.family: "Helvetica"
         font.pixelSize: 12
     }
-
-    Canvas{
-        id: arrow
-//        imageLoaded: "assets/comboBox_arrow.png"
-        width: 25
-        height: 25
-//        onPaint: {
-//            var ctx = getContext("2d")
-//            ctx.beginPath();
-//            ctx.moveTo(x + 5, y + 10);
-//            ctx.lineTo(x + 15, y + 10);
-//            ctx.lineTo(x + 10, y + 15);
-//            ctx.fill();
-//        }
-    }
-
-
 }

@@ -97,6 +97,7 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
         font.pixelSize: 32
         font.bold: true
+        color: "#263238"
     }
 
 //    DropShadow {

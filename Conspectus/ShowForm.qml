@@ -19,7 +19,8 @@ Item {
     property int addPressed: 2
     property int iconSize: 30
     property int topBarSpacing: 15
-    property int panelWidth: 160
+    property int panelWidth: 160    
+    property string textColor: "#263238"
 
     property alias buttonCancel: buttonCancel
 
@@ -439,6 +440,7 @@ Item {
             anchors.top: parent.top
             text: "Tags:"
             font.pointSize: 12
+            color: textColor
         }
 
         TextField {
@@ -458,6 +460,7 @@ Item {
             anchors.top: tagField.bottom
             text: "Commentaries:"
             font.pointSize: 12
+            color: textColor
         }
 
         TextField {
@@ -486,15 +489,6 @@ Item {
             }
         }
 
-//        Column {
-//            id: boxesColumn
-//            width: parent.width
-//            height: parent.height - tagTitle.height - tagField.height - commentTitle.height - commentField.height
-//            anchors.top: commentField.bottom
-//            anchors.topMargin: 30
-
-//            spacing: 20
-
         ComboBox {
             id: boxTerm
             width: parent.width
@@ -508,19 +502,7 @@ Item {
             Component.onCompleted: {
                 currentIndex = -1
             }
-//________________________________________________________________________________
-//                states: State {
-//                    name: "highlight"
-//                    PropertyChanges {target: dropShadowTerm; color: "#9f0000";
-//                                     horizontalOffset: 0; verticalOffset: 0;}
-//                }
 
-//                editable: true
-//                //onCurrentTextChanged: boxTerm.termSelect(model[currentIndex])
-//                onEditTextChanged: boxTerm.termSelect(boxTerm.editText.toString())
-
-//__________________________________________________________________________________
-            signal termSelect(string term)
             onCurrentTextChanged: boxTerm.termSelect(model[currentIndex])
 
             inputMethodHints: Qt.ImhNoAutoUppercase
@@ -532,7 +514,7 @@ Item {
                 label: Text {
                     renderType: Text.NativeRendering
                     font.bold: true
-                    color: "black"
+                    color: textColor
                     text: control.currentIndex===-1?"Term":control.currentText
                 }
             }
@@ -561,7 +543,7 @@ Item {
                     label: Text {
                         renderType: Text.NativeRendering
                         font.bold: true
-                        color: "black"
+                        color: textColor
                         text: control.currentIndex===-1?"Subject":control.currentText
                     }
             }
@@ -589,7 +571,7 @@ Item {
                 }
                 label: Text {
                     renderType: Text.NativeRendering
-                    color: "black"
+                    color: textColor
                     font.bold: true
                     text:
                         control.currentIndex===-1?"Theme":control.currentText
@@ -627,7 +609,7 @@ Item {
             anchors.bottomMargin: saveList.pressed ? verticalNotPressed-addPressed : verticalNotPressed
             anchors.horizontalCenter: parent.horizontalCenter
         }
-//        }
+
         DropShadow {
             anchors.fill: saveList
             source: saveList
