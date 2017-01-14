@@ -1,5 +1,11 @@
 #include "formhandler.h"
 
+void FormHandler::clearComboBox(QObject* view) {
+    QStringList emptyModel;
+    view->setProperty("model", emptyModel);
+    view->setProperty("currentIndex", -1);
+}
+
 bool FormHandler::setTerms() {
     QStandardItemModel* conspectModel = ConspectModel::getConspectModel();
     int terms_count = conspectModel->rowCount();
@@ -7,6 +13,11 @@ bool FormHandler::setTerms() {
         mCurrentTerm = -1;
         mCurrentSubject = "";
         mCurrentTheme = "";
+
+        clearComboBox(mView->findChild<QObject*>("boxTerm"));
+        clearComboBox(mView->findChild<QObject*>("boxSubject"));
+        clearComboBox(mView->findChild<QObject*>("boxTheme"));
+
         qDebug(logDebug()) << "Terms count = 0";
         return false;
     }
@@ -37,8 +48,8 @@ bool FormHandler::setSubjects(int term) {
         if (boxSubject) {
             mCurrentSubject = "";
             mCurrentTheme = "";
-            boxSubject->setProperty("model", subjects);
-            boxSubject->setProperty("currentIndex", -1);
+            clearComboBox(boxSubject);
+            clearComboBox(mView->findChild<QObject*>("boxTheme"));
         } else {
             qWarning(logWarning()) << "Can't find ComboBox boxSubject";
             return false;
@@ -93,8 +104,7 @@ bool FormHandler::setThemes(int term, QString subject) {
         QObject *boxTheme = mView->findChild<QObject*>("boxTheme");
         if (boxTheme) {
             mCurrentTheme = "";
-            boxTheme->setProperty("model", themes);
-            boxTheme->setProperty("currentIndex", -1);
+            clearComboBox(boxTheme);
         } else {
             qWarning(logWarning()) << "Can't find ComboBox boxTheme";
             return false;
@@ -107,8 +117,7 @@ bool FormHandler::setThemes(int term, QString subject) {
         QObject *boxTheme = mView->findChild<QObject*>("boxTheme");
         if (boxTheme) {
             mCurrentTheme = "";
-            boxTheme->setProperty("model", themes);
-            boxTheme->setProperty("currentIndex", -1);
+            clearComboBox(boxTheme);
         } else {
             qWarning(logWarning()) << "Can't find ComboBox boxTheme";
             return false;

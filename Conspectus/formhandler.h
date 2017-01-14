@@ -23,6 +23,7 @@ protected:
     int getTermRowInModel(int term);
     int getSubjectRowInModel(int term_row, QString subject);
 
+    void clearComboBox(QObject* view);
     bool clearComboBoxes();
     bool fillComboBoxes(int term, QString subject, QString theme);
 
