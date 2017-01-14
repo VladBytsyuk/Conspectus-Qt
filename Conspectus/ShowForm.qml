@@ -19,7 +19,8 @@ Item {
     property int addPressed: 2
     property int iconSize: 30
     property int topBarSpacing: 15
-    property int panelWidth: 160    
+    property int panelWidth: 160
+    property int textSize: 10
     property string textColor: "#263238"
 
     property alias buttonCancel: buttonCancel
@@ -50,7 +51,7 @@ Item {
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
                 font.family: "Helvetica"
-                font.pointSize: 12
+                font.pointSize: textSize + 2
                 font.bold: true
                 color: "white"
                 text: control.text
@@ -171,7 +172,7 @@ Item {
         anchors.leftMargin: 5
         anchors.rightMargin: 5
         //anchors.horizontalCenter: parent.horizontalCenter
-        border.color: "#6988bd"
+        //border.color: "#6988bd"
         color: "#006988bd"
         radius: 3
 
@@ -423,10 +424,6 @@ Item {
     }
 
 
-
-
-
-
     Item {
         id: panel
         width: panelWidth - 25
@@ -438,8 +435,9 @@ Item {
             height: 20
             width: parent.width
             anchors.top: parent.top
+            anchors.topMargin: 17
             text: "Tags:"
-            font.pointSize: 12
+            font.pointSize: textSize
             color: textColor
         }
 
@@ -447,7 +445,7 @@ Item {
             id: tagField
             objectName: "tagField"
             width: parent.width
-            height: 100
+            height: 80
             anchors.top: tagTitle.bottom
 
             signal tagChanged(string file_name, string new_tag)
@@ -458,8 +456,8 @@ Item {
             height: 20
             width: parent.width
             anchors.top: tagField.bottom
-            text: "Commentaries:"
-            font.pointSize: 12
+            text: "Comments:"
+            font.pointSize: textSize
             color: textColor
         }
 
@@ -467,7 +465,7 @@ Item {
             id: commentField
             objectName: "commentField"
             width: parent.width
-            height: 210
+            height: 180
             anchors.top: commentTitle.bottom
 
             signal commentChanged(string file_name, string new_comment)
@@ -476,17 +474,57 @@ Item {
         Button {
             id: saveTagsComments
             objectName: "saveTagsComments"
-            width: parent.width
+            width: parent.width * 3 / 4
             height: 25
             anchors.top: commentField.bottom
             anchors.topMargin: 15
 
-            text: "Save"
+            text: "SAVE"
+            style:  ButtonStyle {
+                background: Rectangle{
+                    //color: control.pressed ? "#f0b050"  : "#f0c150"
+                    color: control.pressed ? "#697BBD"  : "#6988bd"
+                    //color: control.pressed ? "#af0000" :"#889f0000"
+                    radius: 3
+                }
+                label: Text {
+                    renderType: Text.NativeRendering
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignHCenter
+                    font.bold: true
+                    font.pointSize: textSize - 1
+                    color: "white"
+                    text: control.text
+                }
+            }
 
             onClicked: {
                 tagField.tagChanged(current_image_name, tagField.text);
                 commentField.commentChanged(current_image_name, commentField.text);
             }
+
+            anchors.bottomMargin: saveTagsComments.pressed ? verticalNotPressed-addPressed : verticalNotPressed
+            anchors.horizontalCenter: parent.horizontalCenter
+        }
+        DropShadow {
+            anchors.fill: saveTagsComments
+            source: saveTagsComments
+            color: "#50000000"
+            horizontalOffset: saveTagsComments.pressed ? shadowOffset-addPressed : shadowOffset
+            verticalOffset: saveTagsComments.pressed ? shadowOffset-addPressed : shadowOffset
+            radius: saveTagsComments.hovered ? rOffShadowNotPressed+8 : rOffShadowNotPressed
+            samples: 17
+        }
+
+        Text {
+            id: addText
+            anchors.bottom: boxTerm.top
+            anchors.bottomMargin: 20
+            color: textColor
+            text: " Add this list to another\npart of the conspect:"
+            font.pointSize: textSize
+            horizontalAlignment: TextInput.AlignHCenter
+            verticalAlignment: TextInput.AlignVCenter
         }
 
         ComboBox {
@@ -494,15 +532,14 @@ Item {
             width: parent.width
             height: boxHeight
 
-            anchors.top: saveTagsComments.bottom
-            anchors.topMargin: 30
+            anchors.bottom: boxSubject.top
+            anchors.bottomMargin: 20
 
             anchors.horizontalCenter: parent.horizontalCenter
             objectName: "boxTerm"
-            Component.onCompleted: {
-                currentIndex = -1
-            }
+            Component.onCompleted: currentIndex = -1
 
+            signal termSelect(string term)
             onCurrentTextChanged: boxTerm.termSelect(model[currentIndex])
 
             inputMethodHints: Qt.ImhNoAutoUppercase
@@ -525,8 +562,8 @@ Item {
             width: parent.width
             height: boxHeight
 
-            anchors.top: boxTerm.bottom
-            anchors.topMargin: 25
+            anchors.bottom: boxTheme.top
+            anchors.bottomMargin: 20
 
             anchors.horizontalCenter: parent.horizontalCenter
             objectName: "boxSubject"
@@ -554,8 +591,8 @@ Item {
             width: parent.width
             height: boxHeight
 
-            anchors.top: boxSubject.bottom
-            anchors.topMargin: 25
+            anchors.bottom: saveList.top
+            anchors.bottomMargin: 20
 
             anchors.horizontalCenter: parent.horizontalCenter
             objectName: "boxTheme"
@@ -583,11 +620,13 @@ Item {
             id: saveList
             width: parent.width * 3 / 4
             height: 25
-            objectName: "buttonSave"
+            objectName: "buttonADD"
             text:"ADD"
             style:  ButtonStyle {
                 background: Rectangle{
-                    color: control.pressed ? "#f0b050"  : "#f0c150"
+                    //color: control.pressed ? "#f0b050"  : "#f0c150"
+                    color: control.pressed ? "#697BBD"  : "#6988bd"
+                    //color: control.pressed ? "#af0000" :"#889f0000"
                     radius: 3
                 }
                 label: Text {
@@ -595,7 +634,8 @@ Item {
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
                     font.bold: true
-                    color: "black"
+                    font.pointSize: textSize - 1
+                    color: "white"
                     text: control.text
                 }
             }
