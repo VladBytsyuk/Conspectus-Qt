@@ -441,13 +441,13 @@ Item {
             color: textColor
         }
 
-        TextField {
+        TextArea {
             id: tagField
             objectName: "tagField"
             width: parent.width
             height: 80
             anchors.top: tagTitle.bottom
-
+            wrapMode: Text.WrapAnywhere
             signal tagChanged(string file_name, string new_tag)
         }
 
@@ -461,13 +461,13 @@ Item {
             color: textColor
         }
 
-        TextField {
+        TextArea {
             id: commentField
             objectName: "commentField"
             width: parent.width
             height: 180
             anchors.top: commentTitle.bottom
-
+            wrapMode: Text.WrapAnywhere
             signal commentChanged(string file_name, string new_comment)
         }
 
