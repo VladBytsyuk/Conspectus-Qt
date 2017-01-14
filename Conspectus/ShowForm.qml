@@ -230,8 +230,6 @@ Item {
 
                         scroll.flickableItem.contentY = scroll.flickableItem.contentHeight / 2 - scroll.height / 2;
                         scroll.flickableItem.contentX = scroll.flickableItem.contentWidth / 2 - scroll.width / 2;
-                        //scroll.flickableItem.contentX = mouse.X - scroll.width / 2;
-                        //scroll.flickableItem.contentY = mouse.Y - scroll.height / 2;
                     }
                 }
                 Image {
@@ -486,15 +484,6 @@ Item {
             }
         }
 
-//        Column {
-//            id: boxesColumn
-//            width: parent.width
-//            height: parent.height - tagTitle.height - tagField.height - commentTitle.height - commentField.height
-//            anchors.top: commentField.bottom
-//            anchors.topMargin: 30
-
-//            spacing: 20
-
         ComboBox {
             id: boxTerm
             width: parent.width
@@ -508,18 +497,7 @@ Item {
             Component.onCompleted: {
                 currentIndex = -1
             }
-//________________________________________________________________________________
-//                states: State {
-//                    name: "highlight"
-//                    PropertyChanges {target: dropShadowTerm; color: "#9f0000";
-//                                     horizontalOffset: 0; verticalOffset: 0;}
-//                }
 
-//                editable: true
-//                //onCurrentTextChanged: boxTerm.termSelect(model[currentIndex])
-//                onEditTextChanged: boxTerm.termSelect(boxTerm.editText.toString())
-
-//__________________________________________________________________________________
             signal termSelect(string term)
             onCurrentTextChanged: boxTerm.termSelect(model[currentIndex])
 
@@ -621,13 +599,11 @@ Item {
             signal addList(string file_name)
             onClicked: saveList.addList(current_image_name)
 
-//                anchors.top: boxTheme.bottom
-//                anchors.topMargin: 25
             anchors.bottom: parent.bottom
             anchors.bottomMargin: saveList.pressed ? verticalNotPressed-addPressed : verticalNotPressed
             anchors.horizontalCenter: parent.horizontalCenter
         }
-//        }
+
         DropShadow {
             anchors.fill: saveList
             source: saveList
