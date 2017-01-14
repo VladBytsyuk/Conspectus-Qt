@@ -161,8 +161,8 @@ int main(int argc, char *argv[])
                      &image_handler, SLOT(onPrint(QString)));
     //Greyscaled
     QObject::connect(engine.rootObjects().at(0)
-                     ->findChild<QObject*>("showForm"), SIGNAL(greyscaled(int, QString)),
-                     &image_handler, SLOT(onGreyscale(int, QString)));
+                     ->findChild<QObject*>("showForm"), SIGNAL(improved(int, QString)),
+                     &image_handler, SLOT(onImproveImage(int,QString)));
     //Deleted
     QObject::connect(engine.rootObjects().at(0)
                      ->findChild<QObject*>("showForm"), SIGNAL(deleted(QString)),

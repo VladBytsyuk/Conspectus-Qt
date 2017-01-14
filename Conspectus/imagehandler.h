@@ -15,9 +15,10 @@ private:
     QString mSubject;
     QString mTheme;
     QString mPath;
-
+    QImage grayScale(const QImage & name);
+    QImage gaussianBlur(const QImage & name);
+    QImage division(const QImage & first, const QImage & second);
     QPixmap rotate(const QPixmap & img, int degree);
-    QPixmap greyscale(const QPixmap & img);
     void updateQmlImage();
     void returnToViewForm();
 
@@ -29,7 +30,7 @@ public slots:
     void onSetPathToList(int term, QString subject, QString theme);
     bool onTurnLeft(int index, QString name);
     bool onTurnRight(int index, QString name);
-    bool onGreyscale(int index, QString name);
+    bool onImproveImage(int index, QString name);
     bool onPrint(QString name);
     bool onDelete(QString name);
     bool onTagChanged(QString file_name, QString tags);

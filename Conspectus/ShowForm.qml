@@ -29,7 +29,7 @@ Item {
     signal turnedLeft(int index, string name)
     signal turnedRight(int index, string name)
     signal printed(string name)
-    signal greyscaled(int index, string name)
+    signal improved(int index, string name)
     signal deleted(string name)
     signal updateViewForm()
     signal imageSet(int index, string name)
@@ -261,7 +261,7 @@ Item {
                         anchors.fill: parent
                         fillMode: Image.PreserveAspectFit
                     }
-                    onClicked: showForm.greyscaled(viewForm.getCurrentIndex(), current_image_name)
+                    onClicked: showForm.improved(viewForm.getCurrentIndex(), current_image_name)
                 }
                 ToolButton{
                     id: toolButtonGarbage
