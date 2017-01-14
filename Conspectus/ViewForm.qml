@@ -14,6 +14,7 @@ Item {
     property int horizontalNotPressed: 135
     property int rOffShadowNotPressed: 8
     property int addPressed: 2
+    property string textColor: "#263238"
 
 
     property alias buttonCancel: buttonCancel
@@ -106,6 +107,7 @@ Item {
                 horizontalAlignment: TextInput.AlignHCenter
                 text: "Term"
                 font.pixelSize: 12
+                color: textColor
             }
 
             Text {
@@ -114,6 +116,7 @@ Item {
                 horizontalAlignment: TextInput.AlignHCenter
                 text: "Subject"
                 font.pixelSize: 12
+                color: textColor
             }
 
             Text {
@@ -122,6 +125,7 @@ Item {
                 horizontalAlignment: TextInput.AlignHCenter
                 text: "Theme"
                 font.pixelSize: 12
+                color: textColor
             }
         }
 
