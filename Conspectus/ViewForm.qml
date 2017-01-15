@@ -408,6 +408,7 @@ Item {
                         onDoubleClicked: {
                             if (mouse.button & Qt.LeftButton) {
                                 root.currentIndex = index;
+                                showForm.current_source_form = "ViewForm";
                                 if (root.currentIndex - 1 != -1 && root.currentIndex + 1 != root.count) {
                                     showForm.setSource(src, true, true);
                                 } else if (root.currentIndex - 1 === -1 && root.currentIndex + 1 != root.count) {
@@ -417,7 +418,6 @@ Item {
                                 } else {
                                     showForm.setSource(src, false, false);
                                 }
-                                showForm.current_source_form = "ViewForm";
                                 showForm.showShowForm();
                                 root.setPath();
                             }

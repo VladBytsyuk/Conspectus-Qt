@@ -13,6 +13,7 @@
 #include "imagehandler.h"
 #include "addformhandler.h"
 #include "viewformhandler.h"
+#include "taghandler.h"
 #include "resourceimageprovider.h"
 #include "utils.h"
 //Log File
@@ -40,6 +41,7 @@ int main(int argc, char *argv[])
     AddFormHandler add_form(engine.rootObjects().at(0)->findChild<QObject*>("addForm"));
     ViewFormHandler view_form(engine.rootObjects().at(0)->findChild<QObject*>("viewForm"));
     ImageHandler image_handler(engine.rootObjects().at(0)->findChild<QObject*>("showForm"));
+    TagHandler tag_handler(engine.rootObjects().at(0)->findChild<QObject*>("tagForm"));
 
     //Open log file. Start logging
     logFile = new QFile(fm->getMainDirPath() + "/logFile.log");
@@ -201,6 +203,11 @@ int main(int argc, char *argv[])
     QObject::connect(engine.rootObjects().at(0)
                      ->findChild<QObject*>("showForm"), SIGNAL(imageSet(int, QString)),
                      &image_handler, SLOT(onSetImagePath(int, QString)));
+
+    //Tag form connections
+    QObject::connect(engine.rootObjects().at(0)
+                     ->findChild<QObject*>("tagForm"), SIGNAL(search(QString)),
+                     &tag_handler, SLOT(onSearchRequest(QString)));
 
     app.exec();
 
