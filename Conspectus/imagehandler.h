@@ -35,6 +35,7 @@ public slots:
     bool onTagChanged(QString file_name, QString tags);
     bool onCommentChanged(QString file_name, QString comment);
     bool onSetImagePath(int index, QString file_name);
+    bool onCropImage(int index, QString name, int fromX, int fromY, int toX, int toY);
 
     void onForm();
     void onOkClicked(QString file_path);

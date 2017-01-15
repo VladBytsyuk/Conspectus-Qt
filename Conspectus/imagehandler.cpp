@@ -203,6 +203,22 @@ bool ImageHandler::onSetImagePath(int index, QString file_name) {
     return true;
 }
 
+bool ImageHandler::onCropImage(int index, QString name, int fromX, int fromY, int toX, int toY) {
+    FileManager fm;
+    QImage image = fm.getImage(name);
+    image = image.copy(fromX, fromY, toX - fromX, toY - fromY);
+    image.save(fm.getImagePath(name));
+
+    updateQmlImage();
+
+    QImage image_preview = fm.getImage(fm.getImagePath(name));
+    image_preview = image_preview.scaledToWidth(480);
+    image.save(fm.getImagePreviewPath(name), 0, 80);
+
+    emit setGridViewIndex(index);
+    return true;
+}
+
 void ImageHandler::onForm() {
     FormHandler::onForm();
 }

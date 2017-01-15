@@ -22,6 +22,8 @@ Item {
     property int panelWidth: 160
     property int textSize: 10
     property string textColor: "#263238"
+    property bool isCropActive: false
+    property bool isNeedToCrop: false
 
     property alias buttonCancel: buttonCancel
 
@@ -33,10 +35,22 @@ Item {
     signal deleted(string name)
     signal updateViewForm()
     signal imageSet(int index, string name)
+    signal cropImage(int index, string name, int fromX, int fromY, int toX, int toY);
 
     function clearTagsComments() {
         tagField.text = "";
         commentField.text = "";
+    }
+
+    function clearCrop() {
+        isCropActive = false;
+        mainImage.opacity = 1;
+        zoomInSlider.enabled = true;
+        canvas.firstX = 0;
+        canvas.firstY = 0;
+        canvas.lastX = 0;
+        canvas.lastY = 0;
+        canvas.requestPaint();
     }
 
     Component {
@@ -121,7 +135,10 @@ Item {
             id: buttonLeftMA
             anchors.fill: parent
             hoverEnabled: true
-            onClicked: viewForm.setPreviousImage()
+            onClicked: {
+                viewForm.setPreviousImage()
+                clearCrop()
+            }
         }
     }
 
@@ -158,7 +175,10 @@ Item {
             id: buttonRightMA
             anchors.fill: parent
             hoverEnabled: true
-            onClicked: viewForm.setNextImage()
+            onClicked: {
+                viewForm.setNextImage()
+                clearCrop()
+            }
         }
     }
 
@@ -178,7 +198,7 @@ Item {
 
         Item {
             id: flowTopBar
-            width: 7 * (iconSize + topBarSpacing) + zoomInSlider.width
+            width: 8 * (iconSize + topBarSpacing) + zoomInSlider.width
             height: iconSize
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
@@ -220,6 +240,7 @@ Item {
                 Slider {
                     id: zoomInSlider
                     height: iconSize
+                    width: 3 * iconSize + 2 * topBarSpacing
                     orientation: Qt.Horizontal
                     visible: true
                     minimumValue: 0
@@ -251,6 +272,34 @@ Item {
                         fillMode: Image.PreserveAspectFit
                     }
                     onClicked: showForm.turnedRight(viewForm.getCurrentIndex(), current_image_name)
+                }
+                ToolButton{
+                    id: toolButtonCrop
+                    height: iconSize
+                    width: iconSize
+                    Image {
+                        source: "/assets/cut.png"
+                        anchors.fill: parent
+                        fillMode: Image.PreserveAspectFit
+                    }
+                    onClicked: {
+                        if (zoomInSlider.value != 0) return;
+                        isCropActive = !isCropActive
+                        mainImage.opacity = isCropActive ? 0.78 : 1
+                        zoomInSlider.enabled = !isCropActive
+                        if (isNeedToCrop) {
+                            cropImage(viewForm.getCurrentIndex(), current_image_name,
+                                      canvas.firstX * mainImage.sourceSize.width / canvas.width,
+                                      canvas.firstY * mainImage.sourceSize.height / canvas.height,
+                                      canvas.lastX * mainImage.sourceSize.width / canvas.width,
+                                      canvas.lastY * mainImage.sourceSize.height / canvas.height);
+                            canvas.firstX = 0;
+                            canvas.firstY = 0;
+                            canvas.lastX = 0;
+                            canvas.lastY = 0;
+                        }
+                        canvas.requestPaint()
+                    }
                 }
                 ToolButton{
                     id: toolButtonMoon
@@ -327,6 +376,79 @@ Item {
                 asynchronous: true
                 source: ""
                 cache: false
+
+                Canvas {
+                    id: canvas
+
+                    width: mainImage.paintedWidth
+                    height: mainImage.paintedHeight
+                    anchors.horizontalCenter: mainImage.horizontalCenter
+                    anchors.verticalCenter: mainImage.verticalCenter
+
+                    property int firstX: 0
+                    property int firstY: 0
+                    property int lastX: 0
+                    property int lastY: 0
+                    onPaint: {
+                        var ctx = getContext("2d")
+                        ctx.clearRect(0,0,canvas.width,canvas.height)
+                        if (isCropActive) {
+                            ctx.lineWidth = 2
+                            ctx.strokeStyle = "#af0000"
+                            ctx.beginPath()
+                            ctx.rect(firstX,firstY,lastX - firstX,lastY - firstY)
+                            ctx.stroke()
+                        }
+                    }
+                }
+
+                MouseArea {
+                    width: mainImage.paintedWidth
+                    height: mainImage.paintedHeight
+
+                    anchors.horizontalCenter: mainImage.horizontalCenter
+                    anchors.verticalCenter: mainImage.verticalCenter
+
+                    id: mouseArea_image
+                    onPressed: {
+                        if (!isCropActive) return;
+                      //  appWindow.click = false
+                        canvas.firstX = mouseX
+                        canvas.firstY = mouseY
+                    }
+                    onPositionChanged: {
+                        if (!isCropActive) return;
+                        canvas.lastX = mouseX
+                        canvas.lastY = mouseY
+                        canvas.requestPaint()
+                    }
+                    onReleased: {
+                        if (!isCropActive) return;
+                        isNeedToCrop = true
+                        canvas.lastX = (mouseX > mainImage.paintedWidth) ? mainImage.paintedWidth : mouseX
+                        canvas.lastY = (mouseY > mainImage.paintedHeight) ? mainImage.paintedHeight : mouseY
+                        canvas.lastX = (canvas.lastX < 0) ? 0 : canvas.lastX
+                        canvas.lastY = (canvas.lastY < 0) ? 0 : canvas.lastY
+                        if (canvas.lastX < canvas.firstX) {
+                            var posX = canvas.lastX
+                            canvas.lastX = canvas.firstX
+                            canvas.firstX = posX
+                        }
+                        if (canvas.lastY < canvas.firstY) {
+                            var posY = canvas.lastY
+                            canvas.lastY = canvas.firstY
+                            canvas.firstY = posY
+                        }
+                        canvas.requestPaint()
+                    }
+                    onClicked: {
+                        if (!isCropActive) return;
+                        if (mouse.button === Qt.RightButton) {
+                           // appWindow.click = true
+                            canvas.requestPaint()
+                        }
+                    }
+                }
             }
         }
 

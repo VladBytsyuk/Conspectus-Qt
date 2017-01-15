@@ -201,6 +201,9 @@ int main(int argc, char *argv[])
     QObject::connect(engine.rootObjects().at(0)
                      ->findChild<QObject*>("showForm"), SIGNAL(imageSet(int, QString)),
                      &image_handler, SLOT(onSetImagePath(int, QString)));
+    QObject::connect(engine.rootObjects().at(0)
+                     ->findChild<QObject*>("showForm"), SIGNAL(cropImage(int, QString, int, int, int, int)),
+                     &image_handler, SLOT(onCropImage(int, QString, int, int, int, int)));
 
     app.exec();
 
