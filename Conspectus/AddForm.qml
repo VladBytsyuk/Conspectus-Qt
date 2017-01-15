@@ -96,7 +96,7 @@ Item {
                     name: "highlightGreen"
                     PropertyChanges {
                         target: dropShadowTextField
-                        color: "#60008f00"
+                        color: "#aa008f00"
                         horizontalOffset: 0
                         verticalOffset: 0
                         radius: 10
