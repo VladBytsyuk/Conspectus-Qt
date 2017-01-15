@@ -1,9 +1,9 @@
-#ifndef IMAGEHANDLER_H
-#define IMAGEHANDLER_H
+#ifndef SHOW_FORM_HANDLER_H
+#define SHOW_FORM_HANDLER_H
 
 #include "formhandler.h"
 
-class ImageHandler : public FormHandler
+class ShowViewForm : public FormHandler
 {
     Q_OBJECT
 
@@ -22,8 +22,8 @@ private:
     void returnToViewForm();
 
 public:
-    ImageHandler(QObject* view);
-    ~ImageHandler();
+    ShowViewForm(QObject* view);
+    ~ShowViewForm();
 
 public slots:
     void onSetPathToList(int term, QString subject, QString theme);
@@ -48,4 +48,4 @@ signals:
     void setGridViewIndex(int index);
 };
 
-#endif // IMAGEHANDLER_H
+#endif // SHOW_FORMHANDLER_H
