@@ -337,23 +337,49 @@ Item {
                 }
 
 
-                ToolButton {
+                Button {
                     id: showPanel
                     property bool isOpen: false
-                    width: iconSize
-                    height: iconSize
-
-                    ColorOverlay {
-                        anchors.fill: parent
-                        color: "#f0c150"
+                    width: iconSize + 10
+                    height: iconSize + 10
+                    anchors.top: parent.top
+                    anchors.topMargin: showPanel.pressed ? shadowOffset-2*addPressed : 0
+                    style: ButtonStyle {
+                        background: Rectangle {
+                            color: "#00000000"
+                        }
                     }
 
+                    Rectangle {
+                        id: showPanelBackground
+                        width: iconSize
+                        height: iconSize
+                        color: "#f0c150"
+                        radius: iconSize / 2
+
+                        Image {
+                            id: openPanel
+                            source: "/assets/add.png"
+                            anchors.fill: parent
+                            fillMode: Image.PreserveAspectFit
+                        }
+                    }
                     onClicked: {
                          panel.state = !isOpen ? "open" : "";
                          isOpen = !isOpen;
                     }
+                    DropShadow {
+                        id: dropShadowOpenPanel
+                        anchors.fill: showPanelBackground
+                        source: showPanelBackground
+                        color: "#50000000"
+                        horizontalOffset: showPanel.pressed ? shadowOffset-2*addPressed : shadowOffset-addPressed
+                        verticalOffset: showPanel.pressed ? shadowOffset-2*addPressed : shadowOffset-addPressed
+                        radius: showPanel.hovered ? rOffShadowNotPressed+8-4 : rOffShadowNotPressed
+                        samples: 17
+                    }
                 }
-           } //End top flow
+           } //End top row
        }
     }
 
@@ -609,7 +635,8 @@ Item {
             width: parent.width * 3 / 4
             height: 25
             anchors.top: commentField.bottom
-            anchors.topMargin: 15
+            anchors.topMargin: saveTagsComments.pressed ? verticalNotPressed : verticalNotPressed-addPressed
+            anchors.horizontalCenter: parent.horizontalCenter
 
             text: "SAVE"
             style:  ButtonStyle {
@@ -634,9 +661,6 @@ Item {
                 tagField.tagChanged(current_image_name, tagField.text);
                 commentField.commentChanged(current_image_name, commentField.text);
             }
-
-            anchors.bottomMargin: saveTagsComments.pressed ? verticalNotPressed-addPressed : verticalNotPressed
-            anchors.horizontalCenter: parent.horizontalCenter
         }
         DropShadow {
             anchors.fill: saveTagsComments
@@ -723,7 +747,7 @@ Item {
             width: parent.width
             height: boxHeight
 
-            anchors.bottom: saveList.top
+            anchors.bottom: flowSaveList.top
             anchors.bottomMargin: 20
 
             anchors.horizontalCenter: parent.horizontalCenter
@@ -748,10 +772,21 @@ Item {
             }
         }
 
+
+        Flow {
+            id: flowSaveList
+            width: parent.width * 3 / 4
+            height: 27
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: verticalNotPressed-addPressed
+        }
         Button {
             id: saveList
-            width: parent.width * 3 / 4
-            height: 25
+            width: flowSaveList.width
+            height: flowSaveList.height - addPressed
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: saveList.pressed ? verticalNotPressed-addPressed : verticalNotPressed
+            anchors.horizontalCenter: parent.horizontalCenter
             objectName: "buttonADD"
             text:"ADD"
             style:  ButtonStyle {
@@ -774,10 +809,6 @@ Item {
 
             signal addList(string file_name)
             onClicked: saveList.addList(current_image_name)
-
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: saveList.pressed ? verticalNotPressed-addPressed : verticalNotPressed
-            anchors.horizontalCenter: parent.horizontalCenter
         }
 
         DropShadow {
@@ -826,6 +857,9 @@ Item {
                 name: "open"
                 PropertyChanges { target: rootShow; anchors.rightMargin: panelWidth; topBarSpacing: 5;
                     iconSize: rootShow.width > 766 ? iconSize : (5 * rootShow.width + 460) / 143 }
+                PropertyChanges { target: mainImage; width: flowButtonRight.x - flowButtonLeft.x - flowButtonLeft.width }
+                PropertyChanges { target: scroll; width: flowButtonRight.x - flowButtonLeft.x - flowButtonLeft.width }
+                PropertyChanges { target: openPanel; source: "/assets/remove.png" }
             }
         ]
 
@@ -833,7 +867,7 @@ Item {
             Transition {
                 NumberAnimation {
                     duration: 200;
-                    properties: "anchors.rightMargin,topBarSpacing,iconSize"
+                    properties: "anchors.rightMargin,topBarSpacing,iconSize,width,source"
                 }
             }
         ]

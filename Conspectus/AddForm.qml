@@ -82,11 +82,28 @@ Item {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
             }
-            states: State {
-                name: "highlight"
-                PropertyChanges {target: dropShadowTextField; color: "#8f0000";
-                                horizontalOffset: 0; verticalOffset: 0;}
-            }
+            states: [
+                State {
+                    name: "highlight"
+                    PropertyChanges {
+                        target: dropShadowTextField
+                        color: "#8f0000"
+                        horizontalOffset: 0
+                        verticalOffset: 0
+                    }
+                },
+                State {
+                    name: "highlightGreen"
+                    PropertyChanges {
+                        target: dropShadowTextField
+                        color: "#aa008f00"
+                        horizontalOffset: 0
+                        verticalOffset: 0
+                        radius: 10
+                        samples: 21
+                    }
+                }
+            ]
         }
         DropShadow {
             id: dropShadowTextField
@@ -221,9 +238,18 @@ Item {
                     boxTheme.state = ""
                  }
                 if (!isEditTextEmpty && !isTermEmpty && !isSubjectEmpty && !isThemeEmpty) {
-                    buttonOk.okClicked(textField1.text);
+                    buttonOk.okClicked(textField1.text)
+                    textField1.text = ""
+                    rectTextField.state = "highlightGreen"
+                    greenTimer.start()
                 }
             }
+        }
+
+        Timer {
+            id: greenTimer
+            interval: 500
+            onTriggered: rectTextField.state = ""
         }
 
     DropShadow {
@@ -403,7 +429,7 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenterOffset: -150
         anchors.verticalCenter: parent.verticalCenter
-        font.pixelSize: 32
+        font.pixelSize: 28
         font.bold: true
         color: textColor
     }
