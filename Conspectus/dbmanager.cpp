@@ -3,9 +3,6 @@
 DBManager::DBManager()
 {
     tryToCreateDB();
-//    if (isTableEmpty(TABLE_CONSPECT) && isTableEmpty(TABLE_LIST)) {
-//        fillAssets();
-//    }
 }
 
 /*======================= Private Methods ====================================*/
@@ -93,81 +90,6 @@ DBManager* DBManager::getInstance() {
     return mInstance;
 }
 
-/*void DBManager::setModel() {
-    QStandardItemModel* conspectModel = ConspectModel::getConspectModel();
-    QStandardItemModel* listModel = ConspectModel::getListModel();
-
-    clearTable(TABLE_CONSPECT);
-    clearTable(TABLE_LIST);
-
-    int termsAmount = conspectModel->rowCount();
-    for (int termIterator = 0; termIterator < termsAmount; ++termIterator) {
-        QModelIndex termIndex = conspectModel->index(termIterator, 0);
-        int term = termIndex.data().toInt();
-
-        int subjectsAmount = conspectModel->rowCount(termIndex);
-        for (int subjectIterator = 0; subjectIterator < subjectsAmount; ++subjectIterator) {
-            QModelIndex subjectIndex =
-                    conspectModel->index(subjectIterator, 0, termIndex);
-            QString subject = subjectIndex.data().toString();
-
-            int themesAmount = conspectModel->rowCount(subjectIndex);
-            for (int themeIterator = 0; themeIterator < themesAmount; ++themeIterator) {
-                QModelIndex themeIndex =
-                        conspectModel->index(themeIterator, 0, subjectIndex);
-                QString theme = themeIndex.data().toString();
-                QModelIndex themeNumberIndex =
-                        conspectModel->index(themeIterator, 0, subjectIndex);
-                int themeNumber = themeNumberIndex.data().toInt();
-
-                int listsAmount = conspectModel->rowCount(themeIndex);
-                for (int listIterator = 0; listIterator < listsAmount; ++listIterator) {
-                    QModelIndex listIndex =
-                            conspectModel->index(listIterator, 0, themeIndex);
-                    int listId = listIndex.data().toInt();
-                    QModelIndex listNumberIndex =
-                            conspectModel->index(listIterator, 1, themeIndex);
-                    int listNumber = listNumberIndex.data().toInt();
-                    QModelIndex idIndex =
-                            conspectModel->index(listIterator, 2, themeIndex);
-                    int id = idIndex.data().toInt();
-
-                    QString insertQuery =
-                            "INSERT INTO " TABLE_CONSPECT " VALUES"
-                                "(" + QString::number(id) + ", "
-                                + QString::number(term) + ", '"
-                                + subject + "', "
-                                + QString::number(themeNumber) + ", '"
-                                + theme + "', "
-                                + QString::number(listNumber) + ", "
-                                + QString::number(listId) + ")";
-                    makeQuery(insertQuery);
-                }
-            }
-        }
-    }
-
-    int listTableSize = listModel->rowCount();
-    for (int rowIterator = 0; rowIterator < listTableSize; ++rowIterator) {
-        QModelIndex listIdIndex = listModel->index(rowIterator, 0);
-        QModelIndex fileNameIndex = listModel->index(rowIterator, 1);
-        QModelIndex tagIndex = listModel->index(rowIterator, 2);
-        QModelIndex commentsIndex = listModel->index(rowIterator, 3);
-
-        int listId = listIdIndex.data().toInt();
-        listId = listId == -1 ? generateListId() : listId;
-        QString fileName = fileNameIndex.data().toString();
-        QString tag = tagIndex.data().toString();
-        QString comments = commentsIndex.data().toString();
-
-        QString insertQuery =
-                "INSERT INTO " TABLE_LIST " VALUES"
-                    "(" + QString::number(listId) + ", '"
-                    + fileName + "', '" + tag + "', '" + comments + "')";
-        makeQuery(insertQuery);
-    }
-};*/
-
 void DBManager::insertRowIntoTableConspect(int id,
                                 int term,
                                 QString subject,
@@ -241,13 +163,6 @@ void DBManager::insertRowIntoTableList(int list_id,
         makeQuery(updateQuery);
     }
 }
-
-/*int DBManager::generateListId() {
-    QString maxIdQuery = "SELECT MAX(" LIST_ID ") FROM " TABLE_LIST;
-    QSqlQuery maxIdResult = makeQuery(maxIdQuery);
-    maxIdResult.next();
-    return maxIdResult.value(0).toInt() + 1;
-}*/
 
 QStandardItemModel* DBManager::getConspectModel() {
     QStandardItemModel* conspectModel = new QStandardItemModel(0, 3);
@@ -411,7 +326,6 @@ int DBManager::findFileIdByName(QString file_name) {
 }
 
 void DBManager::onInsertFileIntoListTable(int id, QString file_name){
-    //TODO: Add file into DB
     insertRowIntoTableList(id, file_name);
 }
 
@@ -420,7 +334,6 @@ void DBManager::onInsertFileIntoListTableWithInfo(int list_id, QString file_name
 }
 
 void DBManager::onRemoveFile(QString file_name){
-    //TODO: Delete file from DB
     deleteRowFromTable(findFileIdByName(file_name), TABLE_LIST);
 }
 
