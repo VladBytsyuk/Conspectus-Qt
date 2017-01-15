@@ -26,6 +26,8 @@ Item {
     property alias buttonCancel: buttonCancel
 
     property string current_image_name: ""
+    property string current_source_form: ""
+
     signal turnedLeft(int index, string name)
     signal turnedRight(int index, string name)
     signal printed(string name)
@@ -121,7 +123,13 @@ Item {
             id: buttonLeftMA
             anchors.fill: parent
             hoverEnabled: true
-            onClicked: viewForm.setPreviousImage()
+            onClicked:  {
+                if (current_source_form === "ViewForm") {
+                    viewForm.setPreviousImage();
+                } else {
+                    tagForm.setPreviousImage();
+                }
+            }
         }
     }
 
@@ -158,7 +166,13 @@ Item {
             id: buttonRightMA
             anchors.fill: parent
             hoverEnabled: true
-            onClicked: viewForm.setNextImage()
+            onClicked: {
+                if (current_source_form === "ViewForm") {
+                    viewForm.setNextImage();
+                } else {
+                    tagForm.setNextImage();
+                }
+            }
         }
     }
 
@@ -416,7 +430,11 @@ Item {
         current_image_name = path;
         setNaturalSize();
 
-        rootShow.imageSet(viewForm.getCurrentIndex(), current_image_name);
+        if (current_source_form === "ViewForm") {
+            rootShow.imageSet(viewForm.getCurrentIndex(), current_image_name);
+        } else {
+            rootShow.imageSet(tagForm.getCurrentIndex(), current_image_name);
+        }
     }
 
     function reloadImage() {

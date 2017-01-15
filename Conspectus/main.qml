@@ -37,6 +37,7 @@ ApplicationWindow {
             addForm.visible = false
             mainForm.visible = false
             showForm.visible = false
+            tagForm.visible = false
             viewForm.viewFormSignal()
         }
 
@@ -55,6 +56,7 @@ ApplicationWindow {
             addForm.visible = true
             mainForm.visible = false
             showForm.visible = false
+            tagForm.visible = false
             addForm.addFormSignal()
         }
 
@@ -75,6 +77,7 @@ ApplicationWindow {
             addForm.visible = false
             mainForm.visible = true
             showForm.visible = false
+            tagForm.visible = false
         }
     }
 
@@ -92,11 +95,33 @@ ApplicationWindow {
             addForm.visible = false
             mainForm.visible = false
             showForm.visible = true
+            tagForm.visible = false
             showFormSignal();
         }
         buttonCancel.onClicked: {
             viewForm.showViewForm();
             showForm.clearTagsComments();
+        }
+    }
+
+    TagForm {
+        id: tagForm
+        anchors.fill: parent
+        objectName: "tagForm"
+        visible: false
+
+        signal tagFormSignal()
+
+        function showTagForm() {
+            viewForm.visible = false
+            addForm.visible = false
+            mainForm.visible = false
+            showForm.visible = false
+            tagForm.visible = true
+            tagFormSignal();
+        }
+        buttonCancel.onClicked: {
+            viewForm.showViewForm();
         }
     }
 

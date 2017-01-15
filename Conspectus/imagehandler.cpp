@@ -32,7 +32,7 @@ bool ImageHandler::onTurnLeft(int index, QString name) {
 
     qDebug(logDebug()) << "Image" << name << "has been rotated to the left";
     updateQmlImage();
-    emit imageUpdated(index, name);
+    //emit imageUpdated(index, name);
     return true;
 }
 
@@ -50,7 +50,7 @@ bool ImageHandler::onTurnRight(int index, QString name) {
 
     qDebug(logDebug()) << "Image" << name << "has been rotated to the right";
     updateQmlImage();
-    emit imageUpdated(index, name);
+    //emit imageUpdated(index, name);
     return true;
 }
 
@@ -109,7 +109,7 @@ bool ImageHandler::onImproveImage(int index, QString name) {
 
     qDebug(logDebug()) << "Image" << name << "has been improved";
     updateQmlImage();
-    emit imageUpdated(index, name);
+    //emit imageUpdated(index, name);
     return true;
 }
 

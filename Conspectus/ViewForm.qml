@@ -97,7 +97,7 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.top: parent.top
             anchors.topMargin: 5
-            width: 600
+            width: 626
             height: 30
             spacing: 5
 
@@ -137,7 +137,7 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 5
-            width: 600
+            width: 626
             height: 30
             spacing: 5
 
@@ -218,6 +218,29 @@ Item {
                             text:
                                 control.currentIndex===-1?"Theme":control.currentText
                         }
+                }
+            }
+
+            Rectangle {
+                id: searchButton
+                width: boxHeight
+                height: boxHeight
+                color: "#f0c150"
+                radius: 3
+                Image{
+                    source: "/assets/search.png"
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.verticalCenter: parent.verticalCenter
+                    width: boxHeight - 3
+                    height: boxHeight - 3
+                    fillMode: Image.PreserveAspectFit
+                }
+                MouseArea{
+                    id: searchButtonMA
+                    anchors.fill: parent
+                    onClicked: {
+                        tagForm.showTagForm();
+                    }
                 }
             }
 
@@ -394,6 +417,7 @@ Item {
                                 } else {
                                     showForm.setSource(src, false, false);
                                 }
+                                showForm.current_source_form = "ViewForm";
                                 showForm.showShowForm();
                                 root.setPath();
                             }
@@ -435,7 +459,7 @@ Item {
    } //End bottom bar
 
    function setNextImage() {
-       console.log(root.currentIndex + 1);
+       //console.log(root.currentIndex + 1);
 
        if (root.currentIndex + 1 != root.count) {
            var nextImg = listModel.get(root.currentIndex + 1).src;
@@ -453,7 +477,7 @@ Item {
    }
 
    function setPreviousImage() {
-       console.log(root.currentIndex - 1);
+       //console.log(root.currentIndex - 1);
 
        if (root.currentIndex - 1 != -1) {
            var prevImg = listModel.get(root.currentIndex - 1).src;
