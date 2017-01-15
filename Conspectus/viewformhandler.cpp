@@ -9,7 +9,7 @@ ViewFormHandler::ViewFormHandler(QObject* view) {
 ViewFormHandler::~ViewFormHandler() {}
 
 void ViewFormHandler::onOkClicked(QString file_path) {
-
+    qDebug(logDebug()) << "ViewForm OK clicked: " << file_path;
 }
 
 QMap<int, QString> ViewFormHandler::getImageSources(int term, QString subject, QString theme) {
@@ -50,6 +50,7 @@ QMap<int, QString> ViewFormHandler::getListIds(int term, QString subject, QStrin
             }
         }
     }
+    return images;
 }
 
 QMap<int, QString> ViewFormHandler::getFileNames(QMap<int, QString> &images) {
@@ -107,6 +108,8 @@ void ViewFormHandler::onSetTheme(QString theme) {
 
 void ViewFormHandler::changeModelOrdering(int previous_index, int current_index) {
     emit changeOrder(mCurrentTerm, mCurrentSubject, mCurrentTheme, previous_index, current_index);
+    mIndex = current_index;
+    mView->findChild<QObject*>("gridView")->setProperty("currentIndex", mIndex);
 }
 
 void ViewFormHandler::reloadGridView() {
@@ -124,7 +127,7 @@ void ViewFormHandler::onOrderChanged(int previous_index, int current_index) {
 void ViewFormHandler::onUpdateImage(int index, QString name) {
     mIndex = index;
     reloadGridView();
-    qDebug(logDebug()) << "Model has been updated";
+    qDebug(logDebug()) << "Model has been updated (" << name << ")";
 }
 
 void ViewFormHandler::onUpdateView() {

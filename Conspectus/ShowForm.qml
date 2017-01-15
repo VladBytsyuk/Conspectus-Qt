@@ -37,6 +37,22 @@ Item {
     signal imageSet(int index, string name)
     signal cropImage(int index, string name, int fromX, int fromY, int toX, int toY);
 
+    //forced emit subjectSelect signal
+    function emitTermSelect(term) {
+        boxTerm.termSelect(term);
+    }
+
+    //forced emit subjectSelect signal
+    function emitSubjectSelect(subject) {
+        boxSubject.subjectSelect(subject);
+    }
+
+    //forced emit themeSelect signal
+    function emitThemeSelect(theme) {
+        boxTheme.themeSelect(theme);
+    }
+
+
     function clearTagsComments() {
         tagField.text = "";
         commentField.text = "";
