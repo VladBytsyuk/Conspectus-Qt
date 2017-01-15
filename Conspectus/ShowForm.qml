@@ -696,6 +696,8 @@ Item {
                 name: "open"
                 PropertyChanges { target: rootShow; anchors.rightMargin: panelWidth; topBarSpacing: 5;
                     iconSize: rootShow.width > 766 ? iconSize : (5 * rootShow.width + 460) / 143 }
+                PropertyChanges { target: mainImage; width: flowButtonRight.x - flowButtonLeft.x - flowButtonLeft.width }
+                PropertyChanges { target: scroll; width: flowButtonRight.x - flowButtonLeft.x - flowButtonLeft.width }
             }
         ]
 
@@ -703,7 +705,7 @@ Item {
             Transition {
                 NumberAnimation {
                     duration: 200;
-                    properties: "anchors.rightMargin,topBarSpacing,iconSize"
+                    properties: "anchors.rightMargin,topBarSpacing,iconSize,width"
                 }
             }
         ]
