@@ -13,6 +13,7 @@ public:
 private:
     QObject* mView;
     QString currentRequest;
+    int mIndex;
 
     void setImageToQml(QString file_name, int list_no);
     void clearViewsFromView();
@@ -23,6 +24,8 @@ signals:
 
 public slots:
     bool onSearchRequest(QString request);
+    void onSetGridViewIndex(int index);
+    void onForm();
 };
 
 #endif // TAGHANDLER_H

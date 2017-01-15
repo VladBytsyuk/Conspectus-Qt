@@ -34,7 +34,7 @@ public slots:
     bool onDelete(QString name);
     bool onTagChanged(QString file_name, QString tags);
     bool onCommentChanged(QString file_name, QString comment);
-    bool onSetImagePath(int index, QString file_name);
+    bool onSetImagePath(int index, QString form_name, QString file_name);
 
     void onForm();
     void onOkClicked(QString file_path);
@@ -44,7 +44,8 @@ signals:
     void addConspectListToAnotherPath(int term, QString subject, QString theme, QString file_name);
     void changeTag(QString file_name, QString tag);
     void changeComment(QString file_name, QString comment);
-    void setGridViewIndex(int index);
+    void setViewFormIndex(int index);
+    void setTagFormIndex(int index);
 };
 
 #endif // IMAGEHANDLER_H

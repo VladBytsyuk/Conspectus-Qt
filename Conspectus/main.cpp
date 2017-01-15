@@ -99,8 +99,10 @@ int main(int argc, char *argv[])
                      conspectModel, &ConspectModel::onChangeTag);
     QObject::connect(&image_handler, &ImageHandler::changeComment,
                      conspectModel, &ConspectModel::onChangeComment);
-    QObject::connect(&image_handler, &ImageHandler::setGridViewIndex,
+    QObject::connect(&image_handler, &ImageHandler::setViewFormIndex,
                      &view_form, &ViewFormHandler::onSetGridViewIndex);
+    QObject::connect(&image_handler, &ImageHandler::setTagFormIndex,
+                     &tag_handler, &TagHandler::onSetGridViewIndex);
 
     //ViewForm connections
     QObject::connect(engine.rootObjects().at(0)
@@ -201,13 +203,16 @@ int main(int argc, char *argv[])
                      ->findChild<QObject*>("commentField"), SIGNAL(commentChanged(QString, QString)),
                      &image_handler, SLOT(onCommentChanged(QString, QString)));
     QObject::connect(engine.rootObjects().at(0)
-                     ->findChild<QObject*>("showForm"), SIGNAL(imageSet(int, QString)),
-                     &image_handler, SLOT(onSetImagePath(int, QString)));
+                     ->findChild<QObject*>("showForm"), SIGNAL(imageSet(int, QString, QString)),
+                     &image_handler, SLOT(onSetImagePath(int, QString, QString)));
 
     //Tag form connections
     QObject::connect(engine.rootObjects().at(0)
                      ->findChild<QObject*>("tagForm"), SIGNAL(search(QString)),
                      &tag_handler, SLOT(onSearchRequest(QString)));
+    QObject::connect(engine.rootObjects().at(0)
+                     ->findChild<QObject*>("tagForm"), SIGNAL(tagFormSignal()),
+                     &tag_handler, SLOT(onForm()));
 
     app.exec();
 

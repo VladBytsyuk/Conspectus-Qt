@@ -34,7 +34,7 @@ Item {
     signal improved(int index, string name)
     signal deleted(string name)
     signal updateViewForm()
-    signal imageSet(int index, string name)
+    signal imageSet(int index, string form_name, string name)
 
     function clearTagsComments() {
         tagField.text = "";
@@ -431,9 +431,9 @@ Item {
         setNaturalSize();
 
         if (current_source_form === "ViewForm") {
-            rootShow.imageSet(viewForm.getCurrentIndex(), current_image_name);
+            rootShow.imageSet(viewForm.getCurrentIndex(), "ViewForm", current_image_name);
         } else if (current_source_form === "TagForm") {
-            rootShow.imageSet(tagForm.getCurrentIndex(), current_image_name);
+            rootShow.imageSet(tagForm.getCurrentIndex(), "TagForm", current_image_name);
         }
     }
 

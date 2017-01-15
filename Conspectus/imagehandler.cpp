@@ -182,7 +182,7 @@ bool ImageHandler::onCommentChanged(QString file_name, QString comments) {
     return true;
 }
 
-bool ImageHandler::onSetImagePath(int index, QString file_name) {
+bool ImageHandler::onSetImagePath(int index, QString form_name, QString file_name) {
     mPath = file_name;
     QString tag = "";
     QString comment = "";
@@ -199,7 +199,11 @@ bool ImageHandler::onSetImagePath(int index, QString file_name) {
     }
     mView->findChild<QObject*>("tagField")->setProperty("text", tag);
     mView->findChild<QObject*>("commentField")->setProperty("text", comment);
-    emit setGridViewIndex(index);
+    if (form_name == "ViewForm") {
+        emit setViewFormIndex(index);
+    } else if (form_name == "TagForm") {
+        emit setTagFormIndex(index);
+    }
     return true;
 }
 

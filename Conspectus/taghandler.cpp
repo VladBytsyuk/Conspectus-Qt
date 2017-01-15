@@ -3,16 +3,19 @@
 #include "conspectmodel.h"
 
 TagHandler::TagHandler(QObject* view) {
-  //  currentRequest = "";
+    currentRequest = "";
     mView = view;
+    mIndex = 0;
 }
 
 TagHandler::~TagHandler(){}
 
 bool TagHandler::onSearchRequest(QString request) {
     qDebug(logDebug()) << "Incoming request is" << request;
-    currentRequest = request;
+    mIndex = 0;
+    currentRequest = request.simplified();
     reloadGridView();
+    return true;
 }
 
 void TagHandler::setImageToQml(QString file_name, int list_no) {
@@ -40,6 +43,14 @@ bool TagHandler::invokeSetImages(QStringList images) {
 void TagHandler::reloadGridView() {
     clearViewsFromView();
     invokeSetImages(ConspectModel::getFileNamesByTag(currentRequest));
-    //mView->findChild<QObject*>("gridView")->setProperty("currentIndex", mIndex);
+    mView->findChild<QObject*>("gridView")->setProperty("currentIndex", mIndex);
 }
 
+void TagHandler::onSetGridViewIndex(int index) {
+    mIndex = index;
+}
+
+void TagHandler::onForm() {
+    mView->findChild<QObject*>("editText")->setProperty("text", currentRequest);
+    reloadGridView();
+}
