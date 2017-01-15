@@ -16,7 +16,6 @@ private:
     QString mTheme;
     QString mPath;
     QImage grayScale(const QImage & name);
-    QImage gaussianBlur(const QImage & name);
     QImage division(const QImage & first, const QImage & second);
     QPixmap rotate(const QPixmap & img, int degree);
     void updateQmlImage();

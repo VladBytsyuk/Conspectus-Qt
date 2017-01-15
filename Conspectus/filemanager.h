@@ -31,11 +31,13 @@ public:
     QString copyFile(QString file_name);
     bool removeFile(QString path);
 
-    QPixmap getImage(QString path);
-    QPixmap getImagePreview(QString file_name);
+    QImage getImage(QString file_name);
+    QImage getImagePreview(QString file_name);
+    QPixmap getPixmap(QString file_name);
+    QPixmap getPixmapPreview(QString file_name);
+
     QString getImagePath(QString file_name);
     QString getImagePreviewPath(QString file_name);
-
     QString getMainDirPath();
     QString getSourceDirPath();
     QString getPreviewDirPath();

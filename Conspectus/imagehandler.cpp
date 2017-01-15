@@ -6,6 +6,10 @@
 #include <QtPrintSupport>
 #include <QColor>
 
+QT_BEGIN_NAMESPACE
+  extern Q_WIDGETS_EXPORT void qt_blurImage( QPainter *p, QImage &blurImage, qreal radius, bool quality, bool alphaOnly, int transposed = 0 );
+QT_END_NAMESPACE
+
 ImageHandler::ImageHandler(QObject* view) {
     mView = view;
     forcedUpdateSubject = false;
@@ -16,8 +20,8 @@ ImageHandler::~ImageHandler(){}
 
 bool ImageHandler::onTurnLeft(int index, QString name) {
     FileManager fm;
-    QPixmap img = fm.getImage(name);
-    QPixmap img_preview = fm.getImagePreview(name);
+    QPixmap img = fm.getPixmap(name);
+    QPixmap img_preview = fm.getPixmapPreview(name);
     QString img_path = fm.getImagePath(name);
     QString img_preview_path = fm.getImagePreviewPath(name);
 
@@ -34,8 +38,8 @@ bool ImageHandler::onTurnLeft(int index, QString name) {
 
 bool ImageHandler::onTurnRight(int index, QString name) {
     FileManager fm;
-    QPixmap img = fm.getImage(name);
-    QPixmap img_preview = fm.getImagePreview(name);
+    QPixmap img = fm.getPixmap(name);
+    QPixmap img_preview = fm.getPixmapPreview(name);
     QString img_path = fm.getImagePath(name);
     QString img_preview_path = fm.getImagePreviewPath(name);
 
@@ -73,13 +77,33 @@ bool ImageHandler::onDelete(QString name) {
 
 bool ImageHandler::onImproveImage(int index, QString name) {
     FileManager fm;
-    QImage img = fm.getImage(name).toImage();
-    QImage img_preview = fm.getImagePreview(name).toImage();
+    QImage img = fm.getImage(name);
+    QImage img_preview = fm.getImagePreview(name);
     QString img_path = fm.getImagePath(name);
     QString img_preview_path = fm.getImagePreviewPath(name);
 
-    QImage new_img = division(grayScale(img), gaussianBlur(img));
-    QImage new_img_preview = division(grayScale(img_preview), gaussianBlur(img_preview));
+    //Main image
+    QImage gs_img = grayScale(img);
+    QImage new_gs_img = gs_img;
+    QPixmap blurred_img( gs_img.size() );
+    blurred_img.fill(Qt::transparent);
+    {
+        QPainter painter( &blurred_img );
+        qt_blurImage( &painter, gs_img, 150, true, false);
+    }
+    QImage new_img = division(new_gs_img, blurred_img.toImage());
+
+    //Preview image
+    QImage gs_img_p = grayScale(img_preview);
+    QImage new_gs_img_p = gs_img_p;
+    QPixmap blurred_img_p ( gs_img_p.size() );
+    blurred_img_p.fill(Qt::transparent);
+    {
+        QPainter painter( &blurred_img_p );
+        qt_blurImage( &painter, gs_img_p, 150, true, false);
+    }
+    QImage new_img_preview = division(new_gs_img_p, blurred_img_p.toImage());
+
     new_img.save(img_path);
     new_img_preview.save(img_preview_path);
 
@@ -99,58 +123,6 @@ QImage ImageHandler::grayScale(const QImage & img) {
     return QImage();
 }
 
-
-QImage ImageHandler::gaussianBlur(const QImage & img) {
-    if(!img.isNull()) {
-        int k = 15;
-        int h = img.height();
-        int w = img.width();
-        QColor p_r,p,p_l;
-        int red, green, blue;
-        QImage blured_image = img;
-
-        while (k!=0) {
-            // horizontally
-            for (int i=1; i<w-1; i++)
-                for (int j=0; j<h; j++)
-                {
-                    p_l = blured_image.pixelColor(i-1,j);
-                    p = blured_image.pixelColor(i,j);
-                    p_r = blured_image.pixelColor(i+1,j);
-
-                    red = (p_l.red() + p.red() + p_r.red()) / 3;
-                    green = (p_l.green() + p.green() + p_r.green()) / 3;
-                    blue = (p_l.blue() + p.blue() + p_r.blue()) / 3;
-
-                    QColor p_new(red,green,blue);
-                    blured_image.setPixelColor(i,j,p_new);
-                }
-
-            // vertically
-            for (int i=0; i<w; i++)
-                for (int j=1; j<h-1; j++)
-                {
-                    p_l = blured_image.pixelColor(i,j-1);
-                    p = blured_image.pixelColor(i,j);
-                    p_r = blured_image.pixelColor(i,j+1);
-
-                    red = (p_l.red() + p.red() + p_r.red()) / 3;
-                    green = (p_l.green() + p.green() + p_r.green()) / 3;
-                    blue = (p_l.blue() + p.blue() + p_r.blue()) / 3;
-
-                    QColor p_new(red,green,blue);
-                    blured_image.setPixelColor(i,j,p_new);
-                }
-
-            k--;
-        }
-        return blured_image;
-    }
-
-    qDebug(logCritical()) << "Gaussian blur error";
-    return QImage();
-}
-
 // Image division (first / second) (required equal first and second image size)
 QImage ImageHandler::division(const QImage & first, const QImage & second) {
     if(!first.isNull() || !second.isNull()) {
@@ -164,24 +136,11 @@ QImage ImageHandler::division(const QImage & first, const QImage & second) {
                 p_first = first.pixelColor(i,j);
                 p_second = second.pixelColor(i,j);
 
-                if (p_first.red() == 0)
-                    p_first.setRed(1);
-                if (p_second.red() == 0)
-                    p_second.setRed(1);
-                if (p_first.green() == 0)
-                    p_first.setGreen(1);
-                if (p_second.green() == 0)
-                    p_second.setGreen(1);
-                if (p_first.blue() == 0)
-                    p_first.setBlue(1);
-                if (p_second.blue() == 0)
-                    p_second.setBlue(1);
+                red = qMin( ( p_first.red() * 255 / (p_second.red() + 1) ) , 255 );
+                green = qMin( ( p_first.green() * 255 / (p_second.green() + 1) ) , 255 );
+                blue = qMin( ( p_first.blue() * 255 / (p_second.blue() + 1) ) , 255 );
 
-                red = qMin((p_first.red() / p_second.red() * 255),255);
-                green = qMin((p_first.green() / p_second.green() * 255),255);
-                blue = qMin((p_first.blue() / p_second.blue() * 255),255);
-
-                QColor p_new(red,green,blue);
+                QColor p_new(red, green, blue);
                 result.setPixelColor(i,j,p_new);
             }
         }
