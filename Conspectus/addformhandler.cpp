@@ -22,6 +22,11 @@ void AddFormHandler::onInvalidFilePath() {
 
 void AddFormHandler::onValidFilePath(QString file_name) {
     emit addFileToModel(file_name, mCurrentTerm, mCurrentSubject, mCurrentTheme);
+    QObject *editText = mView->findChild<QObject*>("rectEditText");
+    editText->setProperty("state", "highlightGreen");
+    editText->setProperty("text", "");
+    QVariant empty;
+    QMetaObject::invokeMethod(mView, "startTimer");
 }
 
 void AddFormHandler::onForm() {

@@ -34,6 +34,10 @@ Item {
         boxTheme.themeSelect(theme);
     }
 
+    function startTimer() {
+        greenTimer.start();
+    }
+
     Component {
         id: buttonStyle
         ButtonStyle {
@@ -239,9 +243,6 @@ Item {
                  }
                 if (!isEditTextEmpty && !isTermEmpty && !isSubjectEmpty && !isThemeEmpty) {
                     buttonOk.okClicked(textField1.text)
-                    textField1.text = ""
-                    rectTextField.state = "highlightGreen"
-                    greenTimer.start()
                 }
             }
         }
