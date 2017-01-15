@@ -445,9 +445,9 @@ QStringList ConspectModel::getFileNamesByTag(QString tag) {
     QStringList tags = tag.split(" ");
     int row = mListsModel->rowCount();
     for (int i = 0; i < row; ++i) {
-        QModleIndex tagIndex = mListsModel->index(i, 2);
+        QModelIndex tagIndex = mListsModel->index(i, 2);
         QString currentTags = tagIndex.data().toString();
-        boolean isAllTags = true;
+        bool isAllTags = true;
         for (int j = 0; j < tags.size(); ++j) {
             if (!currentTags.contains(tags[j])) isAllTags = false;
         }
@@ -456,7 +456,7 @@ QStringList ConspectModel::getFileNamesByTag(QString tag) {
             fileNames.append(nameIndex.data().toString());
         }
     }
-    return file_names;
+    return fileNames;
 }
 
 void ConspectModel::onRemoveList(int term, QString subject, QString theme, QString file_name) {
