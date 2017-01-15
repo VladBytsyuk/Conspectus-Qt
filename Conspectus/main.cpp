@@ -188,7 +188,7 @@ int main(int argc, char *argv[])
                      &image_handler, SLOT(onSetTheme(QString)));
     QObject::connect(engine.rootObjects().at(0)
                      ->findChild<QObject*>("showForm")
-                     ->findChild<QObject*>("buttonSave"), SIGNAL(addList(QString)),
+                     ->findChild<QObject*>("buttonADD"), SIGNAL(addList(QString)),
                      &image_handler, SLOT(onOkClicked(QString)));
     QObject::connect(engine.rootObjects().at(0)
                      ->findChild<QObject*>("showForm")

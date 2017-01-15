@@ -221,12 +221,15 @@ bool ImageHandler::onCropImage(int index, QString name, int fromX, int fromY, in
 
 void ImageHandler::onForm() {
     FormHandler::onForm();
+    qDebug() << "ShowForm: term=" << mCurrentTerm << " subject=" << mCurrentSubject << " theme=" << mCurrentTheme;
 }
 
 void ImageHandler::onOkClicked(QString file_name) {
     emit addConspectListToAnotherPath(mCurrentTerm, mCurrentSubject, mCurrentTheme, file_name);
+
+    qDebug() << "ShowForm: term=" << mCurrentTerm << " subject=" << mCurrentSubject << " theme=" << mCurrentTheme;
 }
 
 void ImageHandler::onPathChange() {
-
+    qDebug() << "ShowForm: term=" << mCurrentTerm << " subject=" << mCurrentSubject << " theme=" << mCurrentTheme;
 }
