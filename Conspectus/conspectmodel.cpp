@@ -442,14 +442,15 @@ void ConspectModel::changeComment(int list_id, QString file_name, QString commen
 
 QStringList ConspectModel::getFileNamesByTag(QString tag) {
     QStringList fileNames;
+    if (tag == "") return fileNames;
     QStringList tags = tag.split(" ");
     int row = mListsModel->rowCount();
     for (int i = 0; i < row; ++i) {
         QModelIndex tagIndex = mListsModel->index(i, 2);
-        QString currentTags = tagIndex.data().toString();
+        QStringList currentTags = tagIndex.data().toString().split(" ");
         bool isAllTags = true;
-        for (int j = 0; j < tags.size(); ++j) {
-            if (!currentTags.contains(tags[j])) isAllTags = false;
+        for (int j = 0; j < tags.size(); ++j) {          
+            if (!currentTags.contains(tags.at(j))) isAllTags = false;
         }
         if (isAllTags) {
             QModelIndex nameIndex = mListsModel->index(i, 1);
