@@ -93,16 +93,12 @@ ApplicationWindow {
             mainForm.visible = false
             showForm.visible = true
             showFormSignal();
-            showForm.clearCrop();aaa.t
+            showForm.clearCrop();
         }
         buttonCancel.onClicked: {
             viewForm.showViewForm();
             showForm.clearTagsComments();
         }
-    }
-
-    Timer {
-        id: aaa
     }
 
 }

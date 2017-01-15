@@ -34,6 +34,8 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("utils", &util);
     engine.load(qmlUrl);
 
+    setWindowIcon(QIcon("/assets/icon.png"));
+
 	FileManager * fm = new FileManager();
     DBManager* dbManager = DBManager::getInstance();
     ConspectModel* conspectModel = ConspectModel::getInstance();
