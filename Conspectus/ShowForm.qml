@@ -126,7 +126,7 @@ Item {
             onClicked:  {
                 if (current_source_form === "ViewForm") {
                     viewForm.setPreviousImage();
-                } else {
+                } else if (current_source_form === "TagForm") {
                     tagForm.setPreviousImage();
                 }
             }
@@ -169,7 +169,7 @@ Item {
             onClicked: {
                 if (current_source_form === "ViewForm") {
                     viewForm.setNextImage();
-                } else {
+                } else if (current_source_form === "TagForm") {
                     tagForm.setNextImage();
                 }
             }
@@ -432,7 +432,7 @@ Item {
 
         if (current_source_form === "ViewForm") {
             rootShow.imageSet(viewForm.getCurrentIndex(), current_image_name);
-        } else {
+        } else if (current_source_form === "TagForm") {
             rootShow.imageSet(tagForm.getCurrentIndex(), current_image_name);
         }
     }

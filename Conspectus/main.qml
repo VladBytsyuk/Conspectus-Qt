@@ -99,8 +99,13 @@ ApplicationWindow {
             showFormSignal();
         }
         buttonCancel.onClicked: {
-            viewForm.showViewForm();
-            showForm.clearTagsComments();
+            if (showForm.current_source_form === "ViewForm") {
+                viewForm.showViewForm();
+                showForm.clearTagsComments();
+                showForm.current_source_form = "";
+            } else if (showForm.current_source_form === "TagForm") {
+                tagForm.showTagForm();
+            }
         }
     }
 
