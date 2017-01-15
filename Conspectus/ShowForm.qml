@@ -231,12 +231,18 @@ Item {
                     onClicked: showForm.turnedLeft(viewForm.getCurrentIndex(), current_image_name)
                 }
 
-                Image {
-                    source: "/assets/zoom-out.png"
+                ToolButton{
+                    id: zoomMinus
                     height: iconSize
                     width: iconSize
-                    fillMode: Image.PreserveAspectFit
+                    Image {
+                        source: "/assets/zoom-out.png"
+                        anchors.fill: parent
+                        fillMode: Image.PreserveAspectFit
+                    }
+                    onClicked: zoomInSlider.value = Math.max(0, zoomInSlider.value - 10);
                 }
+
                 Slider {
                     id: zoomInSlider
                     height: iconSize
@@ -255,11 +261,17 @@ Item {
                         scroll.flickableItem.contentX = scroll.flickableItem.contentWidth / 2 - scroll.width / 2;
                     }
                 }
-                Image {
-                    source: "/assets/zoom.png"
+
+                ToolButton{
+                    id: zoomPlus
                     height: iconSize
                     width: iconSize
-                    fillMode: Image.PreserveAspectFit
+                    Image {
+                        source: "/assets/zoom.png"
+                        anchors.fill: parent
+                        fillMode: Image.PreserveAspectFit
+                    }
+                    onClicked: zoomInSlider.value = Math.min(100, zoomInSlider.value + 10);
                 }
 
                 ToolButton{
