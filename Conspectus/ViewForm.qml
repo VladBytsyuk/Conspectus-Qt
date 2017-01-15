@@ -163,7 +163,11 @@ Item {
                             renderType: Text.NativeRendering
                             font.bold: true
                             color: "black"
-                            text: control.currentIndex===-1?"Term":control.currentText
+                            text: control.currentIndex===-1?
+                                      "Term":
+                                      control.currentText.length>15?
+                                          control.currentText.substring(0,12)+"...":
+                                          control.currentText
                         }
                 }
             }
@@ -189,7 +193,11 @@ Item {
                             renderType: Text.NativeRendering
                             font.bold: true
                             color: "black"
-                            text: control.currentIndex===-1?"Subject":control.currentText
+                            text: control.currentIndex===-1?
+                                      "Subject":
+                                      control.currentText.length>15?
+                                          control.currentText.substring(0,12)+"...":
+                                          control.currentText
                         }
                 }
             }
@@ -216,7 +224,11 @@ Item {
                             color: "black"
                             font.bold: true
                             text:
-                                control.currentIndex===-1?"Theme":control.currentText
+                                control.currentIndex===-1?
+                                    "Theme":
+                                    control.currentText.length>15?
+                                        control.currentText.substring(0,12)+"...":
+                                        control.currentText
                         }
                 }
             }
