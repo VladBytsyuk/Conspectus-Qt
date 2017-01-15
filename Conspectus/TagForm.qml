@@ -154,7 +154,7 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: topBar.bottom
         anchors.topMargin: 10
-        anchors.bottom: buttonCancel.top
+        anchors.bottom: flowEditCancel.top
         anchors.bottomMargin: 10
 
         color: "#006988bd"
@@ -285,6 +285,15 @@ Item {
             }
        }
    } // End photo bar
+
+    Flow {
+        id: flowEditCancel
+        width: parent.width
+        height: buttonHeight + 15
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 2
+        anchors.horizontalCenter: parent.horizontalCenter
+    }
 
     function setNextImage() {
         //console.log(root.currentIndex + 1);

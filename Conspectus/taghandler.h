@@ -12,10 +12,12 @@ public:
 
 private:
     QObject* mView;
+    QString currentRequest;
 
     void setImageToQml(QString file_name, int list_no);
     void clearViewsFromView();
     bool invokeSetImages(QStringList images);
+    void reloadGridView();
 
 signals:
 
