@@ -25,7 +25,6 @@ void AddFormHandler::onValidFilePath(QString file_name) {
     QObject *editText = mView->findChild<QObject*>("rectEditText");
     editText->setProperty("state", "highlightGreen");
     editText->setProperty("text", "");
-    QVariant empty;
     QMetaObject::invokeMethod(mView, "startTimer");
 }
 

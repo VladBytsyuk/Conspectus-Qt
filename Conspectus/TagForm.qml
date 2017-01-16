@@ -112,6 +112,7 @@ Item {
             width: 60
             height: textFieldRect.height
             anchors.left: textFieldRect.right
+            anchors.leftMargin: 5
             anchors.verticalCenter: parent.verticalCenter
             text:"Search"
             visible: true
