@@ -440,6 +440,26 @@ void ConspectModel::changeComment(int list_id, QString file_name, QString commen
     emit insertListTableDBSignal(list_id, file_name, tag, comment);
 }
 
+QStringList ConspectModel::getFileNamesByTag(QString tag) {
+    QStringList fileNames;
+    if (tag.simplified() == "") return fileNames;
+    QStringList tags = tag.simplified().split(" ");
+    int row = mListsModel->rowCount();
+    for (int i = 0; i < row; ++i) {
+        QModelIndex tagIndex = mListsModel->index(i, 2);
+        QStringList currentTags = tagIndex.data().toString().split(" ");
+        bool isAllTags = true;
+        for (int j = 0; j < tags.size(); ++j) {
+            if (!currentTags.contains(tags.at(j))) isAllTags = false;
+        }
+        if (isAllTags) {
+            QModelIndex nameIndex = mListsModel->index(i, 1);
+            fileNames.append(nameIndex.data().toString());
+        }
+    }
+    return fileNames;
+}
+
 void ConspectModel::onRemoveList(int term, QString subject, QString theme, QString file_name) {
     deleteList(term, subject, theme, file_name);
     logConspectModel();

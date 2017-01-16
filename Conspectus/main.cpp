@@ -13,6 +13,7 @@
 #include "imagehandler.h"
 #include "addformhandler.h"
 #include "viewformhandler.h"
+#include "taghandler.h"
 #include "resourceimageprovider.h"
 #include "utils.h"
 //Log File
@@ -40,6 +41,7 @@ int main(int argc, char *argv[])
     AddFormHandler add_form(engine.rootObjects().at(0)->findChild<QObject*>("addForm"));
     ViewFormHandler view_form(engine.rootObjects().at(0)->findChild<QObject*>("viewForm"));
     ImageHandler image_handler(engine.rootObjects().at(0)->findChild<QObject*>("showForm"));
+    TagHandler tag_handler(engine.rootObjects().at(0)->findChild<QObject*>("tagForm"));
 
     //Open log file. Start logging
     logFile = new QFile(fm->getMainDirPath() + "/logFile.log");
@@ -99,6 +101,10 @@ int main(int argc, char *argv[])
                      conspectModel, &ConspectModel::onChangeTag);
     QObject::connect(&image_handler, &ImageHandler::changeComment,
                      conspectModel, &ConspectModel::onChangeComment);
+    QObject::connect(&image_handler, &ImageHandler::setViewFormIndex,
+                     &view_form, &ViewFormHandler::onSetGridViewIndex);
+    QObject::connect(&image_handler, &ImageHandler::setTagFormIndex,
+                     &tag_handler, &TagHandler::onSetGridViewIndex);
 
     //ViewForm connections
     //Open ViewForm
@@ -218,12 +224,20 @@ int main(int argc, char *argv[])
                      &image_handler, SLOT(onCommentChanged(QString, QString)));
     //Set path
     QObject::connect(engine.rootObjects().at(0)
-                     ->findChild<QObject*>("showForm"), SIGNAL(imageSet(int, QString)),
-                     &image_handler, SLOT(onSetImagePath(int, QString)));
+                     ->findChild<QObject*>("showForm"), SIGNAL(imageSet(int, QString, QString)),
+                     &image_handler, SLOT(onSetImagePath(int, QString, QString)));
     //Crop
     QObject::connect(engine.rootObjects().at(0)
                      ->findChild<QObject*>("showForm"), SIGNAL(cropImage(int, QString, int, int, int, int)),
                      &image_handler, SLOT(onCropImage(int, QString, int, int, int, int)));
+
+    //Tag form connections
+    QObject::connect(engine.rootObjects().at(0)
+                     ->findChild<QObject*>("tagForm"), SIGNAL(search(QString)),
+                     &tag_handler, SLOT(onSearchRequest(QString)));
+    QObject::connect(engine.rootObjects().at(0)
+                     ->findChild<QObject*>("tagForm"), SIGNAL(tagFormSignal()),
+                     &tag_handler, SLOT(onForm()));
 
     app.exec();
 

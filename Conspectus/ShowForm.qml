@@ -28,13 +28,15 @@ Item {
     property alias buttonCancel: buttonCancel
 
     property string current_image_name: ""
+    property string current_source_form: ""
+
     signal turnedLeft(int index, string name)
     signal turnedRight(int index, string name)
     signal printed(string name)
     signal improved(int index, string name)
     signal deleted(string name)
     signal updateViewForm()
-    signal imageSet(int index, string name)
+    signal imageSet(int index, string form_name, string name)
     signal cropImage(int index, string name, int fromX, int fromY, int toX, int toY);
 
     //forced emit subjectSelect signal
@@ -151,8 +153,12 @@ Item {
             id: buttonLeftMA
             anchors.fill: parent
             hoverEnabled: true
-            onClicked: {
-                viewForm.setPreviousImage()
+            onClicked:  {
+                if (current_source_form === "ViewForm") {
+                    viewForm.setPreviousImage();
+                } else if (current_source_form === "TagForm") {
+                    tagForm.setPreviousImage();
+                }
                 clearCrop()
             }
         }
@@ -192,7 +198,11 @@ Item {
             anchors.fill: parent
             hoverEnabled: true
             onClicked: {
-                viewForm.setNextImage()
+                if (current_source_form === "ViewForm") {
+                    viewForm.setNextImage();
+                } else if (current_source_form === "TagForm") {
+                    tagForm.setNextImage();
+                }
                 clearCrop()
             }
         }
@@ -580,7 +590,11 @@ Item {
         current_image_name = path;
         setNaturalSize();
 
-        rootShow.imageSet(viewForm.getCurrentIndex(), current_image_name);
+        if (current_source_form === "ViewForm") {
+            rootShow.imageSet(viewForm.getCurrentIndex(), "ViewForm", current_image_name);
+        } else if (current_source_form === "TagForm") {
+            rootShow.imageSet(tagForm.getCurrentIndex(), "TagForm", current_image_name);
+        }
     }
 
     function reloadImage() {

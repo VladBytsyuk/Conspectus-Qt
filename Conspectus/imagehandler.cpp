@@ -32,7 +32,7 @@ bool ImageHandler::onTurnLeft(int index, QString name) {
 
     qDebug(logDebug()) << "Image" << name << "has been rotated to the left";
     updateQmlImage();
-    emit imageUpdated(index, name);
+    //emit imageUpdated(index, name);
     return true;
 }
 
@@ -50,7 +50,7 @@ bool ImageHandler::onTurnRight(int index, QString name) {
 
     qDebug(logDebug()) << "Image" << name << "has been rotated to the right";
     updateQmlImage();
-    emit imageUpdated(index, name);
+    //emit imageUpdated(index, name);
     return true;
 }
 
@@ -109,7 +109,7 @@ bool ImageHandler::onImproveImage(int index, QString name) {
 
     qDebug(logDebug()) << "Image" << name << "has been improved";
     updateQmlImage();
-    emit imageUpdated(index, name);
+    //emit imageUpdated(index, name);
     return true;
 }
 
@@ -182,7 +182,7 @@ bool ImageHandler::onCommentChanged(QString file_name, QString comments) {
     return true;
 }
 
-bool ImageHandler::onSetImagePath(int index, QString file_name) {
+bool ImageHandler::onSetImagePath(int index, QString form_name, QString file_name) {
     mPath = file_name;
     QString tag = "";
     QString comment = "";
@@ -199,7 +199,11 @@ bool ImageHandler::onSetImagePath(int index, QString file_name) {
     }
     mView->findChild<QObject*>("tagField")->setProperty("text", tag);
     mView->findChild<QObject*>("commentField")->setProperty("text", comment);
-    emit setGridViewIndex(index);
+    if (form_name == "ViewForm") {
+        emit setViewFormIndex(index);
+    } else if (form_name == "TagForm") {
+        emit setTagFormIndex(index);
+    }
     return true;
 }
 

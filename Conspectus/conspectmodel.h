@@ -51,6 +51,7 @@ public:
 
     /* ====================== Methods ====================== */
     static ConspectModel* getInstance();
+    static QStringList getFileNamesByTag(QString tag);
 
     static void setConspectModel(QStandardItemModel* conspectModel);
     static QStandardItemModel* getConspectModel();

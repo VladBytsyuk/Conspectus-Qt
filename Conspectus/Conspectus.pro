@@ -18,7 +18,8 @@ SOURCES += \
     viewformhandler.cpp \
     utils.cpp \
     resourceimageprovider.cpp \
-    imagehandler.cpp
+    imagehandler.cpp \
+    taghandler.cpp
 
 RESOURCES += qml.qrc
 win32:RC_FILE = icon.rc
@@ -41,4 +42,5 @@ HEADERS += \
     viewformhandler.h \
     utils.h \
     resourceimageprovider.h \
-    imagehandler.h
+    imagehandler.h \
+    taghandler.h
