@@ -1,9 +1,9 @@
-#ifndef IMAGEHANDLER_H
-#define IMAGEHANDLER_H
+#ifndef SHOW_FORM_HANDLER_H
+#define SHOW_FORM_HANDLER_H
 
 #include "formhandler.h"
 
-class ImageHandler : public FormHandler
+class ShowFormHandler : public FormHandler
 {
     Q_OBJECT
 
@@ -12,7 +12,6 @@ protected:
 
 private:
     int mTerm;
-    QString mFormName;
     QString mSubject;
     QString mTheme;
     QString mPath;
@@ -23,8 +22,8 @@ private:
     void returnToViewForm();
 
 public:
-    ImageHandler(QObject* view);
-    ~ImageHandler();
+    ShowFormHandler(QObject* view);
+    ~ShowFormHandler();
 
 public slots:
     void onSetPathToList(int term, QString subject, QString theme);
@@ -35,7 +34,7 @@ public slots:
     bool onDelete(QString name);
     bool onTagChanged(QString file_name, QString tags);
     bool onCommentChanged(QString file_name, QString comment);
-    bool onSetImagePath(int index, QString form_name, QString file_name);
+    bool onSetImagePath(int index, QString file_name, QString file_name);
     bool onCropImage(int index, QString name, int fromX, int fromY, int toX, int toY);
 
     void onForm();
@@ -48,6 +47,7 @@ signals:
     void changeComment(QString file_name, QString comment);
     void setViewFormIndex(int index);
     void setTagFormIndex(int index);
+
 };
 
-#endif // IMAGEHANDLER_H
+#endif // SHOW_FORMHANDLER_H

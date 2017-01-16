@@ -95,7 +95,7 @@ int main(int argc, char *argv[])
                      &view_form, &ViewFormHandler::onUpdateImage);
     QObject::connect(&view_form, &ViewFormHandler::setPathToList,
                      &image_handler, &ImageHandler::onSetPathToList);
-    QObject::connect(&image_handler, &ImageHandler::setGridViewIndex,
+    QObject::connect(&image_handler, &ImageHandler::setViewFormIndex,
                      &view_form, &ViewFormHandler::onSetGridViewIndex);
     QObject::connect(&image_handler, &ImageHandler::changeTag,
                      conspectModel, &ConspectModel::onChangeTag);
