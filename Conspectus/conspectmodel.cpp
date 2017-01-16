@@ -329,6 +329,7 @@ int ConspectModel::getListId(QString name) {
             return list_id;
         }
     }
+    return 0;
 }
 
 void ConspectModel::deleteList(int term, QString subject, QString theme, QString file_name) {

@@ -216,6 +216,8 @@ bool FormHandler::clearComboBoxes() {
 }
 
 bool FormHandler::fillComboBoxes(int term, QString subject, QString theme) {
+    qDebug(logDebug()) << "Fill term="<<term<<"subject="<<subject<<"theme="<<theme;
+
     setTerms();
     onSetTerm(QString::number(mCurrentTerm));
 
