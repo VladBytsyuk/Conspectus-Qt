@@ -99,8 +99,30 @@ bool FileManager::removeFile(QString file_name){
 	}
 }
 
-//Get image object from project`s directory
-QPixmap FileManager::getImage(QString file_name){
+//Get QImage preview object from project`s direvtory
+QImage FileManager::getImage(QString file_name){
+    QImage img;
+    if (!img.load(getImagePath(file_name))){
+        qCritical(logCritical()) << "Can't load this image: " << file_name;
+        return QImage();
+    } else {
+        return img;
+    }
+}
+
+//Get QImage preview object from project`s direvtory
+QImage FileManager::getImagePreview(QString file_name) {
+    QImage img;
+    if (!img.load(getImagePreviewPath(file_name))){
+        qCritical(logCritical()) << "Can't load this preview image: " << file_name;
+        return QImage();
+    } else {
+        return img;
+    }
+}
+
+//Get QPixmap object from project`s directory
+QPixmap FileManager::getPixmap(QString file_name){
     QPixmap img;
     if (!img.load(getImagePath(file_name))){
         qCritical(logCritical()) << "Can't load this image: " << file_name;
@@ -110,8 +132,8 @@ QPixmap FileManager::getImage(QString file_name){
 	}
 }
 
-//Get image preview object from project`s direvtory
-QPixmap FileManager::getImagePreview(QString file_name) {
+//Get QPixmap preview object from project`s direvtory
+QPixmap FileManager::getPixmapPreview(QString file_name) {
     QPixmap img;
     if (!img.load(getImagePreviewPath(file_name))){
         qCritical(logCritical()) << "Can't load this preview image: " << file_name;

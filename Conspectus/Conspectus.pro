@@ -18,9 +18,11 @@ SOURCES += \
     viewformhandler.cpp \
     utils.cpp \
     resourceimageprovider.cpp \
-    imagehandler.cpp
+    showformhandler.cpp \
+    tagformhandler.cpp
 
 RESOURCES += qml.qrc
+win32:RC_FILE = icon.rc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
@@ -40,4 +42,5 @@ HEADERS += \
     viewformhandler.h \
     utils.h \
     resourceimageprovider.h \
-    imagehandler.h
+    showformhandler.h \
+    tagformhandler.h

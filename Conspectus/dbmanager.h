@@ -6,8 +6,6 @@
 #include <QtSql>
 #include <QStandardItemModel>
 #include "loggingcategories.h"
-//#include "conspectmodel.h"
-//#include "filemanager.h"
 
 #define DATABASE_NAME "conspectus_db"
 
@@ -69,14 +67,16 @@ public:
                                   QString subject,
                                   int theme_no, QString theme,
                                   int list_id_no, int list_id);
-    //ConspectModel* getModel();
-    //int generateListId();
     int findFileIdByName(QString file_name);
     QStandardItemModel* getConspectModel();
     QStandardItemModel* getListModel();
 
 public slots:
     void onInsertFileIntoListTable(int id, QString file_name);
+    void onInsertFileIntoListTableWithInfo(int list_id,
+                                           QString file_name,
+                                           QString tags,
+                                           QString comments);
 	void onRemoveFile(QString file_name);
 
     void onInsertListIntoConspectTable(int id,

@@ -2,12 +2,14 @@
 
 ViewFormHandler::ViewFormHandler(QObject* view) {
     mView = view;
+    forcedUpdateSubject = false;
+    forcedUpdateTheme = false;
 }
 
 ViewFormHandler::~ViewFormHandler() {}
 
 void ViewFormHandler::onOkClicked(QString file_path) {
-
+    qDebug(logDebug()) << "ViewForm OK clicked: " << file_path;
 }
 
 QMap<int, QString> ViewFormHandler::getImageSources(int term, QString subject, QString theme) {
@@ -48,29 +50,27 @@ QMap<int, QString> ViewFormHandler::getListIds(int term, QString subject, QStrin
             }
         }
     }
+    return images;
 }
 
 QMap<int, QString> ViewFormHandler::getFileNames(QMap<int, QString> &images) {
-    QStandardItemModel* listModel = ConspectModel::getListModel();
-    int row_count = listModel->rowCount();
-    QList<int> listNos;
-    QStringList fileIds;
     for (auto it = images.begin(); it != images.end(); ++it) {
-        listNos.push_back(it.key());
-        fileIds.push_back(it.value());
-    }
-    for (int i = 0; i < row_count; ++i) {
-        QModelIndex index = listModel->index(i, 0);
-        int id = index.data().toInt();
-        if (fileIds.contains(QString::number(id))) {
-            int id_index = fileIds.indexOf(QString::number(id));
-            QModelIndex fileSourceIndex = listModel->index(i, 1);
-            QString file_name = fileSourceIndex.data().toString();
-            int list_no = listNos[id_index];
-            images[list_no] = file_name;
-        }
+        images[it.key()] = getNameById(it.value().toInt());
     }
     return images;
+}
+
+QString ViewFormHandler::getNameById(int list_id) {
+    QStandardItemModel* model = ConspectModel::getListModel();
+    int row_count = model->rowCount();
+    for (int i = 0; i < row_count; ++i) {
+        QModelIndex idIndex = model->index(i, 0);
+        if (idIndex.data().toInt() == list_id) {
+            QModelIndex nameIndex = model->index(i, 1);
+            return nameIndex.data().toString();
+        }
+    }
+    return "";
 }
 
 void ViewFormHandler::setImageToQml(QString file_name, int list_no) {
@@ -108,11 +108,14 @@ void ViewFormHandler::onSetTheme(QString theme) {
 
 void ViewFormHandler::changeModelOrdering(int previous_index, int current_index) {
     emit changeOrder(mCurrentTerm, mCurrentSubject, mCurrentTheme, previous_index, current_index);
+    mIndex = current_index;
+    mView->findChild<QObject*>("gridView")->setProperty("currentIndex", mIndex);
 }
 
 void ViewFormHandler::reloadGridView() {
     clearViewsFromView();
     invokeSetImages();
+    mView->findChild<QObject*>("gridView")->setProperty("currentIndex", mIndex);
 }
 
 void ViewFormHandler::onOrderChanged(int previous_index, int current_index) {
@@ -121,9 +124,10 @@ void ViewFormHandler::onOrderChanged(int previous_index, int current_index) {
     qDebug(logDebug()) << "Model has been updated";
 }
 
-void ViewFormHandler::onUpdateImage(QString name) {
+void ViewFormHandler::onUpdateImage(int index, QString name) {
+    mIndex = index;
     reloadGridView();
-    qDebug(logDebug()) << "Model has been updated";
+    qDebug(logDebug()) << "Model has been updated (" << name << ")";
 }
 
 void ViewFormHandler::onUpdateView() {
@@ -131,16 +135,27 @@ void ViewFormHandler::onUpdateView() {
         mCurrentTerm = -1;
         mCurrentSubject = "";
         mCurrentTheme = "";
+        onPathChange();
         clearComboBoxes();
     }
     onForm();
+}
+
+void ViewFormHandler::onSetGridViewIndex(int index) {
+    mIndex = index;
 }
 
 void ViewFormHandler::onSetPath() {
     emit setPathToList(mCurrentTerm, mCurrentSubject, mCurrentTheme);
 }
 
+
+
 void ViewFormHandler::onForm() {
     FormHandler::onForm();
     reloadGridView();
+}
+
+void ViewFormHandler::onPathChange() {
+    mIndex = 0;
 }

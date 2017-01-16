@@ -2,6 +2,8 @@
 
 AddFormHandler::AddFormHandler(QObject* view) {
     mView = view;
+    forcedUpdateSubject = false;
+    forcedUpdateTheme = false;
 }
 
 AddFormHandler::~AddFormHandler() {}
@@ -20,6 +22,10 @@ void AddFormHandler::onInvalidFilePath() {
 
 void AddFormHandler::onValidFilePath(QString file_name) {
     emit addFileToModel(file_name, mCurrentTerm, mCurrentSubject, mCurrentTheme);
+    QObject *editText = mView->findChild<QObject*>("rectEditText");
+    editText->setProperty("state", "highlightGreen");
+    editText->setProperty("text", "");
+    QMetaObject::invokeMethod(mView, "startTimer");
 }
 
 void AddFormHandler::onForm() {
@@ -27,4 +33,8 @@ void AddFormHandler::onForm() {
     FormHandler::onForm();
     QObject *editText = mView->findChild<QObject*>("editText");
     editText->setProperty("text", "");
+}
+
+void AddFormHandler::onPathChange() {
+
 }

@@ -15,12 +15,27 @@ Item {
     property int horizontalNotPressed: 135
     property int rOffShadowNotPressed: 8
     property int addPressed: 2
+    property string textColor: "#263238"
 
     function unHighLight() {
         rectTextField.state = ""
         boxTerm.state = ""
         boxSubject.state = ""
         boxTheme.state = ""
+    }
+
+    //forced emit subjectSelect signal
+    function emitSubjectSelect(subject) {
+        boxSubject.subjectSelect(subject);
+    }
+
+    //forced emit themeSelect signal
+    function emitThemeSelect(theme) {
+        boxTheme.themeSelect(theme);
+    }
+
+    function startTimer() {
+        greenTimer.start();
     }
 
     Component {
@@ -71,11 +86,28 @@ Item {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
             }
-            states: State {
-                name: "highlight"
-                PropertyChanges {target: dropShadowTextField; color: "#8f0000";
-                                horizontalOffset: 0; verticalOffset: 0;}
-            }
+            states: [
+                State {
+                    name: "highlight"
+                    PropertyChanges {
+                        target: dropShadowTextField
+                        color: "#8f0000"
+                        horizontalOffset: 0
+                        verticalOffset: 0
+                    }
+                },
+                State {
+                    name: "highlightGreen"
+                    PropertyChanges {
+                        target: dropShadowTextField
+                        color: "#aa008f00"
+                        horizontalOffset: 0
+                        verticalOffset: 0
+                        radius: 10
+                        samples: 21
+                    }
+                }
+            ]
         }
         DropShadow {
             id: dropShadowTextField
@@ -210,9 +242,15 @@ Item {
                     boxTheme.state = ""
                  }
                 if (!isEditTextEmpty && !isTermEmpty && !isSubjectEmpty && !isThemeEmpty) {
-                    buttonOk.okClicked(textField1.text);
+                    buttonOk.okClicked(textField1.text)
                 }
             }
+        }
+
+        Timer {
+            id: greenTimer
+            interval: 500
+            onTriggered: rectTextField.state = ""
         }
 
     DropShadow {
@@ -235,8 +273,6 @@ Item {
         radius: buttonOk.hovered ? rOffShadowNotPressed+8 : rOffShadowNotPressed
         samples: 17
     }
-
-
 
     ComboBox {
         id: boxTerm
@@ -272,7 +308,7 @@ Item {
                 label: Text {                    
                     renderType: Text.NativeRendering
                     font.bold: true
-                    color: "black"
+                    color: textColor
                     text: control.currentIndex===-1?"Term":
                           control.currentText
                 }
@@ -312,7 +348,7 @@ Item {
                 label: Text {
                     //renderType: Text.NativeRendering
                     font.bold: true
-                    color: "black"
+                    color: textColor
                     text: control.currentIndex===-1?"Subject":control.currentText
                 }
         }
@@ -390,28 +426,63 @@ Item {
     }
     Text {
         id: title
-        text: "CONSPECTUS"
+        text: "ADD LIST"
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenterOffset: -150
         anchors.verticalCenter: parent.verticalCenter
-        font.pixelSize: 32
+        font.pixelSize: 28
         font.bold: true
+        color: textColor
     }
 
-    Canvas{
-        id: arrow
-//        imageLoaded: "assets/comboBox_arrow.png"
-        width: 25
-        height: 25
-//        onPaint: {
-//            var ctx = getContext("2d")
-//            ctx.beginPath();
-//            ctx.moveTo(x + 5, y + 10);
-//            ctx.lineTo(x + 15, y + 10);
-//            ctx.lineTo(x + 10, y + 15);
-//            ctx.fill();
-//        }
+    Text {
+        width: boxWidth
+        height: boxHeight
+        anchors.right: boxTerm.left
+        anchors.rightMargin: 10
+        anchors.verticalCenterOffset: -30
+        anchors.verticalCenter: parent.verticalCenter
+
+        horizontalAlignment: TextInput.AlignRight
+        verticalAlignment: TextInput.AlignVCenter
+
+        text: "Term"
+        color: textColor
+        font.pixelSize: 12
+        font.family: "Helvetica"
+
     }
 
+    Text {
+        width: boxWidth
+        height: boxHeight
+        anchors.right: boxSubject.left
+        anchors.rightMargin: 10
+        anchors.verticalCenterOffset: 10
+        anchors.verticalCenter: parent.verticalCenter
 
+        horizontalAlignment: TextInput.AlignRight
+        verticalAlignment: TextInput.AlignVCenter
+
+        text: "Subject"
+        color: textColor
+        font.pixelSize: 12
+        font.family: "Helvetica"
+    }
+
+    Text {
+        width: boxWidth
+        height: boxHeight
+        anchors.right: boxTheme.left
+        anchors.rightMargin: 10
+        anchors.verticalCenterOffset: 50
+        anchors.verticalCenter: parent.verticalCenter
+
+        horizontalAlignment: TextInput.AlignRight
+        verticalAlignment: TextInput.AlignVCenter
+        text: "Theme"
+        color: textColor
+        font.family: "Helvetica"
+        font.pixelSize: 12
+    }
 }

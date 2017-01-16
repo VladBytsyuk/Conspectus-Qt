@@ -89,21 +89,12 @@ Item {
 
     Text {
         id: title
-//        x: 220
-//        y: 65
         text: "CONSPECTUS"
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenterOffset: -125
         anchors.verticalCenter: parent.verticalCenter
         font.pixelSize: 32
         font.bold: true
+        color: "#263238"
     }
-
-//    DropShadow {
-//        anchors.fill: title
-//        source: title
-//        color: "#20000000"
-//        horizontalOffset: shadowOffset
-//        verticalOffset: shadowOffset
-//    }
 }

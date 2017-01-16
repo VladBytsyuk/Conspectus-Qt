@@ -41,6 +41,8 @@ private:
     int getListId(QString name);
     bool isImageUsed(QString name);
     bool isImageUsed(int list_id);
+    void changeTag(int list_id, QString file_name, QString tag);
+    void changeComment(int list_id, QString file_name, QString comment);
 
 public:
     /* ==================== Constructor ==================== */
@@ -49,6 +51,7 @@ public:
 
     /* ====================== Methods ====================== */
     static ConspectModel* getInstance();
+    static QStringList getFileNamesByTag(QString tag);
 
     static void setConspectModel(QStandardItemModel* conspectModel);
     static QStandardItemModel* getConspectModel();
@@ -65,7 +68,9 @@ public slots:
     void onRemoveFile(QString file_name);
     void onAddFile(QString file_name, int term, QString subject, QString theme);
     void onChangeOrdering(int term, QString subject, QString theme, int previous_index, int current_index);
-
+    void onAddListToAnotherPath(int term, QString subject, QString theme, QString file_name);
+    void onChangeTag(QString file_name, QString tag);
+    void onChangeComment(QString file_name, QString comment);
 
 signals:
     void insertFileDBSignal(int id, QString file_name);
@@ -75,6 +80,10 @@ signals:
                             QString subject,
                             int theme_no, QString theme,
                             int list_id_no, int list_id);
+    void insertListTableDBSignal(int list_id,
+                                 QString file_name,
+                                 QString tags,
+                                 QString comments);
     void updateRowInConspectTable(int id,
                    int term,
                    QString subject,

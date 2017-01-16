@@ -7,6 +7,9 @@ class AddFormHandler : public FormHandler
 {
     Q_OBJECT
 
+protected:
+    void onPathChange();
+
 private:
     QString mCurrentFilePath;
 

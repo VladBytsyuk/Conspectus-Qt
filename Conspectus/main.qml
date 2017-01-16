@@ -37,6 +37,7 @@ ApplicationWindow {
             addForm.visible = false
             mainForm.visible = false
             showForm.visible = false
+            tagForm.visible = false
             viewForm.viewFormSignal()
         }
 
@@ -55,6 +56,7 @@ ApplicationWindow {
             addForm.visible = true
             mainForm.visible = false
             showForm.visible = false
+            tagForm.visible = false
             addForm.addFormSignal()
         }
 
@@ -75,6 +77,7 @@ ApplicationWindow {
             addForm.visible = false
             mainForm.visible = true
             showForm.visible = false
+            tagForm.visible = false
         }
     }
 
@@ -84,13 +87,48 @@ ApplicationWindow {
         objectName: "showForm"
         visible: false
 
+        signal showFormSignal()
+        signal closeImage()
+
         function showShowForm(string) {
             viewForm.visible = false
             addForm.visible = false
             mainForm.visible = false
             showForm.visible = true
+            tagForm.visible = false
+            showFormSignal();
+            showForm.clearCrop();
         }
-        buttonCancel.onClicked: viewForm.showViewForm()
+        buttonCancel.onClicked: {
+            if (showForm.current_source_form === "ViewForm") {
+                viewForm.showViewForm();
+            } else if (showForm.current_source_form === "TagForm") {
+                tagForm.showTagForm();
+            }
+            showForm.clearTagsComments();
+            showForm.current_source_form = "";
+        }
+    }
+
+    TagForm {
+        id: tagForm
+        anchors.fill: parent
+        objectName: "tagForm"
+        visible: false
+
+        signal tagFormSignal()
+
+        function showTagForm() {
+            viewForm.visible = false
+            addForm.visible = false
+            mainForm.visible = false
+            showForm.visible = false
+            tagForm.visible = true
+            tagFormSignal();
+        }
+        buttonCancel.onClicked: {
+            viewForm.showViewForm();
+        }
     }
 
 }

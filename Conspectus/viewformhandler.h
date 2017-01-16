@@ -7,9 +7,15 @@ class ViewFormHandler : public FormHandler
 {
     Q_OBJECT
 
+protected:
+    void onPathChange();
+
 private:
+    int mIndex;
+
     QMap<int, QString> getListIds(int term, QString subject, QString theme);
     QMap<int, QString> getFileNames(QMap<int, QString> &images);
+    QString getNameById(int list_id);
     bool invokeSetImages();
     void changeModelOrdering(int previous_index, int current_index);
     void reloadGridView();
@@ -32,8 +38,9 @@ public slots:
     void onSetTheme(QString theme);
     void onOkClicked(QString file_path);
     void onOrderChanged(int previous_index, int current_index);
-    void onUpdateImage(QString name);
+    void onUpdateImage(int index, QString name);
     void onUpdateView();
+    void onSetGridViewIndex(int index);
 };
 
 #endif // VIEWFORMHANDLER_H

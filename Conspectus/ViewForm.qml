@@ -14,9 +14,25 @@ Item {
     property int horizontalNotPressed: 135
     property int rOffShadowNotPressed: 8
     property int addPressed: 2
+    property string textColor: "#263238"
 
 
     property alias buttonCancel: buttonCancel
+
+    //forced emit subjectSelect signal
+    function emitTermSelect(term) {
+        boxTerm.termSelect(term);
+    }
+
+    //forced emit subjectSelect signal
+    function emitSubjectSelect(subject) {
+        boxSubject.subjectSelect(subject);
+    }
+
+    //forced emit themeSelect signal
+    function emitThemeSelect(theme) {
+        boxTheme.themeSelect(theme);
+    }
 
     Component {
         id: buttonStyle
@@ -81,7 +97,7 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.top: parent.top
             anchors.topMargin: 5
-            width: 600
+            width: 626
             height: 30
             spacing: 5
 
@@ -91,6 +107,7 @@ Item {
                 horizontalAlignment: TextInput.AlignHCenter
                 text: "Term"
                 font.pixelSize: 12
+                color: textColor
             }
 
             Text {
@@ -99,6 +116,7 @@ Item {
                 horizontalAlignment: TextInput.AlignHCenter
                 text: "Subject"
                 font.pixelSize: 12
+                color: textColor
             }
 
             Text {
@@ -107,6 +125,7 @@ Item {
                 horizontalAlignment: TextInput.AlignHCenter
                 text: "Theme"
                 font.pixelSize: 12
+                color: textColor
             }
         }
 
@@ -118,7 +137,7 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 5
-            width: 600
+            width: 626
             height: 30
             spacing: 5
 
@@ -144,7 +163,11 @@ Item {
                             renderType: Text.NativeRendering
                             font.bold: true
                             color: "black"
-                            text: control.currentIndex===-1?"Term":control.currentText
+                            text: control.currentIndex===-1?
+                                      "Term":
+                                      control.currentText.length>15?
+                                          control.currentText.substring(0,12)+"...":
+                                          control.currentText
                         }
                 }
             }
@@ -170,7 +193,11 @@ Item {
                             renderType: Text.NativeRendering
                             font.bold: true
                             color: "black"
-                            text: control.currentIndex===-1?"Subject":control.currentText
+                            text: control.currentIndex===-1?
+                                      "Subject":
+                                      control.currentText.length>15?
+                                          control.currentText.substring(0,12)+"...":
+                                          control.currentText
                         }
                 }
             }
@@ -197,8 +224,35 @@ Item {
                             color: "black"
                             font.bold: true
                             text:
-                                control.currentIndex===-1?"Theme":control.currentText
+                                control.currentIndex===-1?
+                                    "Theme":
+                                    control.currentText.length>15?
+                                        control.currentText.substring(0,12)+"...":
+                                        control.currentText
                         }
+                }
+            }
+
+            Rectangle {
+                id: searchButton
+                width: boxHeight
+                height: boxHeight
+                color: "#f0c150"
+                radius: 3
+                Image{
+                    source: "/assets/search.png"
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.verticalCenter: parent.verticalCenter
+                    width: boxHeight - 3
+                    height: boxHeight - 3
+                    fillMode: Image.PreserveAspectFit
+                }
+                MouseArea{
+                    id: searchButtonMA
+                    anchors.fill: parent
+                    onClicked: {
+                        tagForm.showTagForm();
+                    }
                 }
             }
 
@@ -335,6 +389,7 @@ Item {
                                 source: "image://sourceDir/Preview/" + src;
                                 fillMode: Image.PreserveAspectFit
                                 opacity: parent.opacity
+                                cache: false
                             }
 
                             /**
@@ -365,6 +420,7 @@ Item {
                         onDoubleClicked: {
                             if (mouse.button & Qt.LeftButton) {
                                 root.currentIndex = index;
+                                showForm.current_source_form = "ViewForm";
                                 if (root.currentIndex - 1 != -1 && root.currentIndex + 1 != root.count) {
                                     showForm.setSource(src, true, true);
                                 } else if (root.currentIndex - 1 === -1 && root.currentIndex + 1 != root.count) {
@@ -415,8 +471,9 @@ Item {
    } //End bottom bar
 
    function setNextImage() {
+       //console.log(root.currentIndex + 1);
+
        if (root.currentIndex + 1 != root.count) {
-           //console.log(root.currentIndex + 1);
            var nextImg = listModel.get(root.currentIndex + 1).src;
            root.currentIndex = root.currentIndex + 1;
            if (root.currentIndex - 1 != -1 && root.currentIndex + 1 != root.count) {
@@ -432,8 +489,9 @@ Item {
    }
 
    function setPreviousImage() {
+       //console.log(root.currentIndex - 1);
+
        if (root.currentIndex - 1 != -1) {
-           //console.log(root.currentIndex - 1);
            var prevImg = listModel.get(root.currentIndex - 1).src;
            root.currentIndex = root.currentIndex - 1;
            if (root.currentIndex - 1 != -1 && root.currentIndex + 1 != root.count) {
@@ -446,5 +504,9 @@ Item {
                showForm.setSource(prevImg, false, false);
            }
        }
+   }
+
+   function getCurrentIndex() {
+       return root.currentIndex;
    }
 }

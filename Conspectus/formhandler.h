@@ -17,10 +17,16 @@ protected:
 
     QObject* mView;
 
+    bool forcedUpdateSubject;
+    bool forcedUpdateTheme;
+
     int getTermRowInModel(int term);
     int getSubjectRowInModel(int term_row, QString subject);
 
+    void clearComboBox(QObject* view);
     bool clearComboBoxes();
+    bool fillComboBoxes(int term, QString subject, QString theme);
+    virtual void onPathChange() = 0;
 
 public:
     bool setTerms();

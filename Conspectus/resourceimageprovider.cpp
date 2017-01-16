@@ -13,7 +13,7 @@ ResourceImageProvider::~ResourceImageProvider() {}
 QImage ResourceImageProvider::requestImage(const QString& id, QSize* size, const QSize& requestedSize)
 {
     FileManager fm;
-    QImage image;// = fm.getImage(id);
+    QImage image = fm.getImage(id);
     QImage result;
 
     if (requestedSize.isValid()) {
@@ -29,7 +29,7 @@ QImage ResourceImageProvider::requestImage(const QString& id, QSize* size, const
 QPixmap ResourceImageProvider::requestPixmap(const QString& id, QSize* size, const QSize& requestedSize)
 {
     FileManager fm;
-    QPixmap image = fm.getImage(id);
+    QPixmap image = fm.getPixmap(id);
     QPixmap result;
 
     if (requestedSize.isValid()) {
