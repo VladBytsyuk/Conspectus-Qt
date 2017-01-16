@@ -112,8 +112,9 @@ Item {
             width: 60
             height: textFieldRect.height
             anchors.left: textFieldRect.right
-            anchors.leftMargin: 5
-            anchors.verticalCenter: parent.verticalCenter
+            anchors.leftMargin: buttonSearch.pressed ? 7 : 5
+            anchors.top: textFieldRect.top
+            anchors.topMargin: buttonSearch.pressed ? 2 : 0
             text:"Search"
             visible: true
             style:  ButtonStyle {
