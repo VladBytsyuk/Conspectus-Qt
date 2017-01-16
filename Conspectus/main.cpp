@@ -10,10 +10,10 @@
 #include "dbmanager.h"
 #include "conspectmodel.h"
 #include "filemanager.h"
-#include "imagehandler.h"
+#include "showformhandler.h"
 #include "addformhandler.h"
 #include "viewformhandler.h"
-#include "taghandler.h"
+#include "tagformhandler.h"
 #include "resourceimageprovider.h"
 #include "utils.h"
 //Log File
@@ -40,8 +40,8 @@ int main(int argc, char *argv[])
     ConspectModel* conspectModel = ConspectModel::getInstance();
     AddFormHandler add_form(engine.rootObjects().at(0)->findChild<QObject*>("addForm"));
     ViewFormHandler view_form(engine.rootObjects().at(0)->findChild<QObject*>("viewForm"));
-    ImageHandler image_handler(engine.rootObjects().at(0)->findChild<QObject*>("showForm"));
-    TagHandler tag_handler(engine.rootObjects().at(0)->findChild<QObject*>("tagForm"));
+    ShowFormHandler show_form(engine.rootObjects().at(0)->findChild<QObject*>("showForm"));
+    TagFormHandler tag_form(engine.rootObjects().at(0)->findChild<QObject*>("tagForm"));
 
     //Open log file. Start logging
     logFile = new QFile(fm->getMainDirPath() + "/logFile.log");
@@ -78,12 +78,12 @@ int main(int argc, char *argv[])
                      &add_form, &AddFormHandler::onValidFilePath);
     QObject::connect(&add_form, &AddFormHandler::addFileToModel,
                      conspectModel, &ConspectModel::onAddFile);
-    QObject::connect(&image_handler, &ImageHandler::addConspectListToAnotherPath,
+    QObject::connect(&show_form, &ShowFormHandler::addConspectListToAnotherPath,
                      conspectModel, &ConspectModel::onAddListToAnotherPath);
     //Remove file
     QObject::connect(fm, &FileManager::removeFileSignal,
                      conspectModel, &ConspectModel::onRemoveFile);
-    QObject::connect(&image_handler, &ImageHandler::deleteList,
+    QObject::connect(&show_form, &ShowFormHandler::deleteList,
                      conspectModel, &ConspectModel::onRemoveList);
     QObject::connect(conspectModel, &ConspectModel::tryToRemoveFile,
                      fm, &FileManager::onTryToRemoveFile);
@@ -91,20 +91,20 @@ int main(int argc, char *argv[])
     QObject::connect(&view_form, &ViewFormHandler::changeOrder,
                      conspectModel, &ConspectModel::onChangeOrdering);
     //Image info
-    QObject::connect(&image_handler, &ImageHandler::imageUpdated,
+    QObject::connect(&show_form, &ShowFormHandler::imageUpdated,
                      &view_form, &ViewFormHandler::onUpdateImage);
     QObject::connect(&view_form, &ViewFormHandler::setPathToList,
-                     &image_handler, &ImageHandler::onSetPathToList);
-    QObject::connect(&image_handler, &ImageHandler::setViewFormIndex,
+                     &show_form, &ShowFormHandler::onSetPathToList);
+    QObject::connect(&show_form, &ShowFormHandler::setViewFormIndex,
                      &view_form, &ViewFormHandler::onSetGridViewIndex);
-    QObject::connect(&image_handler, &ImageHandler::changeTag,
+    QObject::connect(&show_form, &ShowFormHandler::changeTag,
                      conspectModel, &ConspectModel::onChangeTag);
-    QObject::connect(&image_handler, &ImageHandler::changeComment,
+    QObject::connect(&show_form, &ShowFormHandler::changeComment,
                      conspectModel, &ConspectModel::onChangeComment);
-    QObject::connect(&image_handler, &ImageHandler::setViewFormIndex,
+    QObject::connect(&show_form, &ShowFormHandler::setViewFormIndex,
                      &view_form, &ViewFormHandler::onSetGridViewIndex);
-    QObject::connect(&image_handler, &ImageHandler::setTagFormIndex,
-                     &tag_handler, &TagHandler::onSetGridViewIndex);
+    QObject::connect(&show_form, &ShowFormHandler::setTagFormIndex,
+                     &tag_form, &TagFormHandler::onSetGridViewIndex);
 
     //ViewForm connections
     //Open ViewForm
@@ -167,23 +167,23 @@ int main(int argc, char *argv[])
     //Turn left
     QObject::connect(engine.rootObjects().at(0)
                      ->findChild<QObject*>("showForm"), SIGNAL(turnedLeft(int, QString)),
-                     &image_handler, SLOT(onTurnLeft(int, QString)));
+                     &show_form, SLOT(onTurnLeft(int, QString)));
     //Turn right
     QObject::connect(engine.rootObjects().at(0)
                      ->findChild<QObject*>("showForm"), SIGNAL(turnedRight(int, QString)),
-                     &image_handler, SLOT(onTurnRight(int, QString)));
+                     &show_form, SLOT(onTurnRight(int, QString)));
     //Print
     QObject::connect(engine.rootObjects().at(0)
                      ->findChild<QObject*>("showForm"), SIGNAL(printed(QString)),
-                     &image_handler, SLOT(onPrint(QString)));
+                     &show_form, SLOT(onPrint(QString)));
     //Greyscaled
     QObject::connect(engine.rootObjects().at(0)
                      ->findChild<QObject*>("showForm"), SIGNAL(improved(int, QString)),
-                     &image_handler, SLOT(onImproveImage(int,QString)));
+                     &show_form, SLOT(onImproveImage(int,QString)));
     //Deleted
     QObject::connect(engine.rootObjects().at(0)
                      ->findChild<QObject*>("showForm"), SIGNAL(deleted(QString)),
-                     &image_handler, SLOT(onDelete(QString)));
+                     &show_form, SLOT(onDelete(QString)));
     //Update ViewForm
     QObject::connect(engine.rootObjects().at(0)
                      ->findChild<QObject*>("showForm"), SIGNAL(updateViewForm()),
@@ -191,53 +191,53 @@ int main(int argc, char *argv[])
     //Open ShowForm
     QObject::connect(engine.rootObjects().at(0)
                      ->findChild<QObject*>("showForm"), SIGNAL(showFormSignal()),
-                     &image_handler, SLOT(onForm()));
+                     &show_form, SLOT(onForm()));
     //Set Term
     QObject::connect(engine.rootObjects().at(0)
                      ->findChild<QObject*>("showForm")
                      ->findChild<QObject*>("boxTerm"), SIGNAL(termSelect(QString)),
-                     &image_handler, SLOT(onSetTerm(QString)));
+                     &show_form, SLOT(onSetTerm(QString)));
     //Set Subject
     QObject::connect(engine.rootObjects().at(0)
                      ->findChild<QObject*>("showForm")
                      ->findChild<QObject*>("boxSubject"), SIGNAL(subjectSelect(QString)),
-                     &image_handler, SLOT(onSetSubject(QString)));
+                     &show_form, SLOT(onSetSubject(QString)));
     //Set Theme
     QObject::connect(engine.rootObjects().at(0)
                      ->findChild<QObject*>("showForm")
                      ->findChild<QObject*>("boxTheme"), SIGNAL(themeSelect(QString)),
-                     &image_handler, SLOT(onSetTheme(QString)));
+                     &show_form, SLOT(onSetTheme(QString)));
     //Add list to another part of conspect
     QObject::connect(engine.rootObjects().at(0)
                      ->findChild<QObject*>("showForm")
                      ->findChild<QObject*>("buttonADD"), SIGNAL(addList(QString)),
-                     &image_handler, SLOT(onOkClicked(QString)));
+                     &show_form, SLOT(onOkClicked(QString)));
     //Tag changed
     QObject::connect(engine.rootObjects().at(0)
                      ->findChild<QObject*>("showForm")
                      ->findChild<QObject*>("tagField"), SIGNAL(tagChanged(QString, QString)),
-                     &image_handler, SLOT(onTagChanged(QString, QString)));
+                     &show_form, SLOT(onTagChanged(QString, QString)));
     //Comment changed
     QObject::connect(engine.rootObjects().at(0)
                      ->findChild<QObject*>("showForm")
                      ->findChild<QObject*>("commentField"), SIGNAL(commentChanged(QString, QString)),
-                     &image_handler, SLOT(onCommentChanged(QString, QString)));
+                     &show_form, SLOT(onCommentChanged(QString, QString)));
     //Set path
     QObject::connect(engine.rootObjects().at(0)
                      ->findChild<QObject*>("showForm"), SIGNAL(imageSet(int, QString, QString)),
-                     &image_handler, SLOT(onSetImagePath(int, QString, QString)));
+                     &show_form, SLOT(onSetImagePath(int, QString, QString)));
     //Crop
     QObject::connect(engine.rootObjects().at(0)
                      ->findChild<QObject*>("showForm"), SIGNAL(cropImage(int, QString, int, int, int, int)),
-                     &image_handler, SLOT(onCropImage(int, QString, int, int, int, int)));
+                     &show_form, SLOT(onCropImage(int, QString, int, int, int, int)));
 
     //Tag form connections
     QObject::connect(engine.rootObjects().at(0)
                      ->findChild<QObject*>("tagForm"), SIGNAL(search(QString)),
-                     &tag_handler, SLOT(onSearchRequest(QString)));
+                     &tag_form, SLOT(onSearchRequest(QString)));
     QObject::connect(engine.rootObjects().at(0)
                      ->findChild<QObject*>("tagForm"), SIGNAL(tagFormSignal()),
-                     &tag_handler, SLOT(onForm()));
+                     &tag_form, SLOT(onForm()));
 
     app.exec();
 

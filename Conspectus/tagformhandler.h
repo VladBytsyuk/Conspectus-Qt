@@ -3,12 +3,12 @@
 
 #include <QObject>
 
-class TagHandler : public QObject
+class TagFormHandler : public QObject
 {
     Q_OBJECT
 public:
-    explicit TagHandler(QObject* view);
-    ~TagHandler();
+    explicit TagFormHandler(QObject* view);
+    ~TagFormHandler();
 
 private:
     QObject* mView;

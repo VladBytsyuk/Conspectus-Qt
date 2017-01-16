@@ -1,4 +1,4 @@
-#include "imagehandler.h"
+#include "showformhandler.h"
 #include "loggingcategories.h"
 #include "filemanager.h"
 
@@ -10,15 +10,15 @@ QT_BEGIN_NAMESPACE
   extern Q_WIDGETS_EXPORT void qt_blurImage( QPainter *p, QImage &blurImage, qreal radius, bool quality, bool alphaOnly, int transposed = 0 );
 QT_END_NAMESPACE
 
-ImageHandler::ImageHandler(QObject* view) {
+ShowFormHandler::ShowFormHandler(QObject* view) {
     mView = view;
     forcedUpdateSubject = false;
     forcedUpdateTheme = false;
 }
 
-ImageHandler::~ImageHandler(){}
+ShowFormHandler::~ShowFormHandler(){}
 
-bool ImageHandler::onTurnLeft(int index, QString name) {
+bool ShowFormHandler::onTurnLeft(int index, QString name) {
     FileManager fm;
     QPixmap img = fm.getPixmap(name);
     QPixmap img_preview = fm.getPixmapPreview(name);
@@ -36,7 +36,7 @@ bool ImageHandler::onTurnLeft(int index, QString name) {
     return true;
 }
 
-bool ImageHandler::onTurnRight(int index, QString name) {
+bool ShowFormHandler::onTurnRight(int index, QString name) {
     FileManager fm;
     QPixmap img = fm.getPixmap(name);
     QPixmap img_preview = fm.getPixmapPreview(name);
@@ -54,7 +54,7 @@ bool ImageHandler::onTurnRight(int index, QString name) {
     return true;
 }
 
-bool ImageHandler::onPrint(QString name) {
+bool ShowFormHandler::onPrint(QString name) {
     qDebug(logDebug()) << "Start printing image" << name;
     QPixmap pix;
     FileManager fm;
@@ -69,13 +69,13 @@ bool ImageHandler::onPrint(QString name) {
     return true;
 }
 
-bool ImageHandler::onDelete(QString name) {
+bool ShowFormHandler::onDelete(QString name) {
     emit deleteList(mTerm, mSubject, mTheme, name);
     returnToViewForm();
     return true;
 }
 
-bool ImageHandler::onImproveImage(int index, QString name) {
+bool ShowFormHandler::onImproveImage(int index, QString name) {
     FileManager fm;
     QImage img = fm.getImage(name);
     QImage img_preview = fm.getImagePreview(name);
@@ -113,7 +113,7 @@ bool ImageHandler::onImproveImage(int index, QString name) {
     return true;
 }
 
-QImage ImageHandler::grayScale(const QImage & img) {
+QImage ShowFormHandler::grayScale(const QImage & img) {
     if(!img.isNull()) {
         QImage image_gray = img;
         image_gray = image_gray.convertToFormat(QImage::Format_Grayscale8);
@@ -124,7 +124,7 @@ QImage ImageHandler::grayScale(const QImage & img) {
 }
 
 // Image division (first / second) (required equal first and second image size)
-QImage ImageHandler::division(const QImage & first, const QImage & second) {
+QImage ShowFormHandler::division(const QImage & first, const QImage & second) {
     if(!first.isNull() || !second.isNull()) {
         QImage result = first;
         int h = first.height();
@@ -150,7 +150,7 @@ QImage ImageHandler::division(const QImage & first, const QImage & second) {
     return QImage();
 }
 
-QPixmap ImageHandler::rotate(const QPixmap & img, int degree) {
+QPixmap ShowFormHandler::rotate(const QPixmap & img, int degree) {
     QPoint center = img.rect().center();
     QMatrix matrix;
     matrix.translate(center.x(), center.y());
@@ -158,31 +158,31 @@ QPixmap ImageHandler::rotate(const QPixmap & img, int degree) {
     return img.transformed(matrix);
 }
 
-void ImageHandler::returnToViewForm() {
+void ShowFormHandler::returnToViewForm() {
     QMetaObject::invokeMethod(mView, "showViewForm");
 }
 
-void ImageHandler::updateQmlImage() {
+void ShowFormHandler::updateQmlImage() {
     QMetaObject::invokeMethod(mView, "reloadImage");
 }
 
-void ImageHandler::onSetPathToList(int term, QString subject, QString theme) {
+void ShowFormHandler::onSetPathToList(int term, QString subject, QString theme) {
     mTerm = term;
     mSubject = subject;
     mTheme = theme;
 }
 
-bool ImageHandler::onTagChanged(QString file_name, QString tags) {
+bool ShowFormHandler::onTagChanged(QString file_name, QString tags) {
     emit changeTag(file_name, tags);
     return true;
 }
 
-bool ImageHandler::onCommentChanged(QString file_name, QString comments) {
+bool ShowFormHandler::onCommentChanged(QString file_name, QString comments) {
     emit changeComment(file_name, comments);
     return true;
 }
 
-bool ImageHandler::onSetImagePath(int index, QString form_name, QString file_name) {
+bool ShowFormHandler::onSetImagePath(int index, QString form_name, QString file_name) {
     mPath = file_name;
     mFormName = form_name;
     QString tag = "";
@@ -208,7 +208,7 @@ bool ImageHandler::onSetImagePath(int index, QString form_name, QString file_nam
     return true;
 }
 
-bool ImageHandler::onCropImage(int index, QString name, int fromX, int fromY, int toX, int toY) {
+bool ShowFormHandler::onCropImage(int index, QString name, int fromX, int fromY, int toX, int toY) {
     FileManager fm;
     QImage image = fm.getImage(name);
     image = image.copy(fromX, fromY, toX - fromX, toY - fromY);
@@ -228,17 +228,17 @@ bool ImageHandler::onCropImage(int index, QString name, int fromX, int fromY, in
     return true;
 }
 
-void ImageHandler::onForm() {
+void ShowFormHandler::onForm() {
     FormHandler::onForm();
     qDebug() << "ShowForm: term=" << mCurrentTerm << " subject=" << mCurrentSubject << " theme=" << mCurrentTheme;
 }
 
-void ImageHandler::onOkClicked(QString file_name) {
+void ShowFormHandler::onOkClicked(QString file_name) {
     emit addConspectListToAnotherPath(mCurrentTerm, mCurrentSubject, mCurrentTheme, file_name);
 
     qDebug() << "ShowForm: term=" << mCurrentTerm << " subject=" << mCurrentSubject << " theme=" << mCurrentTheme;
 }
 
-void ImageHandler::onPathChange() {
+void ShowFormHandler::onPathChange() {
     qDebug() << "ShowForm: term=" << mCurrentTerm << " subject=" << mCurrentSubject << " theme=" << mCurrentTheme;
 }

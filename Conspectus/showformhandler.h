@@ -1,9 +1,9 @@
-#ifndef IMAGEHANDLER_H
-#define IMAGEHANDLER_H
+#ifndef SHOWFORMHANDLER_H
+#define SHOWFORMHANDLER_H
 
 #include "formhandler.h"
 
-class ImageHandler : public FormHandler
+class ShowFormHandler : public FormHandler
 {
     Q_OBJECT
 
@@ -23,8 +23,8 @@ private:
     void returnToViewForm();
 
 public:
-    ImageHandler(QObject* view);
-    ~ImageHandler();
+    ShowFormHandler(QObject* view);
+    ~ShowFormHandler();
 
 public slots:
     void onSetPathToList(int term, QString subject, QString theme);
@@ -50,4 +50,4 @@ signals:
     void setTagFormIndex(int index);
 };
 
-#endif // IMAGEHANDLER_H
+#endif // SHOWFORMHANDLER_H
