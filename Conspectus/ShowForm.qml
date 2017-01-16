@@ -115,8 +115,12 @@ Item {
     }
 
     function showViewForm() {
-        updateViewForm();
-        viewForm.showViewForm();
+        if (current_source_form === "ViewForm") {
+            updateViewForm();
+            viewForm.showViewForm();
+        } else if (current_source_form === "TagForm") {
+            tagForm.showTagForm();
+        }
     }
 
     Flow {
