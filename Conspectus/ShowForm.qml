@@ -354,6 +354,8 @@ Item {
                     id: toolButtonGarbage
                     height: iconSize
                     width: iconSize
+                    enabled: current_source_form === "TagForm" ? false : true
+                    opacity: current_source_form === "TagForm" ? 0.54 : 1
                     Image {
                         source: "/assets/garbage.png"
                         anchors.fill: parent
